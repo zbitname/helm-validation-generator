@@ -1,0 +1,10 @@
+someProp: val
+somePropWithComment: val    # comment!!!
+items:                      # json-schema: ref=ItemArray
+  - name: test name
+    value: test value
+    description: test description
+elements:
+  - element#1
+  - element#2
+  - element#3
