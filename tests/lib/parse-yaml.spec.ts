@@ -91,4 +91,42 @@ describe('YAML parse', () => {
             ],
         });
     });
+
+    it('simple case with comments', () => {
+        const content = readFileSync(`${__dirname}/files/simple-comments.yaml`).toString();
+        const res = parse(content, '');
+        const chartItem = res[0].getChartItem();
+        expect(chartItem).to.deep.equals({
+            type: 'object',
+            value: [],
+            children: [
+                { type: 'string', prop: 'someProp', value: 'val' },
+                { type: 'string', prop: 'somePropWithComment', value: 'val' },
+                {
+                    type: 'array',
+                    value: [],
+                    children: [
+                        {
+                            type: 'object',
+                            value: [],
+                            children: [
+                                { type: 'string', prop: 'name', value: 'test name' },
+                                { type: 'string', prop: 'value', value: 'test value' },
+                                { type: 'string', prop: 'description', value: 'test description' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    type: 'array',
+                    value: [],
+                    children: [
+                        { type: 'string', value: 'element#1' },
+                        { type: 'string', value: 'element#2' },
+                        { type: 'string', value: 'element#3' },
+                    ],
+                },
+            ],
+        });
+    });
 });
