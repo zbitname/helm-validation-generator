@@ -1,10 +1,23 @@
+# this is
+# the file
+# for test of comments
+# in YAML
 someProp: val
+# this is somePropWithComment
 somePropWithComment: val    # comment!!!
+# this is items
 items:                      # json-schema: ref=ItemArray
-  - name: test name
-    value: test value
+# this is items.name
+  - name: test name         # begin of array
+    # this is items.value
+    value: test value       # some comment #1
+    # this is items.description
     description: test description
-elements:
-  - element#1
+# this is elements
+elements:                   # json-schema: ref=Elements
+  # this is elements[0]
+  - element#1               # some comment #2
+  # this is elements[1]
   - element#2
+  # this is elements[2]
   - element#3

@@ -96,22 +96,39 @@ describe('YAML parse', () => {
         const content = readFileSync(`${__dirname}/files/simple-comments.yaml`).toString();
         const res = parse(content, '');
         const chartItem = res[0].getChartItem();
+
         expect(chartItem).to.deep.equals({
             type: 'object',
             value: [],
             children: [
                 { type: 'string', prop: 'someProp', value: 'val' },
-                { type: 'string', prop: 'somePropWithComment', value: 'val' },
+                {
+                    type: 'string',
+                    prop: 'somePropWithComment',
+                    value: 'val',
+                    comment: 'comment!!!',
+                },
                 {
                     type: 'array',
                     value: [],
+                    comment: 'json-schema: ref=ItemArray',
                     children: [
                         {
                             type: 'object',
                             value: [],
                             children: [
-                                { type: 'string', prop: 'name', value: 'test name' },
-                                { type: 'string', prop: 'value', value: 'test value' },
+                                {
+                                    type: 'string',
+                                    prop: 'name',
+                                    value: 'test name',
+                                    comment: 'begin of array',
+                                },
+                                {
+                                    type: 'string',
+                                    prop: 'value',
+                                    value: 'test value',
+                                    comment: 'some comment #1',
+                                },
                                 { type: 'string', prop: 'description', value: 'test description' },
                             ],
                         },
@@ -120,8 +137,9 @@ describe('YAML parse', () => {
                 {
                     type: 'array',
                     value: [],
+                    comment: 'json-schema: ref=Elements',
                     children: [
-                        { type: 'string', value: 'element#1' },
+                        { type: 'string', value: 'element#1', comment: 'some comment #2' },
                         { type: 'string', value: 'element#2' },
                         { type: 'string', value: 'element#3' },
                     ],

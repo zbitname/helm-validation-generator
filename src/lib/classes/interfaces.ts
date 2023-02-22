@@ -5,6 +5,7 @@ export interface IChartItem {
     type: TItemValue;
     prop?: string;
     children?: IChartItem[];
+    comment?: string | null;
 }
 
 export interface IChartItemGenerator {

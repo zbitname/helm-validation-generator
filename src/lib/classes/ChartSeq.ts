@@ -22,6 +22,10 @@ export class ChartSeq implements IChartItemGenerator {
             children: [],
         };
 
+        if (this.doc.commentBefore) {
+            chartPart.comment = this.doc.commentBefore.trim().split('\n')[0];
+        }
+
         for (const item of this.doc.items) {
             if (item instanceof Scalar) {
                 chartPart.children!.push(new ChartScalar(item).getChartItem());
