@@ -1,13 +1,13 @@
 {
-    "ItemArray": {
-        "type": "array",
-        "elements": {
-            "type": "object",
-            "properties": {
-                "name": {"type": "string"},
-                "value": {"type": "string"},
-                "description": {"type": "string"}
-            }
-        }
+  "ItemArray": {
+    "type": "array",
+    "elements": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "value": {"type": "string"},
+        "description": {"type": "string"}
+      }
     }
+  }
 }

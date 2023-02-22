@@ -6,18 +6,18 @@ prop5: null
 prop6: []
 prop7: {}
 prop8:
-    - val1
-    - 234
-    - 234.345
-    - true
-    - null
-    - []
-    - {}
+  - val1
+  - 234
+  - 234.345
+  - true
+  - null
+  - []
+  - {}
 prop9:
-    subprop1: val1
-    subprop2: 234
-    subprop3: 234.345
-    subprop4: true
-    subprop5: null
-    subprop6: []
-    subprop7: {}
+  subprop1: val1
+  subprop2: 234
+  subprop3: 234.345
+  subprop4: true
+  subprop5: null
+  subprop6: []
+  subprop7: {}
