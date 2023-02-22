@@ -26,10 +26,11 @@ describe('YAML parse', () => {
         { type: 'number', prop: 'prop3', value: 123.456 },
         { type: 'boolean', prop: 'prop4', value: true },
         { type: 'null', prop: 'prop5', value: null },
-        { type: 'array', value: [], children: [] },
-        { type: 'object', value: [], children: [] },
+        { type: 'array', prop: 'prop6', value: [], children: [] },
+        { type: 'object', prop: 'prop7', value: [], children: [] },
         {
           type: 'array',
+          prop: 'prop8',
           value: [],
           children: [
             { type: 'string', value: 'val1' },
@@ -43,6 +44,7 @@ describe('YAML parse', () => {
         },
         {
           type: 'object',
+          prop: 'prop9',
           value: [],
           children: [
             { type: 'string', prop: 'subprop1', value: 'val1' },
@@ -50,8 +52,8 @@ describe('YAML parse', () => {
             { type: 'number', prop: 'subprop3', value: 234.345 },
             { type: 'boolean', prop: 'subprop4', value: true },
             { type: 'null', prop: 'subprop5', value: null },
-            { type: 'array', value: [], children: [] },
-            { type: 'object', value: [], children: [] },
+            { type: 'array', prop: 'subprop6', value: [], children: [] },
+            { type: 'object', prop: 'subprop7', value: [], children: [] },
           ],
         },
       ],
@@ -109,6 +111,7 @@ describe('YAML parse', () => {
           comment: 'comment!!!',
         },
         {
+          prop: 'items',
           type: 'array',
           value: [],
           comment: 'json-schema: ref=ItemArray',
@@ -135,6 +138,7 @@ describe('YAML parse', () => {
           ],
         },
         {
+          prop: 'elements',
           type: 'array',
           value: [],
           comment: 'json-schema: ref=Elements',
@@ -143,6 +147,29 @@ describe('YAML parse', () => {
             { type: 'string', value: 'element#2' },
             { type: 'string', value: 'element#3' },
           ],
+        },
+        {
+          prop: 'props',
+          comment: 'some props',
+          children: [
+            {
+              prop: 'p1',
+              type: 'string',
+              value: 'val1',
+            },
+            {
+              prop: 'p2',
+              type: 'string',
+              value: 'val2',
+            },
+            {
+              prop: 'p3',
+              type: 'string',
+              value: 'val3',
+            },
+          ],
+          type: 'object',
+          value: [],
         },
       ],
     });

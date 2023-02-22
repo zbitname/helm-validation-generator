@@ -33,15 +33,24 @@ export class ChartPair implements IChartItemGenerator {
     }
 
     if (this.doc.value instanceof Pair) {
-      return new ChartPair(this.doc.value).getChartItem();
+      return {
+        ...new ChartPair(this.doc.value).getChartItem(),
+        prop: this.doc.key.value,
+      };
     }
 
     if (this.doc.value instanceof YAMLMap) {
-      return new ChartMap(this.doc.value).getChartItem();
+      return {
+        ...new ChartMap(this.doc.value).getChartItem(),
+        prop: this.doc.key.value,
+      };
     }
 
     if (this.doc.value instanceof YAMLSeq) {
-      return new ChartSeq(this.doc.value).getChartItem();
+      return {
+        ...new ChartSeq(this.doc.value).getChartItem(),
+        prop: this.doc.key.value,
+      };
     }
 
     console.log('ChartPair.getChartItem->(this.doc.value)', this.doc.value);

@@ -21,3 +21,8 @@ elements:                   # json-schema: ref=Elements
   - element#2
   # this is elements[2]
   - element#3
+props:                      # some props
+  # come comment that not to be selected for schema
+  p1: val1
+  p2: val2
+  p3: val3
