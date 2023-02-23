@@ -25,9 +25,9 @@ export class ChartPair implements IChartItemGenerator {
 
     if (this.doc.value instanceof Scalar) {
       return {
-        type: getTypeByValue(this.doc.value?.value),
         prop: this.doc.key.value,
-        value: this.doc.value.value,
+        types: [ getTypeByValue(this.doc.value?.value) ],
+        values: [ this.doc.value.value ],
         ...(this.doc.value.comment && { comment: this.doc.value.comment?.trim() }),
       } as IChartItem;
     }

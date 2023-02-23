@@ -18,42 +18,42 @@ describe('YAML parse', () => {
     const chartItem = res[0].getChartItem();
 
     expect(chartItem).to.deep.equals({
-      type: 'object',
-      value: [],
+      types: [ 'object' ],
+      values: [],
       children: [
-        { type: 'string', prop: 'prop1', value: 'some string' },
-        { type: 'number', prop: 'prop2', value: 123 },
-        { type: 'number', prop: 'prop3', value: 123.456 },
-        { type: 'boolean', prop: 'prop4', value: true },
-        { type: 'null', prop: 'prop5', value: null },
-        { type: 'array', prop: 'prop6', value: [], children: [] },
-        { type: 'object', prop: 'prop7', value: [], children: [] },
+        { types: [ 'string' ], prop: 'prop1', values: [ 'some string' ] },
+        { types: [ 'number' ], prop: 'prop2', values: [ 123 ] },
+        { types: [ 'number' ], prop: 'prop3', values: [ 123.456 ] },
+        { types: [ 'boolean' ], prop: 'prop4', values: [ true ] },
+        { types: [ 'null' ], prop: 'prop5', values: [ null ] },
+        { types: [ 'array' ], prop: 'prop6', values: [], children: [] },
+        { types: [ 'object' ], prop: 'prop7', values: [], children: [] },
         {
-          type: 'array',
+          types: [ 'array' ],
           prop: 'prop8',
-          value: [],
+          values: [],
           children: [
-            { type: 'string', value: 'val1' },
-            { type: 'number', value: 234 },
-            { type: 'number', value: 234.345 },
-            { type: 'boolean', value: true },
-            { type: 'null', value: null },
-            { type: 'array', value: [], children: [] },
-            { type: 'object', value: [], children: [] },
+            { types: [ 'string' ], values: [ 'val1' ] },
+            { types: [ 'number' ], values: [ 234 ] },
+            { types: [ 'number' ], values: [ 234.345 ] },
+            { types: [ 'boolean' ], values: [ true ] },
+            { types: [ 'null' ], values: [ null ] },
+            { types: [ 'array' ], values: [], children: [] },
+            { types: [ 'object' ], values: [], children: [] },
           ],
         },
         {
-          type: 'object',
+          types: [ 'object' ],
           prop: 'prop9',
-          value: [],
+          values: [],
           children: [
-            { type: 'string', prop: 'subprop1', value: 'val1' },
-            { type: 'number', prop: 'subprop2', value: 234 },
-            { type: 'number', prop: 'subprop3', value: 234.345 },
-            { type: 'boolean', prop: 'subprop4', value: true },
-            { type: 'null', prop: 'subprop5', value: null },
-            { type: 'array', prop: 'subprop6', value: [], children: [] },
-            { type: 'object', prop: 'subprop7', value: [], children: [] },
+            { types: [ 'string' ], prop: 'subprop1', values: [ 'val1' ] },
+            { types: [ 'number' ], prop: 'subprop2', values: [ 234 ] },
+            { types: [ 'number' ], prop: 'subprop3', values: [ 234.345 ] },
+            { types: [ 'boolean' ], prop: 'subprop4', values: [ true ] },
+            { types: [ 'null' ], prop: 'subprop5', values: [ null ] },
+            { types: [ 'array' ], prop: 'subprop6', values: [], children: [] },
+            { types: [ 'object' ], prop: 'subprop7', values: [], children: [] },
           ],
         },
       ],
@@ -65,12 +65,12 @@ describe('YAML parse', () => {
     const res = parse(content, '');
     const chartItem = res[0].getChartItem();
     expect(chartItem).to.deep.equals({
-      type: 'array',
-      value: [],
+      types: [ 'array' ],
+      values: [],
       children: [
-        { type: 'string', value: 'item1' },
-        { type: 'string', value: 'item2' },
-        { type: 'string', value: 'item3' },
+        { types: [ 'string' ], values: [ 'item1' ] },
+        { types: [ 'string' ], values: [ 'item2' ] },
+        { types: [ 'string' ], values: [ 'item3' ] },
       ],
     });
   });
@@ -80,16 +80,16 @@ describe('YAML parse', () => {
     const res = parse(content, '');
     const chartItem = res[0].getChartItem();
     expect(chartItem).to.deep.equals({
-      type: 'array',
-      value: [],
+      types: [ 'array' ],
+      values: [],
       children: [
-        { type: 'null', value: null },
-        { type: 'number', value: 123 },
-        { type: 'number', value: 123.456 },
-        { type: 'boolean', value: true },
-        { type: 'string', value: 'some string' },
-        { type: 'array', value: [], children: [] },
-        { type: 'object', value: [], children: [] },
+        { types: [ 'null' ], values: [ null ] },
+        { types: [ 'number' ], values: [ 123 ] },
+        { types: [ 'number' ], values: [ 123.456 ] },
+        { types: [ 'boolean' ], values: [ true ] },
+        { types: [ 'string' ], values: [ 'some string' ] },
+        { types: [ 'array' ], values: [], children: [] },
+        { types: [ 'object' ], values: [], children: [] },
       ],
     });
   });
@@ -100,52 +100,52 @@ describe('YAML parse', () => {
     const chartItem = res[0].getChartItem();
 
     expect(chartItem).to.deep.equals({
-      type: 'object',
-      value: [],
+      types: [ 'object' ],
+      values: [],
       children: [
-        { type: 'string', prop: 'someProp', value: 'val' },
+        { prop: 'someProp', types: [ 'string' ], values: [ 'val' ] },
         {
-          type: 'string',
           prop: 'somePropWithComment',
-          value: 'val',
+          types: [ 'string' ],
+          values: [ 'val' ],
           comment: 'comment!!!',
         },
         {
           prop: 'items',
-          type: 'array',
-          value: [],
+          types: [ 'array' ],
+          values: [],
           comment: 'json-schema: ref=ItemArray',
           children: [
             {
-              type: 'object',
-              value: [],
+              types: [ 'object' ],
+              values: [],
               children: [
                 {
-                  type: 'string',
                   prop: 'name',
-                  value: 'test name',
+                  types: [ 'string' ],
+                  values: [ 'test name' ],
                   comment: 'begin of array',
                 },
                 {
-                  type: 'string',
                   prop: 'value',
-                  value: 'test value',
+                  types: [ 'string' ],
+                  values: [ 'test value' ],
                   comment: 'some comment #1',
                 },
-                { type: 'string', prop: 'description', value: 'test description' },
+                { prop: 'description', types: [ 'string' ], values: [ 'test description' ] },
               ],
             },
           ],
         },
         {
           prop: 'elements',
-          type: 'array',
-          value: [],
+          types: [ 'array' ],
+          values: [],
           comment: 'json-schema: ref=Elements',
           children: [
-            { type: 'string', value: 'element#1', comment: 'some comment #2' },
-            { type: 'string', value: 'element#2' },
-            { type: 'string', value: 'element#3' },
+            { types: [ 'string' ], values: [ 'element#1' ], comment: 'some comment #2' },
+            { types: [ 'string' ], values: [ 'element#2' ] },
+            { types: [ 'string' ], values: [ 'element#3' ] },
           ],
         },
         {
@@ -154,22 +154,22 @@ describe('YAML parse', () => {
           children: [
             {
               prop: 'p1',
-              type: 'string',
-              value: 'val1',
+              types: [ 'string' ],
+              values: [ 'val1' ],
             },
             {
               prop: 'p2',
-              type: 'string',
-              value: 'val2',
+              types: [ 'string' ],
+              values: [ 'val2' ],
             },
             {
               prop: 'p3',
-              type: 'string',
-              value: 'val3',
+              types: [ 'string' ],
+              values: [ 'val3' ],
             },
           ],
-          type: 'object',
-          value: [],
+          types: [ 'object' ],
+          values: [],
         },
       ],
     });

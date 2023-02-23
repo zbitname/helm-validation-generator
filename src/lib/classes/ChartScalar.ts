@@ -14,8 +14,8 @@ export class ChartScalar implements IChartItemGenerator {
 
   public getChartItem(): IChartItem {
     return {
-      type: getTypeByValue(this.doc.value),
-      value: this.doc.value,
+      types: [ getTypeByValue(this.doc.value) ],
+      values: [ this.doc.value ],
       ...(this.doc.comment && { comment: this.doc.comment.trim() }),
     };
   }

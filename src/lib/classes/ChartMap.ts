@@ -15,8 +15,8 @@ export class ChartMap implements IChartItemGenerator {
 
   public getChartItem(): IChartItem {
     const chartPart: IChartItem = {
-      type: 'object',
-      value: [],
+      types: [ 'object' ],
+      values: [],
       children: [],
       ...(this.doc.commentBefore && { comment: this.doc.commentBefore.trim().split('\n')[0] }),
     };

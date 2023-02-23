@@ -1,8 +1,8 @@
 export type TItemValue = 'number' | 'string' | 'bigint' | 'boolean' | 'undefined' | 'array' | 'object' | 'null' | 'unknown';
 
 export interface IChartItem {
-  value: any;
-  type: TItemValue;
+  values: any[];
+  types: TItemValue[];
   prop?: string;
   children?: IChartItem[];
   comment?: string | null;

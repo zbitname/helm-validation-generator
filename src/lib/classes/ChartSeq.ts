@@ -17,8 +17,8 @@ export class ChartSeq implements IChartItemGenerator {
 
   public getChartItem(): IChartItem {
     const chartPart: IChartItem = {
-      type: 'array',
-      value: [],
+      types: [ 'array' ],
+      values: [],
       children: [],
     };
 
