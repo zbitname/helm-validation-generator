@@ -7,50 +7,54 @@ import {
   YAMLSeq,
 } from 'yaml';
 
-import { IChartItem, IChartItemGenerator } from './interfaces';
 import { ChartMap } from './ChartMap';
 import { ChartSeq } from './ChartSeq';
 import { getTypeByValue } from './helpers';
+import { ChartItem } from './ChartItem';
+import { ChartItemGenerator, IChartItemGeneratorParams } from './ChartItemGenerator';
 
-export class ChartPair implements IChartItemGenerator {
+export class ChartPair extends ChartItemGenerator<Pair> {
   constructor(
-    private doc: Pair,
-  ) { }
+    doc: Pair,
+    params: IChartItemGeneratorParams,
+  ) {
+    super(doc, params);
+  }
 
-  public getChartItem(): IChartItem {
+  public getChartItem(): ChartItem {
     if (!(this.doc.key instanceof Scalar)) {
       console.debug('failed pair', this.doc);
       throw new Error('Key must be Scalar type');
     }
 
     if (this.doc.value instanceof Scalar) {
-      return {
+      return new ChartItem({
         prop: this.doc.key.value,
         types: [ getTypeByValue(this.doc.value?.value) ],
         values: [ this.doc.value.value ],
+        path: `${this.path}.${this.doc.key.value}`,
         ...(this.doc.value.comment && { comment: this.doc.value.comment?.trim() }),
-      } as IChartItem;
+      });
     }
 
     if (this.doc.value instanceof Pair) {
-      return {
-        ...new ChartPair(this.doc.value).getChartItem(),
-        prop: this.doc.key.value,
-      };
+      return new ChartPair(this.doc.value, {
+        path: this.path,
+      }).getChartItem();
     }
 
     if (this.doc.value instanceof YAMLMap) {
-      return {
-        ...new ChartMap(this.doc.value).getChartItem(),
-        prop: this.doc.key.value,
-      };
+      return new ChartMap(this.doc.value, {
+        propName: this.doc.key.value,
+        path: `${this.path}.${this.doc.key.value}`,
+      }).getChartItem();
     }
 
     if (this.doc.value instanceof YAMLSeq) {
-      return {
-        ...new ChartSeq(this.doc.value).getChartItem(),
-        prop: this.doc.key.value,
-      };
+      return new ChartSeq(this.doc.value, {
+        propName: this.doc.key.value,
+        path: `${this.path}.${this.doc.key.value}`,
+      }).getChartItem();
     }
 
     console.log('ChartPair.getChartItem->(this.doc.value)', this.doc.value);

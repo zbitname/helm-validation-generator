@@ -4,19 +4,24 @@ import {
   Scalar,
 } from 'yaml';
 
-import { IChartItem, IChartItemGenerator } from './interfaces';
 import { getTypeByValue } from './helpers';
+import { ChartItem } from './ChartItem';
+import { ChartItemGenerator, IChartItemGeneratorParams } from './ChartItemGenerator';
 
-export class ChartScalar implements IChartItemGenerator {
+export class ChartScalar extends ChartItemGenerator<Scalar> {
   constructor(
-    private doc: Scalar,
-  ) { }
+    doc: Scalar,
+    params: IChartItemGeneratorParams,
+  ) {
+    super(doc, params);
+  }
 
-  public getChartItem(): IChartItem {
-    return {
+  public getChartItem(): ChartItem {
+    return new ChartItem({
       types: [ getTypeByValue(this.doc.value) ],
       values: [ this.doc.value ],
+      path: this.path,
       ...(this.doc.comment && { comment: this.doc.comment.trim() }),
-    };
+    });
   }
 }

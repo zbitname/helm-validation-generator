@@ -6,7 +6,7 @@ someProp: val
 # this is somePropWithComment
 somePropWithComment: val    # comment!!!
 # this is items
-items:                      # json-schema: ref=ItemArray
+items:                      # schema: ref(ItemArray)
 # this is items.name
   - name: test name         # begin of array
     # this is items.value
@@ -14,7 +14,7 @@ items:                      # json-schema: ref=ItemArray
     # this is items.description
     description: test description
 # this is elements
-elements:                   # json-schema: ref=Elements
+elements:                   # schema: ref(Elements)
   # this is elements[0]
   - element#1               # some comment #2
   # this is elements[1]

@@ -1,0 +1,7 @@
+someModel:
+  name: some name
+  value: some value
+  comment: some comment
+model1: # schema: ref(Model1)
+  name: some model name
+  value: some model value

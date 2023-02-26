@@ -1,0 +1,15 @@
+prop1:
+  num: 123.456
+  str: some string
+  bool: false
+  null: null
+  arr:
+    - 123.456
+    - some string
+    - false
+    - null
+  obj:
+    subnum: 123.456
+    substr: some string
+    subbool: false
+    subnull: null

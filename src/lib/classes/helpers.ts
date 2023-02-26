@@ -1,4 +1,4 @@
-import { TItemValue } from './interfaces';
+import { TItemValue } from '../interfaces';
 
 export const getTypeByValue = (value: any): TItemValue => {
   if (value === null) {

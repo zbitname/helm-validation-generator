@@ -3,8 +3,13 @@ import {
 } from 'yaml';
 
 import { ChartRoot } from './classes/ChartRoot';
+import { ControlCommentRepo } from './classes/ControlCommentRepo';
+import { SkipControlComment } from './control-comments/skip';
 
-export const parse = (inputChart: string, inputTypes: string) => {
+const controlComment = new ControlCommentRepo();
+controlComment.add('skip', SkipControlComment);
+
+export const parse = (inputChart: string) => {
   const docs = parseAllDocuments(inputChart);
   const charts: ChartRoot[] = [];
 

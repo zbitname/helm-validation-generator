@@ -7,21 +7,28 @@ import {
 } from 'yaml';
 
 import { ChartSeq } from './ChartSeq';
-import { IChartItem, IChartItemGenerator } from './interfaces';
 import { ChartMap } from './ChartMap';
+import { ChartItem } from './ChartItem';
+import { ChartItemGenerator } from './ChartItemGenerator';
 
-export class ChartRoot implements IChartItemGenerator {
+export class ChartRoot extends ChartItemGenerator<Document> {
   constructor(
-    private doc: Document,
-  ) { }
+    doc: Document,
+  ) {
+    super(doc);
+  }
 
-  public getChartItem(): IChartItem {
+  public getChartItem(): ChartItem {
     if (this.doc.contents instanceof YAMLSeq) {
-      return new ChartSeq(this.doc.contents).getChartItem();
+      return new ChartSeq(this.doc.contents, {
+        path: ''
+      }).getChartItem();
     }
 
     if (this.doc.contents instanceof YAMLMap) {
-      return new ChartMap(this.doc.contents).getChartItem();
+      return new ChartMap(this.doc.contents, {
+        path: ''
+      }).getChartItem();
     }
 
     throw new Error('Unsupported type');
