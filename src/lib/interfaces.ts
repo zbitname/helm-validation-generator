@@ -1,7 +1,3 @@
-import { JSONSchemaType } from 'ajv';
-
-export { JSONSchemaType };
-
 export type TItemValue = 'number' | 'string' | 'bigint' | 'boolean' | 'undefined' | 'array' | 'object' | 'null' | 'unknown';
 
 export type TControlFncDesc = {
@@ -14,7 +10,7 @@ export type TSchemaOptions = {
 };
 
 export type TControlOperations = {
-  break?: boolean;
+  skip?: boolean;
   // patchSchema?: {
   //   key: string;
   //   value?: string;
