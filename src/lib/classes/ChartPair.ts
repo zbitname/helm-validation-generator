@@ -28,11 +28,13 @@ export class ChartPair extends ChartItemGenerator<Pair> {
     }
 
     if (this.doc.value instanceof Scalar) {
+      const path = `${this.path}.${this.doc.key.value}`;
+
       return new ChartItem({
         prop: this.doc.key.value,
         types: [ getTypeByValue(this.doc.value?.value) ],
         values: [ this.doc.value.value ],
-        path: `${this.path}.${this.doc.key.value}`,
+        path,
         ...(this.doc.value.comment && { comment: this.doc.value.comment?.trim() }),
       });
     }

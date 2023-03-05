@@ -10,7 +10,7 @@ export type TSchemaOptions = {
 };
 
 export type TControlOperations = {
-  skip?: boolean;
+  skip?: boolean; // priority=1
   // patchSchema?: {
   //   key: string;
   //   value?: string;
@@ -30,11 +30,14 @@ export interface IChartItem {
 }
 
 export interface IChartItemWithOptions extends IChartItem {
+  pathTemplate: string;
   options?: TControlFncDesc[];
+  children?: IChartItemWithOptions[];
 }
 
 export interface IChartItemWithOperations extends IChartItemWithOptions {
   operations: TControlOperations;
+  children?: IChartItemWithOperations[];
 }
 
 export interface IControlComment {

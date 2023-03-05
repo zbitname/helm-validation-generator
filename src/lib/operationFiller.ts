@@ -21,6 +21,7 @@ export const fill = (chartItems: IChartItemWithOptions[], controlCommentsRepo: I
 
     result.push({
       ...item,
+      children: [],
       operations,
     });
   }

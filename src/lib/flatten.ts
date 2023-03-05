@@ -3,6 +3,7 @@ import { IChartItemWithOptions } from './interfaces';
 export const flatten = (parent: IChartItemWithOptions[], element: IChartItemWithOptions): IChartItemWithOptions[] => {
   parent.push({
     path: element.path,
+    pathTemplate: element.pathTemplate,
     types: element.types,
     values: element.values,
     comment: element.comment,

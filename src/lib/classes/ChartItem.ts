@@ -9,6 +9,7 @@ export class ChartItem implements IChartItemWithOptions {
   public readonly values: any[];
   public readonly types: TItemValue[];
   public readonly path: string;
+  public readonly pathTemplate: string;
   public readonly prop?: string;
   public readonly children?: IChartItemWithOptions[] = [];
   public readonly comment?: string | null = null;
@@ -20,8 +21,9 @@ export class ChartItem implements IChartItemWithOptions {
     this.values = _doc.values;
     this.types = _doc.types;
     this.path = _doc.path;
+    this.pathTemplate = _doc.path.replace(/\[\d+\]/g, '[]');
     this.prop = _doc.prop;
-    this.children = _doc.children;
+    this.children = _doc.children as IChartItemWithOptions[];
     this.comment = _doc.comment;
 
     this.options = this.getParsedComment();
