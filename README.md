@@ -12,7 +12,7 @@ Control comments:
 * `allowAdditionalProperties`: TODO. This options can be applied only for objects.
 
 Flow:
-* `items = (yaml-to-schema).parse(content: String);` Parse YAML
+* `items = (parse-yaml).parse(content: String);` Parse YAML
 * `flat = (flatten).flatten([], items[0].getChartItem(): IChartItem);` Make flat from tree
 * `flatWithOperators = (operationFiller).fill(flat, controlCommentRepo);` Fill operations to all items
 * `schemaItems = (flatShemaGenerator).getJSONSchemaFromFlat(flatWithOperators);` Make "schema" from flat items with operations

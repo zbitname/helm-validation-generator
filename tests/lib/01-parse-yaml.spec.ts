@@ -3,7 +3,7 @@
 
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
-import { parse } from '../../src/lib/yaml-to-schema';
+import { parse } from '../../src/lib/parse-yaml';
 import { compact } from './helpers';
 
 describe('YAML parse', () => {

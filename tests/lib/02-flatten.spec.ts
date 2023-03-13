@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 
 import { readFileSync } from 'fs';
-import { parse } from '../../src/lib/yaml-to-schema';
+import { parse } from '../../src/lib/parse-yaml';
 import { expect } from 'chai';
 import { flatten } from '../../src/lib/flatten';
 import { compact } from './helpers';

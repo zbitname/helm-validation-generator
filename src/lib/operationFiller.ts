@@ -6,7 +6,11 @@ import {
   TControlOperations,
 } from './interfaces';
 
-export const fill = (chartItems: IChartItemWithOptions[], controlCommentsRepo: IControlCommentRepo): IChartItemWithOperations[] => {
+// 3rd stage
+export const operationFiller = (
+  chartItems: IChartItemWithOptions[],
+  controlCommentsRepo: IControlCommentRepo,
+): IChartItemWithOperations[] => {
   const result: IChartItemWithOperations[] = [];
 
   for (const item of chartItems) {

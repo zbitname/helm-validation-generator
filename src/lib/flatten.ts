@@ -1,5 +1,6 @@
 import { IChartItemWithOptions } from './interfaces';
 
+// 2nd stage
 export const flatten = (parent: IChartItemWithOptions[], element: IChartItemWithOptions): IChartItemWithOptions[] => {
   parent.push({
     path: element.path,

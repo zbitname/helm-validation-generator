@@ -4,9 +4,9 @@
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
 
-import { parse } from '../../src/lib/yaml-to-schema';
+import { parse } from '../../src/lib/parse-yaml';
 import { flatten } from '../../src/lib/flatten';
-import { fill } from '../../src/lib/operationFiller';
+import { operationFiller } from '../../src/lib/operationFiller';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { SkipControlComment } from '../../src/lib/control-comments/skip';
 
@@ -128,7 +128,7 @@ describe('Operator filler #01 / file=different-types-in-one-item.yaml', () => {
       const content = BASE_CONTENT.replace(variant.replaceOf, variant.replaceTo);
       const res = parse(content);
       const flat = flatten([], res[0].getChartItem());
-      const flatWithOperators = fill(flat, controlCommentRepo);
+      const flatWithOperators = operationFiller(flat, controlCommentRepo);
 
       expect(flatWithOperators[variant.index]).to.have.property('options');
       expect(flatWithOperators[variant.index].path).to.be.equals(variant.path);

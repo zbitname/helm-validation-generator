@@ -4,9 +4,9 @@
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
 
-import { parse } from '../../src/lib/yaml-to-schema';
+import { parse } from '../../src/lib/parse-yaml';
 import { flatten } from '../../src/lib/flatten';
-import { fill } from '../../src/lib/operationFiller';
+import { operationFiller } from '../../src/lib/operationFiller';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { SkipControlComment } from '../../src/lib/control-comments/skip';
 import { RefControlComment } from '../../src/lib/control-comments/ref';
@@ -22,7 +22,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/1-lvl-array-with-scalars-twice.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {
@@ -41,7 +41,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {
@@ -71,7 +71,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {
@@ -92,7 +92,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/prop.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {
@@ -129,7 +129,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/root-array.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {
@@ -148,7 +148,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/simple-comments.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {
@@ -176,7 +176,7 @@ describe('Get JSON schema from flat', () => {
     const content = readFileSync(`${__dirname}/files/simple-schema-1.yaml`).toString();
     const res = parse(content);
     const flat = flatten([], res[0].getChartItem());
-    const flatWithOperators = fill(flat, controlCommentRepo);
+    const flatWithOperators = operationFiller(flat, controlCommentRepo);
     const schema = getJSONSchemaFromFlat(flatWithOperators);
 
     for (const schemaItem of schema) {

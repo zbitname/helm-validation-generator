@@ -4,6 +4,7 @@ import {
   TItemValue,
 } from './interfaces';
 
+// 4th stage
 export const getJSONSchemaFromFlat = (chartItems: IChartItemWithOperations[]): IJSONSchemaForProcessing[] => {
   const pathTemplates: string[] = [];
   const result: IJSONSchemaForProcessing[] = [];
