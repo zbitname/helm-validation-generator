@@ -13,7 +13,7 @@ import { RefControlComment } from '../../src/lib/control-comments/ref';
 import { getJSONSchemaFromFlat } from '../../src/lib/flat-shema-generator';
 import { omit } from 'lodash';
 
-describe('Get JSON schema from flat', () => {
+describe('Schema generator (flat)', () => {
   const controlCommentRepo = new ControlCommentRepo();
   controlCommentRepo.add('skip', SkipControlComment);
   controlCommentRepo.add('ref', RefControlComment);

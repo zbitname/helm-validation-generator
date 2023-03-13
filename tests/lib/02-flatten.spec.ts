@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import { flatten } from '../../src/lib/flatten';
 import { compact } from './helpers';
 
-describe('Flutten', () => {
+describe('Flatten', () => {
   it('different-types-in-one-item.yaml', () => {
     const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
     const res = parse(content);

@@ -10,7 +10,7 @@ import { operationFiller } from '../../src/lib/operation-filler';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { SkipControlComment } from '../../src/lib/control-comments/skip';
 
-describe('Operator filler #01 / file=different-types-in-one-item.yaml', () => {
+describe('Operator filler / file=different-types-in-one-item.yaml', () => {
   const BASE_CONTENT = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
 
   const controlCommentRepo = new ControlCommentRepo();
