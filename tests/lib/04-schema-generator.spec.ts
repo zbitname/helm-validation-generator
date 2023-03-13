@@ -6,11 +6,11 @@ import { expect } from 'chai';
 
 import { parse } from '../../src/lib/parse-yaml';
 import { flatten } from '../../src/lib/flatten';
-import { operationFiller } from '../../src/lib/operationFiller';
+import { operationFiller } from '../../src/lib/operation-filler';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { SkipControlComment } from '../../src/lib/control-comments/skip';
 import { RefControlComment } from '../../src/lib/control-comments/ref';
-import { getJSONSchemaFromFlat } from '../../src/lib/flatShemaGenerator';
+import { getJSONSchemaFromFlat } from '../../src/lib/flat-shema-generator';
 import { omit } from 'lodash';
 
 describe('Get JSON schema from flat', () => {

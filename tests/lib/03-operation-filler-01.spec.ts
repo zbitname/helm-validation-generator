@@ -6,7 +6,7 @@ import { expect } from 'chai';
 
 import { parse } from '../../src/lib/parse-yaml';
 import { flatten } from '../../src/lib/flatten';
-import { operationFiller } from '../../src/lib/operationFiller';
+import { operationFiller } from '../../src/lib/operation-filler';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { SkipControlComment } from '../../src/lib/control-comments/skip';
 
