@@ -12,7 +12,7 @@ export type TSchemaOptions = {
 export type TControlOperations = {
   skip?: boolean; // priority=10
   patchSchema?: { // priority=20
-    key: string; // $#ALL: all keys
+    key: string; // %ALL%: all keys
     value?: string;
     operation: 'set' | 'unset' | 'push' | 'pull';
   }[];

@@ -4,7 +4,7 @@ export class RefControlComment implements IControlComment {
   compile(definitionName: string): TControlOperations {
     return {
       patchSchema: [{
-        key: '$#ALL',
+        key: '%ALL%',
         value: definitionName,
         operation: 'unset',
       }, {
