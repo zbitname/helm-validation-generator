@@ -10,12 +10,12 @@ export type TSchemaOptions = {
 };
 
 export type TControlOperations = {
-  skip?: boolean; // priority=1
-  // patchSchema?: {
-  //   key: string;
-  //   value?: string;
-  //   operation: 'set' | 'unset' | 'push' | 'pull';
-  // }[];
+  skip?: boolean; // priority=10
+  patchSchema?: { // priority=20
+    key: string; // $#ALL: all keys
+    value?: string;
+    operation: 'set' | 'unset' | 'push' | 'pull';
+  }[];
 };
 
 // export type TControlCommentFnc = (...args: any[]) => TControlOperators;
@@ -40,6 +40,11 @@ export interface IChartItemWithOperations extends IChartItemWithOptions {
   children?: IChartItemWithOperations[];
 }
 
+export interface IJSONSchema {
+  oneOf?: any;
+  type?: 'string' | 'number' | 'integer' | 'object' | 'array' | 'boolean' | 'null';
+}
+
 export interface IControlComment {
   compile(...args: any[]): TControlOperations;
 }
@@ -54,3 +59,51 @@ export interface IChartItemGenerator {
   // setControlCommentRepo(repo: IControlCommentRepo): this;
   // getControlCommentRepo(): IControlCommentRepo;
 }
+
+interface IJSONSchemaForProcessingBase {
+  chartItems: IChartItemWithOperations[];
+  pathTemplate: IChartItemWithOperations['pathTemplate'];
+}
+
+export interface IJSONSchemaForProcessingObject extends IJSONSchemaForProcessingBase {
+  type: 'object';
+  properties: string[];
+  required: string[];
+}
+
+export interface IJSONSchemaForProcessingNumber extends IJSONSchemaForProcessingBase {
+  type: 'number';
+}
+
+export interface IJSONSchemaForProcessingString extends IJSONSchemaForProcessingBase {
+  type: 'string';
+}
+
+export interface IJSONSchemaForProcessingBoolean extends IJSONSchemaForProcessingBase {
+  type: 'boolean';
+}
+
+export interface IJSONSchemaForProcessingNull extends IJSONSchemaForProcessingBase {
+  type: 'null';
+}
+
+export interface IJSONSchemaForProcessingArray extends IJSONSchemaForProcessingBase {
+  type: 'array';
+  items: (
+    IJSONSchemaForProcessingObject
+    | IJSONSchemaForProcessingArray
+    | IJSONSchemaForProcessingNumber
+    | IJSONSchemaForProcessingString
+    | IJSONSchemaForProcessingBoolean
+    | IJSONSchemaForProcessingNull
+  )[];
+}
+
+export type IJSONSchemaForProcessing = (
+  IJSONSchemaForProcessingObject
+  | IJSONSchemaForProcessingArray
+  | IJSONSchemaForProcessingNumber
+  | IJSONSchemaForProcessingString
+  | IJSONSchemaForProcessingBoolean
+  | IJSONSchemaForProcessingNull
+);
