@@ -31,7 +31,7 @@ export const getJSONSchemaFromFlat = (chartItems: IChartItemWithOperations[]): I
   return result;
 };
 
-export const getFlatJSONSchema = (items: IChartItemWithOperations[]): IJSONSchemaForProcessing[] => {
+const getFlatJSONSchema = (items: IChartItemWithOperations[]): IJSONSchemaForProcessing[] => {
   const pathTemplates = new Set<string>();
 
   for (const item of items) {
