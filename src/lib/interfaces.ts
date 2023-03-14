@@ -1,4 +1,4 @@
-export type TItemValue = 'number' | 'string' | 'bigint' | 'boolean' | 'undefined' | 'array' | 'object' | 'null' | 'unknown';
+export type TJSONSchemaType = 'string' | 'number' | 'integer' | 'object' | 'array' | 'boolean' | 'null';
 
 export type TControlFncDesc = {
   name: string;
@@ -22,7 +22,7 @@ export type TControlOperations = {
 
 export interface IChartItem {
   values: any[];
-  types: TItemValue[];
+  types: TJSONSchemaType[];
   path: string;
   prop?: string;
   children?: IChartItem[];
@@ -41,12 +41,13 @@ export interface IChartItemWithOperations extends IChartItemWithOptions {
 }
 
 export interface IJSONSchema {
+  $ref?: string;
   oneOf?: any;
-  type?: 'string' | 'number' | 'integer' | 'object' | 'array' | 'boolean' | 'null';
+  type?: TJSONSchemaType;
 }
 
 export interface IControlComment {
-  compile(...args: any[]): TControlOperations;
+  getOperations(...args: any[]): TControlOperations;
 }
 
 export interface IControlCommentRepo {

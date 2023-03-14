@@ -19,13 +19,14 @@ export const operationFiller = (
     for (const option of (item.options || [])) {
       const ControlComment = controlCommentsRepo.get(option.name);
       const controlComment = new ControlComment() as IControlComment;
-      const compiledOp = controlComment.compile(...option.args);
+      const compiledOp = controlComment.getOperations(...option.args);
 
       operations.skip = compiledOp.skip ?? operations.skip;
 
       if (!operations.patchSchema) {
         operations.patchSchema = compiledOp.patchSchema;
       } else {
+        // coverage: you need a few control-comments with `.patchSchema` option
         operations.patchSchema.push(...(compiledOp.patchSchema || []));
       }
     }

@@ -1,7 +1,7 @@
 import {
   IChartItemWithOperations,
   IJSONSchemaForProcessing,
-  TItemValue,
+  TJSONSchemaType,
 } from './interfaces';
 
 // 4th stage
@@ -49,7 +49,7 @@ const getFlatJSONSchema = (items: IChartItemWithOperations[]): IJSONSchemaForPro
       p.add(j);
     }
     return p;
-  }, new Set<TItemValue>());
+  }, new Set<TJSONSchemaType>());
 
   const result: IJSONSchemaForProcessing[] = [];
 
