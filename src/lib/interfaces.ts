@@ -22,7 +22,7 @@ export type TControlOperations = {
 
 export interface IChartItem {
   values: any[];
-  types: TJSONSchemaType[];
+  type: TJSONSchemaType;
   path: string;
   prop?: string;
   children?: IChartItem[];
@@ -44,15 +44,6 @@ export interface IJSONSchema {
   $ref?: string;
   oneOf?: any;
   type?: TJSONSchemaType;
-}
-
-export interface IControlComment {
-  getOperations(...args: any[]): TControlOperations;
-}
-
-export interface IControlCommentRepo {
-  add(name: string, impl: new () => IControlComment): this;
-  get(name: string): new () => IControlComment | undefined;
 }
 
 export interface IChartItemGenerator {
@@ -108,3 +99,29 @@ export type IJSONSchemaForProcessing = (
   | IJSONSchemaForProcessingBoolean
   | IJSONSchemaForProcessingNull
 );
+
+export interface ISchemaParams {
+  readonly skipTemplatePaths: IJSONSchemaForProcessing['pathTemplate'][];
+}
+
+export interface ISchemaItemParams {
+  readonly templatePath: IJSONSchemaForProcessing['pathTemplate'];
+  readonly inputSchema: IJSONSchema;
+}
+
+export interface IControlComment {
+  schemaParams: ISchemaParams;
+  schemaItemParams: ISchemaItemParams;
+  before(...args: any[]): void;
+  after(...args: any[]): void;
+}
+
+export type TControlCommentConstructor = new (
+  schemaParams: ISchemaParams,
+  schemaItemParams: ISchemaItemParams,
+) => IControlComment;
+
+export interface IControlCommentRepo {
+  add(name: string, impl: TControlCommentConstructor): this;
+  get(name: string): TControlCommentConstructor;
+}

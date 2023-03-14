@@ -22,7 +22,7 @@ export class ChartSeq extends ChartItemGenerator<YAMLSeq> {
 
   public getChartItem(): ChartItem {
     const chartPart: IChartItem = {
-      types: [ 'array' ],
+      type: 'array',
       values: [],
       children: [],
       path: this.path,

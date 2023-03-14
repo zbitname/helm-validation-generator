@@ -1,6 +1,6 @@
-import { TItemValue } from '../interfaces';
+import { TJSONSchemaType } from '../interfaces';
 
-export const getTypeByValue = (value: any): TItemValue => {
+export const getTypeByValue = (value: any): TJSONSchemaType => {
   if (value === null) {
     return 'null';
   }
@@ -11,14 +11,18 @@ export const getTypeByValue = (value: any): TItemValue => {
 
   const valueTypeOf = typeof value;
   switch (valueTypeOf) {
-    case 'bigint':
-    case 'boolean':
-    case 'number':
-    case 'string':
     case 'undefined':
+      return 'null';
+
+    case 'bigint':
+    case 'number':
+      return 'number';
+
+    case 'boolean':
     case 'object':
+    case 'string':
       return valueTypeOf;
   }
 
-  return 'unknown';
+  return 'null';
 };

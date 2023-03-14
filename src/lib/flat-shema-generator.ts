@@ -1,7 +1,6 @@
 import {
   IChartItemWithOperations,
   IJSONSchemaForProcessing,
-  TJSONSchemaType,
 } from './interfaces';
 
 // 4th stage
@@ -43,18 +42,11 @@ const getFlatJSONSchema = (items: IChartItemWithOperations[]): IJSONSchemaForPro
   }
 
   const pathTemplate = [...pathTemplates][0];
-
-  const allTypes = items.map(i => i.types).reduce((p, c) => {
-    for (const j of c) {
-      p.add(j);
-    }
-    return p;
-  }, new Set<TJSONSchemaType>());
-
+  const allTypes = items.map(i => i.type);
   const result: IJSONSchemaForProcessing[] = [];
 
-  for (const type of [...allTypes]) {
-    const itemsWithType = items.filter(i => i.types.includes(type));
+  for (const type of allTypes) {
+    const itemsWithType = items.filter(i => i.type === type);
 
     switch (type) {
       case 'object':

@@ -146,6 +146,4 @@ describe('Operator filler', () => {
       });
     }
   });
-
-
 });

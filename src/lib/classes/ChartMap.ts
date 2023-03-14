@@ -20,7 +20,7 @@ export class ChartMap extends ChartItemGenerator<YAMLMap> {
 
   public getChartItem(): ChartItem {
     const chartPart: IChartItem = {
-      types: [ 'object' ],
+      type: 'object',
       values: [],
       children: [],
       path: this.path,

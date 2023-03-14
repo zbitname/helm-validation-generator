@@ -15,22 +15,22 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '', types: [ 'object' ], values: [] },
-      { path: '.prop1', pathTemplate: '.prop1', types: [ 'object' ], values: [], prop: 'prop1' },
-      { path: '.prop1.num', pathTemplate: '.prop1.num', types: [ 'number' ], values: [ 123.456 ], prop: 'num' },
-      { path: '.prop1.str', pathTemplate: '.prop1.str', types: [ 'string' ], values: [ 'some string' ], prop: 'str' },
-      { path: '.prop1.bool', pathTemplate: '.prop1.bool', types: [ 'boolean' ], values: [ false ], prop: 'bool' },
-      { path: '.prop1.null', pathTemplate: '.prop1.null', types: [ 'null' ], values: [ null ], prop: null },
-      { path: '.prop1.arr', pathTemplate: '.prop1.arr', types: [ 'array' ], values: [], prop: 'arr' },
-      { path: '.prop1.arr[0]', pathTemplate: '.prop1.arr[]', types: [ 'number' ], values: [ 123.456 ] },
-      { path: '.prop1.arr[1]', pathTemplate: '.prop1.arr[]', types: [ 'string' ], values: [ 'some string' ] },
-      { path: '.prop1.arr[2]', pathTemplate: '.prop1.arr[]', types: [ 'boolean' ], values: [ false ] },
-      { path: '.prop1.arr[3]', pathTemplate: '.prop1.arr[]', types: [ 'null' ], values: [ null ] },
-      { path: '.prop1.obj', pathTemplate: '.prop1.obj', types: [ 'object' ], values: [], prop: 'obj' },
-      { path: '.prop1.obj.subnum', pathTemplate: '.prop1.obj.subnum', types: [ 'number' ], values: [ 123.456 ], prop: 'subnum' },
-      { path: '.prop1.obj.substr', pathTemplate: '.prop1.obj.substr', types: [ 'string' ], values: [ 'some string' ], prop: 'substr' },
-      { path: '.prop1.obj.subbool', pathTemplate: '.prop1.obj.subbool', types: [ 'boolean' ], values: [ false ], prop: 'subbool' },
-      { path: '.prop1.obj.subnull', pathTemplate: '.prop1.obj.subnull', types: [ 'null' ], values: [ null ], prop: 'subnull' },
+      { path: '', pathTemplate: '', type: 'object', values: [] },
+      { path: '.prop1', pathTemplate: '.prop1', type: 'object', values: [], prop: 'prop1' },
+      { path: '.prop1.num', pathTemplate: '.prop1.num', type: 'number', values: [ 123.456 ], prop: 'num' },
+      { path: '.prop1.str', pathTemplate: '.prop1.str', type: 'string', values: [ 'some string' ], prop: 'str' },
+      { path: '.prop1.bool', pathTemplate: '.prop1.bool', type: 'boolean', values: [ false ], prop: 'bool' },
+      { path: '.prop1.null', pathTemplate: '.prop1.null', type: 'null', values: [ null ], prop: null },
+      { path: '.prop1.arr', pathTemplate: '.prop1.arr', type: 'array', values: [], prop: 'arr' },
+      { path: '.prop1.arr[0]', pathTemplate: '.prop1.arr[]', type: 'number', values: [ 123.456 ] },
+      { path: '.prop1.arr[1]', pathTemplate: '.prop1.arr[]', type: 'string', values: [ 'some string' ] },
+      { path: '.prop1.arr[2]', pathTemplate: '.prop1.arr[]', type: 'boolean', values: [ false ] },
+      { path: '.prop1.arr[3]', pathTemplate: '.prop1.arr[]', type: 'null', values: [ null ] },
+      { path: '.prop1.obj', pathTemplate: '.prop1.obj', type: 'object', values: [], prop: 'obj' },
+      { path: '.prop1.obj.subnum', pathTemplate: '.prop1.obj.subnum', type: 'number', values: [ 123.456 ], prop: 'subnum' },
+      { path: '.prop1.obj.substr', pathTemplate: '.prop1.obj.substr', type: 'string', values: [ 'some string' ], prop: 'substr' },
+      { path: '.prop1.obj.subbool', pathTemplate: '.prop1.obj.subbool', type: 'boolean', values: [ false ], prop: 'subbool' },
+      { path: '.prop1.obj.subnull', pathTemplate: '.prop1.obj.subnull', type: 'null', values: [ null ], prop: 'subnull' },
     ]);
   });
 
@@ -41,14 +41,14 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '', types: [ 'array' ], values: [] },
-      { path: '[0]', pathTemplate: '[]', types: [ 'null' ], values: [ null ] },
-      { path: '[1]', pathTemplate: '[]', types: [ 'number' ], values: [ 123 ] },
-      { path: '[2]', pathTemplate: '[]', types: [ 'number' ], values: [ 123.456 ] },
-      { path: '[3]', pathTemplate: '[]', types: [ 'boolean' ], values: [ true ] },
-      { path: '[4]', pathTemplate: '[]', types: [ 'string' ], values: [ 'some string' ] },
-      { path: '[5]', pathTemplate: '[]', types: [ 'array' ], values: [] },
-      { path: '[6]', pathTemplate: '[]', types: [ 'object' ], values: [] },
+      { path: '', pathTemplate: '', type: 'array', values: [] },
+      { path: '[0]', pathTemplate: '[]', type: 'null', values: [ null ] },
+      { path: '[1]', pathTemplate: '[]', type: 'number', values: [ 123 ] },
+      { path: '[2]', pathTemplate: '[]', type: 'number', values: [ 123.456 ] },
+      { path: '[3]', pathTemplate: '[]', type: 'boolean', values: [ true ] },
+      { path: '[4]', pathTemplate: '[]', type: 'string', values: [ 'some string' ] },
+      { path: '[5]', pathTemplate: '[]', type: 'array', values: [] },
+      { path: '[6]', pathTemplate: '[]', type: 'object', values: [] },
     ]);
   });
 
@@ -59,30 +59,30 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '', types: [ 'object' ], values: [] },
-      { path: '.prop1', pathTemplate: '.prop1', prop: 'prop1', types: [ 'string' ], values: [ 'some string' ] },
-      { path: '.prop2', pathTemplate: '.prop2', prop: 'prop2', types: [ 'number' ], values: [ 123 ] },
-      { path: '.prop3', pathTemplate: '.prop3', prop: 'prop3', types: [ 'number' ], values: [ 123.456 ] },
-      { path: '.prop4', pathTemplate: '.prop4', prop: 'prop4', types: [ 'boolean' ], values: [ true ] },
-      { path: '.prop5', pathTemplate: '.prop5', prop: 'prop5', types: [ 'null' ], values: [ null ] },
-      { path: '.prop6', pathTemplate: '.prop6', prop: 'prop6', types: [ 'array' ], values: [] },
-      { path: '.prop7', pathTemplate: '.prop7', prop: 'prop7', types: [ 'object' ], values: [] },
-      { path: '.prop8', pathTemplate: '.prop8', prop: 'prop8', types: [ 'array' ], values: [] },
-      { path: '.prop8[0]', pathTemplate: '.prop8[]', types: [ 'string' ], values: [ 'val1' ] },
-      { path: '.prop8[1]', pathTemplate: '.prop8[]', types: [ 'number' ], values: [ 234 ] },
-      { path: '.prop8[2]', pathTemplate: '.prop8[]', types: [ 'number' ], values: [ 234.345 ] },
-      { path: '.prop8[3]', pathTemplate: '.prop8[]', types: [ 'boolean' ], values: [ true ] },
-      { path: '.prop8[4]', pathTemplate: '.prop8[]', types: [ 'null' ], values: [ null ] },
-      { path: '.prop8[5]', pathTemplate: '.prop8[]', types: [ 'array' ], values: [] },
-      { path: '.prop8[6]', pathTemplate: '.prop8[]', types: [ 'object' ], values: [] },
-      { path: '.prop9', pathTemplate: '.prop9', prop: 'prop9', types: [ 'object' ], values: [] },
-      { path: '.prop9.subprop1', pathTemplate: '.prop9.subprop1', prop: 'subprop1', types: [ 'string' ], values: [ 'val1' ] },
-      { path: '.prop9.subprop2', pathTemplate: '.prop9.subprop2', prop: 'subprop2', types: [ 'number' ], values: [ 234 ] },
-      { path: '.prop9.subprop3', pathTemplate: '.prop9.subprop3', prop: 'subprop3', types: [ 'number' ], values: [ 234.345 ] },
-      { path: '.prop9.subprop4', pathTemplate: '.prop9.subprop4', prop: 'subprop4', types: [ 'boolean' ], values: [ true ] },
-      { path: '.prop9.subprop5', pathTemplate: '.prop9.subprop5', prop: 'subprop5', types: [ 'null' ], values: [ null ] },
-      { path: '.prop9.subprop6', pathTemplate: '.prop9.subprop6', prop: 'subprop6', types: [ 'array' ], values: [] },
-      { path: '.prop9.subprop7', pathTemplate: '.prop9.subprop7', prop: 'subprop7', types: [ 'object' ], values: [] },
+      { path: '', pathTemplate: '', type: 'object', values: [] },
+      { path: '.prop1', pathTemplate: '.prop1', prop: 'prop1', type: 'string', values: [ 'some string' ] },
+      { path: '.prop2', pathTemplate: '.prop2', prop: 'prop2', type: 'number', values: [ 123 ] },
+      { path: '.prop3', pathTemplate: '.prop3', prop: 'prop3', type: 'number', values: [ 123.456 ] },
+      { path: '.prop4', pathTemplate: '.prop4', prop: 'prop4', type: 'boolean', values: [ true ] },
+      { path: '.prop5', pathTemplate: '.prop5', prop: 'prop5', type: 'null', values: [ null ] },
+      { path: '.prop6', pathTemplate: '.prop6', prop: 'prop6', type: 'array', values: [] },
+      { path: '.prop7', pathTemplate: '.prop7', prop: 'prop7', type: 'object', values: [] },
+      { path: '.prop8', pathTemplate: '.prop8', prop: 'prop8', type: 'array', values: [] },
+      { path: '.prop8[0]', pathTemplate: '.prop8[]', type: 'string', values: [ 'val1' ] },
+      { path: '.prop8[1]', pathTemplate: '.prop8[]', type: 'number', values: [ 234 ] },
+      { path: '.prop8[2]', pathTemplate: '.prop8[]', type: 'number', values: [ 234.345 ] },
+      { path: '.prop8[3]', pathTemplate: '.prop8[]', type: 'boolean', values: [ true ] },
+      { path: '.prop8[4]', pathTemplate: '.prop8[]', type: 'null', values: [ null ] },
+      { path: '.prop8[5]', pathTemplate: '.prop8[]', type: 'array', values: [] },
+      { path: '.prop8[6]', pathTemplate: '.prop8[]', type: 'object', values: [] },
+      { path: '.prop9', pathTemplate: '.prop9', prop: 'prop9', type: 'object', values: [] },
+      { path: '.prop9.subprop1', pathTemplate: '.prop9.subprop1', prop: 'subprop1', type: 'string', values: [ 'val1' ] },
+      { path: '.prop9.subprop2', pathTemplate: '.prop9.subprop2', prop: 'subprop2', type: 'number', values: [ 234 ] },
+      { path: '.prop9.subprop3', pathTemplate: '.prop9.subprop3', prop: 'subprop3', type: 'number', values: [ 234.345 ] },
+      { path: '.prop9.subprop4', pathTemplate: '.prop9.subprop4', prop: 'subprop4', type: 'boolean', values: [ true ] },
+      { path: '.prop9.subprop5', pathTemplate: '.prop9.subprop5', prop: 'subprop5', type: 'null', values: [ null ] },
+      { path: '.prop9.subprop6', pathTemplate: '.prop9.subprop6', prop: 'subprop6', type: 'array', values: [] },
+      { path: '.prop9.subprop7', pathTemplate: '.prop9.subprop7', prop: 'subprop7', type: 'object', values: [] },
     ]);
   });
 
@@ -93,10 +93,10 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '', types: [ 'array' ], values: [] },
-      { path: '[0]', pathTemplate: '[]', types: [ 'string' ], values: [ 'item1' ] },
-      { path: '[1]', pathTemplate: '[]', types: [ 'string' ], values: [ 'item2' ] },
-      { path: '[2]', pathTemplate: '[]', types: [ 'string' ], values: [ 'item3' ] },
+      { path: '', pathTemplate: '', type: 'array', values: [] },
+      { path: '[0]', pathTemplate: '[]', type: 'string', values: [ 'item1' ] },
+      { path: '[1]', pathTemplate: '[]', type: 'string', values: [ 'item2' ] },
+      { path: '[2]', pathTemplate: '[]', type: 'string', values: [ 'item3' ] },
     ]);
   });
 
@@ -107,13 +107,13 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '', types: [ 'object' ], values: [] },
-      { path: '.someProp', pathTemplate: '.someProp', prop: 'someProp', types: [ 'string' ], values: [ 'val' ] },
+      { path: '', pathTemplate: '', type: 'object', values: [] },
+      { path: '.someProp', pathTemplate: '.someProp', prop: 'someProp', type: 'string', values: [ 'val' ] },
       {
         path: '.somePropWithComment',
         pathTemplate: '.somePropWithComment',
         prop: 'somePropWithComment',
-        types: [ 'string' ],
+        type: 'string',
         values: [ 'val' ],
         comment: 'comment!!!',
       },
@@ -121,7 +121,7 @@ describe('Flatten', () => {
         path: '.items',
         pathTemplate: '.items',
         prop: 'items',
-        types: [ 'array' ],
+        type: 'array',
         values: [],
         comment: 'schema: ref(ItemArray)',
         options: [{
@@ -129,12 +129,12 @@ describe('Flatten', () => {
           name: 'ref',
         }],
       },
-      { path: '.items[0]', pathTemplate: '.items[]', types: [ 'object' ], values: [] },
+      { path: '.items[0]', pathTemplate: '.items[]', type: 'object', values: [] },
       {
         path: '.items[0].name',
         pathTemplate: '.items[].name',
         prop: 'name',
-        types: [ 'string' ],
+        type: 'string',
         values: [ 'test name' ],
         comment: 'begin of array',
       },
@@ -142,7 +142,7 @@ describe('Flatten', () => {
         path: '.items[0].value',
         pathTemplate: '.items[].value',
         prop: 'value',
-        types: [ 'string' ],
+        type: 'string',
         values: [ 'test value' ],
         comment: 'some comment #1',
       },
@@ -150,14 +150,14 @@ describe('Flatten', () => {
         path: '.items[0].description',
         pathTemplate: '.items[].description',
         prop: 'description',
-        types: [ 'string' ],
+        type: 'string',
         values: [ 'test description' ],
       },
       {
         path: '.elements',
         pathTemplate: '.elements',
         prop: 'elements',
-        types: [ 'array' ],
+        type: 'array',
         values: [],
         comment: 'schema: ref(Elements)',
         options: [{
@@ -165,13 +165,13 @@ describe('Flatten', () => {
           name: 'ref',
         }],
       },
-      { path: '.elements[0]', pathTemplate: '.elements[]', types: [ 'string' ], values: [ 'element#1' ], comment: 'some comment #2' },
-      { path: '.elements[1]', pathTemplate: '.elements[]', types: [ 'string' ], values: [ 'element#2' ] },
-      { path: '.elements[2]', pathTemplate: '.elements[]', types: [ 'string' ], values: [ 'element#3' ] },
-      { path: '.props', pathTemplate: '.props', prop: 'props', types: [ 'object' ], values: [], comment: 'some props' },
-      { path: '.props.p1', pathTemplate: '.props.p1', prop: 'p1', types: [ 'string' ], values: [ 'val1' ] },
-      { path: '.props.p2', pathTemplate: '.props.p2', prop: 'p2', types: [ 'string' ], values: [ 'val2' ] },
-      { path: '.props.p3', pathTemplate: '.props.p3', prop: 'p3', types: [ 'string' ], values: [ 'val3' ] },
+      { path: '.elements[0]', pathTemplate: '.elements[]', type: 'string', values: [ 'element#1' ], comment: 'some comment #2' },
+      { path: '.elements[1]', pathTemplate: '.elements[]', type: 'string', values: [ 'element#2' ] },
+      { path: '.elements[2]', pathTemplate: '.elements[]', type: 'string', values: [ 'element#3' ] },
+      { path: '.props', pathTemplate: '.props', prop: 'props', type: 'object', values: [], comment: 'some props' },
+      { path: '.props.p1', pathTemplate: '.props.p1', prop: 'p1', type: 'string', values: [ 'val1' ] },
+      { path: '.props.p2', pathTemplate: '.props.p2', prop: 'p2', type: 'string', values: [ 'val2' ] },
+      { path: '.props.p3', pathTemplate: '.props.p3', prop: 'p3', type: 'string', values: [ 'val3' ] },
     ]);
   });
 

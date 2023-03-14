@@ -5,7 +5,7 @@ export const flatten = (parent: IChartItemWithOptions[], element: IChartItemWith
   parent.push({
     path: element.path,
     pathTemplate: element.pathTemplate,
-    types: element.types,
+    type: element.type,
     values: element.values,
     comment: element.comment,
     prop: element.prop,

@@ -1,17 +1,14 @@
-import { IControlComment, TControlOperations } from '../interfaces';
+import { ControlComment } from '../classes/ControlComment';
+import { IJSONSchema } from '../interfaces';
 
-export class RefControlComment implements IControlComment {
-  getOperations(definitionName: string): TControlOperations {
-    return {
-      patchSchema: [{
-        key: '%ALL%',
-        value: definitionName,
-        operation: 'unset',
-      }, {
-        key: '$ref',
-        value: definitionName,
-        operation: 'set',
-      }],
-    };
+export class RefControlComment extends ControlComment {
+  before(...args: any[]): void {
+    // nothing
+  }
+
+  after(definitionName: string): IJSONSchema | void {
+    this.schemaItemParams.inputSchema.$ref = definitionName;
+    delete this.schemaItemParams.inputSchema.oneOf;
+    delete this.schemaItemParams.inputSchema.type;
   }
 }

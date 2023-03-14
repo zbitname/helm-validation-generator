@@ -18,7 +18,7 @@ export class ChartScalar extends ChartItemGenerator<Scalar> {
 
   public getChartItem(): ChartItem {
     return new ChartItem({
-      types: [ getTypeByValue(this.doc.value) ],
+      type: getTypeByValue(this.doc.value),
       values: [ this.doc.value ],
       path: this.path,
       ...(this.doc.comment && { comment: this.doc.comment.trim() }),

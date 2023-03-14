@@ -2,12 +2,12 @@ import {
   IChartItem,
   IChartItemWithOptions,
   TControlFncDesc,
-  TItemValue,
+  TJSONSchemaType,
 } from '../interfaces';
 
 export class ChartItem implements IChartItemWithOptions {
   public readonly values: any[];
-  public readonly types: TItemValue[];
+  public readonly type: TJSONSchemaType;
   public readonly path: string;
   public readonly pathTemplate: string;
   public readonly prop?: string;
@@ -19,7 +19,7 @@ export class ChartItem implements IChartItemWithOptions {
     _doc: IChartItem,
   ) {
     this.values = _doc.values;
-    this.types = _doc.types;
+    this.type = _doc.type;
     this.path = _doc.path;
     this.pathTemplate = _doc.path.replace(/\[\d+\]/g, '[]');
     this.prop = _doc.prop;

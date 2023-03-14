@@ -32,7 +32,7 @@ export class ChartPair extends ChartItemGenerator<Pair> {
 
       return new ChartItem({
         prop: this.doc.key.value,
-        types: [ getTypeByValue(this.doc.value?.value) ],
+        type: getTypeByValue(this.doc.value?.value),
         values: [ this.doc.value.value ],
         path,
         ...(this.doc.value.comment && { comment: this.doc.value.comment?.trim() }),

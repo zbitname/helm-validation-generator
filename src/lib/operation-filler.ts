@@ -3,6 +3,8 @@ import {
   IChartItemWithOptions,
   IControlComment,
   IControlCommentRepo,
+  IJSONSchema,
+  ISchemaParams,
   TControlOperations,
 } from './interfaces';
 
@@ -12,23 +14,28 @@ export const operationFiller = (
   controlCommentsRepo: IControlCommentRepo,
 ): IChartItemWithOperations[] => {
   const result: IChartItemWithOperations[] = [];
+  const schemaParams: ISchemaParams = {
+    skipTemplatePaths: [],
+  };
 
   for (const item of chartItems) {
     const operations: TControlOperations = {};
 
     for (const option of (item.options || [])) {
       const ControlComment = controlCommentsRepo.get(option.name);
-      const controlComment = new ControlComment() as IControlComment;
-      const compiledOp = controlComment.getOperations(...option.args);
+      const schema: IJSONSchema = {};
+      const controlComment = new ControlComment(schemaParams, {
+        inputSchema: schema,
+        templatePath: item.pathTemplate,
+      }) as IControlComment;
 
-      operations.skip = compiledOp.skip ?? operations.skip;
+      controlComment.before(...option.args);
 
-      if (!operations.patchSchema) {
-        operations.patchSchema = compiledOp.patchSchema;
-      } else {
-        // coverage: you need a few control-comments with `.patchSchema` option
-        operations.patchSchema.push(...(compiledOp.patchSchema || []));
+      if (schemaParams.skipTemplatePaths.some(i => item.pathTemplate.startsWith(i))) {
+        continue;
       }
+
+      schema.type = item.type;
     }
 
     result.push({
