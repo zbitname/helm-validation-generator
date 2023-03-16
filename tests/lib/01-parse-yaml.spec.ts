@@ -13,7 +13,7 @@ describe('YAML parse', () => {
     expect(res).to.be.deep.equals([]);
   });
 
-  it('prop.yaml', () => {
+  it('file=prop.yaml', () => {
     const content = readFileSync(`${__dirname}/files/prop.yaml`).toString();
     const res = parse(content);
     const chartItem = res[0].getChartItem();
@@ -109,7 +109,7 @@ describe('YAML parse', () => {
     });
   });
 
-  it('root-array.yaml', () => {
+  it('file=root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/root-array.yaml`).toString();
     const res = parse(content);
     const chartItem = res[0].getChartItem();
@@ -126,7 +126,7 @@ describe('YAML parse', () => {
     });
   });
 
-  it('mixed-types-root-array.yaml', () => {
+  it('file=mixed-types-root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const res = parse(content);
     const chartItem = res[0].getChartItem();
@@ -147,7 +147,7 @@ describe('YAML parse', () => {
     });
   });
 
-  it('simple-comments.yaml', () => {
+  it('file=simple-comments.yaml', () => {
     const content = readFileSync(`${__dirname}/files/simple-comments.yaml`).toString();
     const res = parse(content);
     const chartItem = res[0].getChartItem();
@@ -263,6 +263,128 @@ describe('YAML parse', () => {
           values: [],
         },
       ],
+    });
+  });
+
+  it('file=different-types-in-one-item.yaml', () => {
+    const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
+    const res = parse(content);
+    const chartItem = res[0].getChartItem();
+
+    expect(compact(chartItem)).to.deep.equals({
+      children: [
+        {
+          children: [
+            {
+              values: [ 123.456 ],
+              type: 'number',
+              path: '.prop1.num',
+              pathTemplate: '.prop1.num',
+              prop: 'num',
+            },
+            {
+              values: [ 'some string' ],
+              type: 'string',
+              path: '.prop1.str',
+              pathTemplate: '.prop1.str',
+              prop: 'str',
+            },
+            {
+              values: [ false ],
+              type: 'boolean',
+              path: '.prop1.bool',
+              pathTemplate: '.prop1.bool',
+              prop: 'bool',
+            },
+            {
+              values: [ null ],
+              type: 'null',
+              path: '.prop1.null',
+              pathTemplate: '.prop1.null',
+              prop: 'null',
+            },
+            {
+              children: [
+                {
+                  values: [ 123.456 ],
+                  type: 'number',
+                  path: '.prop1.arr[0]',
+                  pathTemplate: '.prop1.arr.[]',
+                },
+                {
+                  values: [ 'some string' ],
+                  type: 'string',
+                  path: '.prop1.arr[1]',
+                  pathTemplate: '.prop1.arr.[]',
+                },
+                {
+                  values: [ false ],
+                  type: 'boolean',
+                  path: '.prop1.arr[2]',
+                  pathTemplate: '.prop1.arr.[]',
+                },
+                {
+                  values: [ null ],
+                  type: 'null',
+                  path: '.prop1.arr[3]',
+                  pathTemplate: '.prop1.arr.[]',
+                }
+              ],
+              values: [],
+              type: 'array',
+              path: '.prop1.arr',
+              pathTemplate: '.prop1.arr',
+              prop: 'arr',
+            },
+            {
+              children: [
+                {
+                  values: [ 123.456 ],
+                  type: 'number',
+                  path: '.prop1.obj.subnum',
+                  pathTemplate: '.prop1.obj.subnum',
+                  prop: 'subnum',
+                },
+                {
+                  values: [ 'some string' ],
+                  type: 'string',
+                  path: '.prop1.obj.substr',
+                  pathTemplate: '.prop1.obj.substr',
+                  prop: 'substr',
+                },
+                {
+                  values: [ false ],
+                  type: 'boolean',
+                  path: '.prop1.obj.subbool',
+                  pathTemplate: '.prop1.obj.subbool',
+                  prop: 'subbool',
+                },
+                {
+                  values: [ null ],
+                  type: 'null',
+                  path: '.prop1.obj.subnull',
+                  pathTemplate: '.prop1.obj.subnull',
+                  prop: 'subnull',
+                }
+              ],
+              values: [],
+              type: 'object',
+              path: '.prop1.obj',
+              pathTemplate: '.prop1.obj',
+              prop: 'obj',
+            }
+          ],
+          values: [],
+          type: 'object',
+          path: '.prop1',
+          pathTemplate: '.prop1',
+          prop: 'prop1',
+        }
+      ],
+      values: [],
+      type: 'object',
+      path: '',
+      pathTemplate: '',
     });
   });
 });

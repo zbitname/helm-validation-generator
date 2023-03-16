@@ -18,11 +18,16 @@ export class ChartItem implements IChartItemWithOptions {
   constructor(
     _doc: IChartItem,
   ) {
+    if (_doc.prop === null) {
+      this.prop = 'null';
+    } else {
+      this.prop = _doc.prop;
+    }
+
     this.values = _doc.values;
     this.type = _doc.type;
     this.path = _doc.path;
     this.pathTemplate = _doc.path.replace(/\[\d+\]/g, '.[]');
-    this.prop = _doc.prop;
     this.children = _doc.children as IChartItemWithOptions[];
     this.comment = _doc.comment;
 

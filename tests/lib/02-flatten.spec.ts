@@ -20,7 +20,7 @@ describe('Flatten', () => {
       { path: '.prop1.num', pathTemplate: '.prop1.num', type: 'number', values: [ 123.456 ], prop: 'num' },
       { path: '.prop1.str', pathTemplate: '.prop1.str', type: 'string', values: [ 'some string' ], prop: 'str' },
       { path: '.prop1.bool', pathTemplate: '.prop1.bool', type: 'boolean', values: [ false ], prop: 'bool' },
-      { path: '.prop1.null', pathTemplate: '.prop1.null', type: 'null', values: [ null ], prop: null },
+      { path: '.prop1.null', pathTemplate: '.prop1.null', type: 'null', values: [ null ], prop: 'null' },
       { path: '.prop1.arr', pathTemplate: '.prop1.arr', type: 'array', values: [], prop: 'arr' },
       { path: '.prop1.arr[0]', pathTemplate: '.prop1.arr.[]', type: 'number', values: [ 123.456 ] },
       { path: '.prop1.arr[1]', pathTemplate: '.prop1.arr.[]', type: 'string', values: [ 'some string' ] },

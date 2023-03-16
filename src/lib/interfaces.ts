@@ -39,8 +39,13 @@ export interface IJSONSchemaItem {
   $ref?: string;
   type?: TJSONSchemaType;
   items?: {
-    oneOf?: IJSONSchemaItem;
-  } | IJSONSchemaItem;
+    oneOf?: IJSONSchemaItem[];
+  };
+  properties?: Record<string, {
+    oneOf?: IJSONSchemaItem[];
+  }>;
+  required?: string[];
+  additionalProperties?: boolean;
 }
 
 export interface IJSONSchema {
