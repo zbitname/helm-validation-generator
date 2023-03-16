@@ -35,10 +35,10 @@ export interface IChartItemWithOptions extends IChartItem {
   children?: IChartItemWithOptions[];
 }
 
-export interface IChartItemWithOperations extends IChartItemWithOptions {
-  operations: TControlOperations;
-  children?: IChartItemWithOperations[];
-}
+// export interface IChartItemWithOperations extends IChartItemWithOptions {
+//   operations: TControlOperations;
+//   children?: IChartItemWithOperations[];
+// }
 
 export interface IJSONSchema {
   $ref?: string;
@@ -53,8 +53,8 @@ export interface IChartItemGenerator {
 }
 
 interface IJSONSchemaForProcessingBase {
-  chartItems: IChartItemWithOperations[];
-  pathTemplate: IChartItemWithOperations['pathTemplate'];
+  chartItems: IChartItemWithOptions[];
+  pathTemplate: IChartItemWithOptions['pathTemplate'];
 }
 
 export interface IJSONSchemaForProcessingObject extends IJSONSchemaForProcessingBase {

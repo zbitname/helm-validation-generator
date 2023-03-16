@@ -1,26 +1,22 @@
 import {
-  IChartItemWithOperations,
   IChartItemWithOptions,
   IControlComment,
   IControlCommentRepo,
   IJSONSchema,
   ISchemaParams,
-  TControlOperations,
 } from './interfaces';
 
 // 3rd stage
-export const operationFiller = (
+export const operationCompiler = (
   chartItems: IChartItemWithOptions[],
   controlCommentsRepo: IControlCommentRepo,
-): IChartItemWithOperations[] => {
-  const result: IChartItemWithOperations[] = [];
+): IChartItemWithOptions[] => {
+  const result: IChartItemWithOptions[] = [];
   const schemaParams: ISchemaParams = {
     skipTemplatePaths: [],
   };
 
   for (const item of chartItems) {
-    const operations: TControlOperations = {};
-
     for (const option of (item.options || [])) {
       const ControlComment = controlCommentsRepo.get(option.name);
       const schema: IJSONSchema = {};
@@ -31,17 +27,16 @@ export const operationFiller = (
 
       controlComment.before(...option.args);
 
-      if (schemaParams.skipTemplatePaths.some(i => item.pathTemplate.startsWith(i))) {
-        continue;
-      }
-
       schema.type = item.type;
+    }
+
+    if (schemaParams.skipTemplatePaths.some(i => item.pathTemplate.startsWith(i))) {
+      continue;
     }
 
     result.push({
       ...item,
       children: [],
-      operations,
     });
   }
 
