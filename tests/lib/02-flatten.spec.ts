@@ -15,7 +15,7 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '.', type: 'object', values: [] },
+      { path: '', pathTemplate: '', type: 'object', values: [] },
       { path: '.prop1', pathTemplate: '.prop1', type: 'object', values: [], prop: 'prop1' },
       { path: '.prop1.num', pathTemplate: '.prop1.num', type: 'number', values: [ 123.456 ], prop: 'num' },
       { path: '.prop1.str', pathTemplate: '.prop1.str', type: 'string', values: [ 'some string' ], prop: 'str' },
@@ -41,7 +41,7 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '.', type: 'array', values: [] },
+      { path: '', pathTemplate: '', type: 'array', values: [] },
       { path: '[0]', pathTemplate: '.[]', type: 'null', values: [ null ] },
       { path: '[1]', pathTemplate: '.[]', type: 'number', values: [ 123 ] },
       { path: '[2]', pathTemplate: '.[]', type: 'number', values: [ 123.456 ] },
@@ -59,7 +59,7 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '.', type: 'object', values: [] },
+      { path: '', pathTemplate: '', type: 'object', values: [] },
       { path: '.prop1', pathTemplate: '.prop1', prop: 'prop1', type: 'string', values: [ 'some string' ] },
       { path: '.prop2', pathTemplate: '.prop2', prop: 'prop2', type: 'number', values: [ 123 ] },
       { path: '.prop3', pathTemplate: '.prop3', prop: 'prop3', type: 'number', values: [ 123.456 ] },
@@ -93,7 +93,7 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '.', type: 'array', values: [] },
+      { path: '', pathTemplate: '', type: 'array', values: [] },
       { path: '[0]', pathTemplate: '.[]', type: 'string', values: [ 'item1' ] },
       { path: '[1]', pathTemplate: '.[]', type: 'string', values: [ 'item2' ] },
       { path: '[2]', pathTemplate: '.[]', type: 'string', values: [ 'item3' ] },
@@ -107,7 +107,7 @@ describe('Flatten', () => {
     const flatItems = flatten([], chartItem);
 
     expect(compact(flatItems)).to.deep.equals([
-      { path: '', pathTemplate: '.', type: 'object', values: [] },
+      { path: '', pathTemplate: '', type: 'object', values: [] },
       { path: '.someProp', pathTemplate: '.someProp', prop: 'someProp', type: 'string', values: [ 'val' ] },
       {
         path: '.somePropWithComment',

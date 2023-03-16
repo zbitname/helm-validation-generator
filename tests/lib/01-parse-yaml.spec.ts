@@ -22,7 +22,7 @@ describe('YAML parse', () => {
       type: 'object',
       values: [],
       path: '',
-      pathTemplate: '.',
+      pathTemplate: '',
       children: [
         { type: 'string', prop: 'prop1', values: [ 'some string' ], path: '.prop1', pathTemplate: '.prop1' },
         { type: 'number', prop: 'prop2', values: [ 123 ], path: '.prop2', pathTemplate: '.prop2' },
@@ -117,7 +117,7 @@ describe('YAML parse', () => {
       type: 'array',
       values: [],
       path: '',
-      pathTemplate: '.',
+      pathTemplate: '',
       children: [
         { type: 'string', values: [ 'item1' ], path: '[0]', pathTemplate: '.[]' },
         { type: 'string', values: [ 'item2' ], path: '[1]', pathTemplate: '.[]' },
@@ -134,7 +134,7 @@ describe('YAML parse', () => {
       type: 'array',
       values: [],
       path: '',
-      pathTemplate: '.',
+      pathTemplate: '',
       children: [
         { type: 'null', values: [ null ], path: '[0]', pathTemplate: '.[]' },
         { type: 'number', values: [ 123 ], path: '[1]', pathTemplate: '.[]' },
@@ -156,7 +156,7 @@ describe('YAML parse', () => {
       type: 'object',
       values: [],
       path: '',
-      pathTemplate: '.',
+      pathTemplate: '',
       children: [
         { prop: 'someProp', type: 'string', values: [ 'val' ], path: '.someProp', pathTemplate: '.someProp' },
         {
