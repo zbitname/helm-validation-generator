@@ -22,7 +22,7 @@ describe('YAML parse', () => {
       type: 'object',
       values: [],
       path: '',
-      pathTemplate: '',
+      pathTemplate: '.',
       children: [
         { type: 'string', prop: 'prop1', values: [ 'some string' ], path: '.prop1', pathTemplate: '.prop1' },
         { type: 'number', prop: 'prop2', values: [ 123 ], path: '.prop2', pathTemplate: '.prop2' },
@@ -38,13 +38,13 @@ describe('YAML parse', () => {
           path: '.prop8',
           pathTemplate: '.prop8',
           children: [
-            { type: 'string', values: [ 'val1' ], path: '.prop8[0]', pathTemplate: '.prop8[]' },
-            { type: 'number', values: [ 234 ], path: '.prop8[1]', pathTemplate: '.prop8[]' },
-            { type: 'number', values: [ 234.345 ], path: '.prop8[2]', pathTemplate: '.prop8[]' },
-            { type: 'boolean', values: [ true ], path: '.prop8[3]', pathTemplate: '.prop8[]' },
-            { type: 'null', values: [ null ], path: '.prop8[4]', pathTemplate: '.prop8[]' },
-            { type: 'array', values: [], children: [], path: '.prop8[5]', pathTemplate: '.prop8[]' },
-            { type: 'object', values: [], children: [], path: '.prop8[6]', pathTemplate: '.prop8[]' },
+            { type: 'string', values: [ 'val1' ], path: '.prop8[0]', pathTemplate: '.prop8.[]' },
+            { type: 'number', values: [ 234 ], path: '.prop8[1]', pathTemplate: '.prop8.[]' },
+            { type: 'number', values: [ 234.345 ], path: '.prop8[2]', pathTemplate: '.prop8.[]' },
+            { type: 'boolean', values: [ true ], path: '.prop8[3]', pathTemplate: '.prop8.[]' },
+            { type: 'null', values: [ null ], path: '.prop8[4]', pathTemplate: '.prop8.[]' },
+            { type: 'array', values: [], children: [], path: '.prop8[5]', pathTemplate: '.prop8.[]' },
+            { type: 'object', values: [], children: [], path: '.prop8[6]', pathTemplate: '.prop8.[]' },
           ],
         },
         {
@@ -117,11 +117,11 @@ describe('YAML parse', () => {
       type: 'array',
       values: [],
       path: '',
-      pathTemplate: '',
+      pathTemplate: '.',
       children: [
-        { type: 'string', values: [ 'item1' ], path: '[0]', pathTemplate: '[]' },
-        { type: 'string', values: [ 'item2' ], path: '[1]', pathTemplate: '[]' },
-        { type: 'string', values: [ 'item3' ], path: '[2]', pathTemplate: '[]' },
+        { type: 'string', values: [ 'item1' ], path: '[0]', pathTemplate: '.[]' },
+        { type: 'string', values: [ 'item2' ], path: '[1]', pathTemplate: '.[]' },
+        { type: 'string', values: [ 'item3' ], path: '[2]', pathTemplate: '.[]' },
       ],
     });
   });
@@ -134,15 +134,15 @@ describe('YAML parse', () => {
       type: 'array',
       values: [],
       path: '',
-      pathTemplate: '',
+      pathTemplate: '.',
       children: [
-        { type: 'null', values: [ null ], path: '[0]', pathTemplate: '[]' },
-        { type: 'number', values: [ 123 ], path: '[1]', pathTemplate: '[]' },
-        { type: 'number', values: [ 123.456 ], path: '[2]', pathTemplate: '[]' },
-        { type: 'boolean', values: [ true ], path: '[3]', pathTemplate: '[]' },
-        { type: 'string', values: [ 'some string' ], path: '[4]', pathTemplate: '[]' },
-        { type: 'array', values: [], children: [], path: '[5]', pathTemplate: '[]' },
-        { type: 'object', values: [], children: [], path: '[6]', pathTemplate: '[]' },
+        { type: 'null', values: [ null ], path: '[0]', pathTemplate: '.[]' },
+        { type: 'number', values: [ 123 ], path: '[1]', pathTemplate: '.[]' },
+        { type: 'number', values: [ 123.456 ], path: '[2]', pathTemplate: '.[]' },
+        { type: 'boolean', values: [ true ], path: '[3]', pathTemplate: '.[]' },
+        { type: 'string', values: [ 'some string' ], path: '[4]', pathTemplate: '.[]' },
+        { type: 'array', values: [], children: [], path: '[5]', pathTemplate: '.[]' },
+        { type: 'object', values: [], children: [], path: '[6]', pathTemplate: '.[]' },
       ],
     });
   });
@@ -156,7 +156,7 @@ describe('YAML parse', () => {
       type: 'object',
       values: [],
       path: '',
-      pathTemplate: '',
+      pathTemplate: '.',
       children: [
         { prop: 'someProp', type: 'string', values: [ 'val' ], path: '.someProp', pathTemplate: '.someProp' },
         {
@@ -182,7 +182,7 @@ describe('YAML parse', () => {
             type: 'object',
             values: [],
             path: '.items[0]',
-            pathTemplate: '.items[]',
+            pathTemplate: '.items.[]',
             children: [
               {
                 prop: 'name',
@@ -190,7 +190,7 @@ describe('YAML parse', () => {
                 values: [ 'test name' ],
                 comment: 'begin of array',
                 path: '.items[0].name',
-                pathTemplate: '.items[].name',
+                pathTemplate: '.items.[].name',
               },
               {
                 prop: 'value',
@@ -198,14 +198,14 @@ describe('YAML parse', () => {
                 values: [ 'test value' ],
                 comment: 'some comment #1',
                 path: '.items[0].value',
-                pathTemplate: '.items[].value',
+                pathTemplate: '.items.[].value',
               },
               {
                 prop: 'description',
                 type: 'string',
                 values: [ 'test description' ],
                 path: '.items[0].description',
-                pathTemplate: '.items[].description',
+                pathTemplate: '.items.[].description',
               },
             ],
           }],
@@ -227,10 +227,10 @@ describe('YAML parse', () => {
               values: [ 'element#1' ],
               comment: 'some comment #2',
               path: '.elements[0]',
-              pathTemplate: '.elements[]',
+              pathTemplate: '.elements.[]',
             },
-            { type: 'string', values: [ 'element#2' ], path: '.elements[1]', pathTemplate: '.elements[]' },
-            { type: 'string', values: [ 'element#3' ], path: '.elements[2]', pathTemplate: '.elements[]' },
+            { type: 'string', values: [ 'element#2' ], path: '.elements[1]', pathTemplate: '.elements.[]' },
+            { type: 'string', values: [ 'element#3' ], path: '.elements[2]', pathTemplate: '.elements.[]' },
           ],
         },
         {

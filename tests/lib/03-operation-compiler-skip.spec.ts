@@ -10,7 +10,7 @@ import { operationCompiler } from '../../src/lib/operation-compiler';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { SkipControlComment } from '../../src/lib/control-comments/skip';
 
-describe('Operator filler (skip)', () => {
+describe('Operation compiler (skip)', () => {
   describe('file=different-types-in-one-item.yaml', () => {
     const BASE_CONTENT = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
 
