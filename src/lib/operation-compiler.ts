@@ -3,7 +3,7 @@ import {
   IControlComment,
   IControlCommentRepo,
   ISchemaParams,
-  JSONSchemaItem,
+  IJSONSchemaItem,
 } from './interfaces';
 
 // 3rd stage
@@ -19,7 +19,7 @@ export const operationCompiler = (
   for (const item of chartItems) {
     for (const option of (item.options || [])) {
       const ControlComment = controlCommentsRepo.get(option.name);
-      const schema: JSONSchemaItem = {};
+      const schema: IJSONSchemaItem = {};
       const controlComment = new ControlComment(schemaParams, {
         inputSchema: schema,
         templatePath: item.pathTemplate,

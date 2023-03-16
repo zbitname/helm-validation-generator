@@ -35,16 +35,16 @@ export interface IChartItemWithOptions extends IChartItem {
   children?: IChartItemWithOptions[];
 }
 
-export interface JSONSchemaItem {
+export interface IJSONSchemaItem {
   $ref?: string;
   type?: TJSONSchemaType;
   items?: {
-    oneOf?: JSONSchemaItem;
-  } | JSONSchemaItem;
+    oneOf?: IJSONSchemaItem;
+  } | IJSONSchemaItem;
 }
 
 export interface IJSONSchema {
-  oneOf?: JSONSchemaItem[];
+  oneOf?: IJSONSchemaItem[];
 }
 
 export interface IChartItemGenerator {
@@ -107,7 +107,7 @@ export interface ISchemaParams {
 
 export interface ISchemaItemParams {
   readonly templatePath: IJSONSchemaForProcessing['pathTemplate'];
-  readonly inputSchema: JSONSchemaItem;
+  readonly inputSchema: IJSONSchemaItem;
 }
 
 export interface IControlComment {
