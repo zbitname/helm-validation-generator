@@ -48,8 +48,14 @@ export interface IJSONSchemaItem {
   additionalProperties?: boolean;
 }
 
-export interface IJSONSchema {
+export interface IJSONSchemaRoot {
   oneOf?: IJSONSchemaItem[];
+  $def?: Record<string, Omit<IJSONSchemaItem, '$ref'>>;
+}
+
+export interface ICompiledChartItem extends Pick<IChartItem, 'type' | 'path' | 'prop'> {
+  pathTemplate: string;
+  precompiledSchemaItem: IJSONSchemaItem;
 }
 
 export interface IChartItemGenerator {

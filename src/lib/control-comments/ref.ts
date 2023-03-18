@@ -1,14 +1,17 @@
 import { ControlComment } from '../classes/ControlComment';
-import { IJSONSchema } from '../interfaces';
+import { IJSONSchemaRoot, IJSONSchemaItem } from '../interfaces';
 
 export class RefControlComment extends ControlComment {
   before(...args: any[]): void {
     // nothing
   }
 
-  after(definitionName: string): IJSONSchema | void {
-    this.schemaItemParams.inputSchema.$ref = definitionName;
-    delete this.schemaItemParams.inputSchema.oneOf;
-    delete this.schemaItemParams.inputSchema.type;
+  after(definitionName: string): IJSONSchemaRoot | void {
+    for (const key in this.schemaItemParams.inputSchema) {
+      delete this.schemaItemParams.inputSchema[key as keyof IJSONSchemaItem];
+    }
+
+    this.schemaItemParams.inputSchema.$ref = `#/$def/${definitionName}`;
+    this.schemaParams.skipTemplatePaths.push(this.schemaItemParams.templatePath + '.');
   }
 }

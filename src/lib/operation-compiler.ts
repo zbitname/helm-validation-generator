@@ -4,30 +4,53 @@ import {
   IControlCommentRepo,
   ISchemaParams,
   IJSONSchemaItem,
+  ICompiledChartItem,
+  TSchemaOptions,
 } from './interfaces';
 
 // 3rd stage
 export const operationCompiler = (
   chartItems: IChartItemWithOptions[],
   controlCommentsRepo: IControlCommentRepo,
-): IChartItemWithOptions[] => {
-  const result: IChartItemWithOptions[] = [];
+  params: TSchemaOptions = {},
+): ICompiledChartItem[] => {
+  const additionalProperties = params.additionalProperties ?? false;
+  const result: ICompiledChartItem[] = [];
   const schemaParams: ISchemaParams = {
     skipTemplatePaths: [],
   };
 
   for (const item of chartItems) {
+    const schemaItem: IJSONSchemaItem = {
+      type: item.type,
+    };
+
+    schemaItem.type = item.type;
+
+    switch (schemaItem.type) {
+      case 'array':
+        schemaItem.items = {
+          oneOf: [],
+        };
+        break;
+
+      case 'object':
+        schemaItem.properties = {};
+        schemaItem.required = [];
+        schemaItem.additionalProperties = additionalProperties;
+        break;
+    }
+
     for (const option of (item.options || [])) {
       const ControlComment = controlCommentsRepo.get(option.name);
-      const schema: IJSONSchemaItem = {};
       const controlComment = new ControlComment(schemaParams, {
-        inputSchema: schema,
+        inputSchema: schemaItem,
         templatePath: item.pathTemplate,
       }) as IControlComment;
 
       controlComment.before(...option.args);
 
-      schema.type = item.type;
+      controlComment.after(...option.args);
     }
 
     if (schemaParams.skipTemplatePaths.some(i => item.pathTemplate.startsWith(i))) {
@@ -35,8 +58,11 @@ export const operationCompiler = (
     }
 
     result.push({
-      ...item,
-      children: [],
+      type: item.type,
+      path: item.path,
+      prop: item.prop,
+      pathTemplate: item.pathTemplate,
+      precompiledSchemaItem: schemaItem,
     });
   }
 

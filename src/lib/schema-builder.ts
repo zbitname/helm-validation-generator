@@ -1,6 +1,6 @@
 import {
-  IChartItemWithOptions,
-  IJSONSchema,
+  ICompiledChartItem,
+  IJSONSchemaRoot,
   IJSONSchemaItem,
 } from './interfaces';
 
@@ -8,13 +8,10 @@ const getParentPathTemplate = (pathTemplate: string) => pathTemplate.split('.').
 
 // 4th stage
 export const buildSchema = (
-  chartItems: IChartItemWithOptions[],
-  params: {
-    additionalProperties?: boolean;
-  } = {},
-): IJSONSchema => {
-  const additionalProperties = params.additionalProperties ?? false;
-  const result: IJSONSchema = {
+  chartItems: ICompiledChartItem[],
+  schemaDefinitions?: IJSONSchemaRoot['$def'],
+): IJSONSchemaRoot => {
+  const result: IJSONSchemaRoot = {
     oneOf: [],
   };
   const cache: Record<string, IJSONSchemaItem[]> = {};
@@ -26,23 +23,9 @@ export const buildSchema = (
 
     const parentPathTemplate = getParentPathTemplate(item.pathTemplate);
     const parentSchemaItems = cache[parentPathTemplate];
-    const schemaItem: IJSONSchemaItem = {
-      type: item.type,
-    };
-
-    switch (item.type) {
-      case 'array':
-        schemaItem.items = {
-          oneOf: [],
-        };
-        break;
-
-      case 'object':
-        schemaItem.properties = {};
-        schemaItem.required = [];
-        schemaItem.additionalProperties = additionalProperties;
-        break;
-    }
+    const schemaItem: IJSONSchemaItem =
+      cache[item.pathTemplate]?.find(i => i.type === item.type)
+      || { ...item.precompiledSchemaItem };
 
     if (!parentSchemaItems) {
       if (!cache[item.pathTemplate]) {
@@ -69,7 +52,9 @@ export const buildSchema = (
 
     switch (parentSchemaItem.type) {
       case 'array':
-        parentSchemaItem.items?.oneOf?.push(schemaItem);
+        if (!parentSchemaItem.items?.oneOf?.find(i => i.type === schemaItem.type)) {
+          parentSchemaItem.items?.oneOf?.push(schemaItem);
+        }
         break;
 
       case 'object':
@@ -85,5 +70,8 @@ export const buildSchema = (
     }
   }
 
-  return result;
+  return {
+    ...result,
+    ...schemaDefinitions && { $def: schemaDefinitions },
+  };
 };
