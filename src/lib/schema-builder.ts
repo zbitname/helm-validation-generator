@@ -4,7 +4,7 @@ import {
   IJSONSchemaItem,
 } from './interfaces';
 
-const getParentPathTemplate = (pathTemplate: string) => pathTemplate.split('.').slice(0, -1).join('.');
+const getParentPathTemplate = (pathTemplate: string) => pathTemplate.split(/(?<!\\)\./).slice(0, -1).join('.');
 
 // 4th stage
 export const buildSchema = (

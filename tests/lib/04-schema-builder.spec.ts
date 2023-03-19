@@ -327,4 +327,71 @@ describe('Schema builder', () => {
       },
     });
   });
+
+  it('file=issue-dot-notationed-keys.yaml', () => {
+    const content = readFileSync(`${__dirname}/files/issue-dot-notationed-keys.yaml`).toString();
+    const controlCommentRepo = new ControlCommentRepo();
+    controlCommentRepo.add('ref', RefControlComment);
+
+    const res = parse(content);
+    const flat = flatten([], res[0].getChartItem());
+    const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
+      additionalProperties: false,
+    });
+    const schema = buildSchema(flatCompiledItems, {});
+
+    expect(schema).to.deep.equals({
+      oneOf: [{
+        type: 'object',
+        properties: {
+          ingress: {
+            oneOf: [{
+              type: 'object',
+              properties: {
+                annotations: {
+                  oneOf: [{
+                    type: 'object',
+                    properties: {
+                      'kubernetes.io/ingress.class': {
+                        oneOf: [ { type: 'string' } ],
+                      },
+                      'nginx.ingress.kubernetes.io/proxy-body-size': {
+                        oneOf: [ { type: 'string' } ],
+                      },
+                      'nginx.ingress.kubernetes.io/proxy-read-timeout': {
+                        oneOf: [ { type: 'string' } ],
+                      },
+                      'nginx.ingress.kubernetes.io/proxy-send-timeout': {
+                        oneOf: [ { type: 'string' } ],
+                      },
+                      'nginx.ingress.kubernetes.io/limit-rps': {
+                        oneOf: [ { type: 'string' } ],
+                      },
+                      'nginx.ingress.kubernetes.io/limit-rpm': {
+                        oneOf: [ { type: 'string' } ],
+                      },
+                    },
+                    required: [
+                      'kubernetes.io/ingress.class',
+                      'nginx.ingress.kubernetes.io/proxy-body-size',
+                      'nginx.ingress.kubernetes.io/proxy-read-timeout',
+                      'nginx.ingress.kubernetes.io/proxy-send-timeout',
+                      'nginx.ingress.kubernetes.io/limit-rps',
+                      'nginx.ingress.kubernetes.io/limit-rpm',
+                    ],
+                    additionalProperties: false,
+                  }],
+                },
+              },
+              required: [ 'annotations' ],
+              additionalProperties: false,
+            }],
+          },
+        },
+        'required': [ 'ingress' ],
+        'additionalProperties': false,
+      }],
+      $def: {},
+    });
+  });
 });

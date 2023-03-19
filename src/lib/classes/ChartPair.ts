@@ -13,6 +13,14 @@ import { getTypeByValue } from './helpers';
 import { ChartItem } from './ChartItem';
 import { ChartItemGenerator, IChartItemGeneratorParams } from './ChartItemGenerator';
 
+const buildPathKey = (key: string) => {
+  let k = key;
+  if (k === null) {
+    k = 'null';
+  }
+  return k.replace(/\./g, '\\.');
+};
+
 export class ChartPair extends ChartItemGenerator<Pair> {
   constructor(
     doc: Pair,
@@ -28,7 +36,7 @@ export class ChartPair extends ChartItemGenerator<Pair> {
     }
 
     if (this.doc.value instanceof Scalar) {
-      const path = `${this.path}.${this.doc.key.value}`;
+      const path = `${this.path}.${buildPathKey(this.doc.key.value)}`;
 
       return new ChartItem({
         prop: this.doc.key.value,
@@ -48,14 +56,14 @@ export class ChartPair extends ChartItemGenerator<Pair> {
     if (this.doc.value instanceof YAMLMap) {
       return new ChartMap(this.doc.value, {
         propName: this.doc.key.value,
-        path: `${this.path}.${this.doc.key.value}`,
+        path: `${this.path}.${buildPathKey(this.doc.key.value)}`,
       }).getChartItem();
     }
 
     if (this.doc.value instanceof YAMLSeq) {
       return new ChartSeq(this.doc.value, {
         propName: this.doc.key.value,
-        path: `${this.path}.${this.doc.key.value}`,
+        path: `${this.path}.${buildPathKey(this.doc.key.value)}`,
       }).getChartItem();
     }
 
