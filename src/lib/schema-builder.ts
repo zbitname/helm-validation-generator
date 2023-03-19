@@ -64,7 +64,10 @@ export const buildSchema = (
           oneOf: [],
         };
 
-        parentSchemaItem.required?.push(item.prop);
+        if (parentSchemaItem.required?.indexOf(item.prop) === -1) {
+          parentSchemaItem.required?.push(item.prop);
+        }
+
         parentSchemaItem.properties[item.prop].oneOf!.push(schemaItem);
         break;
     }
