@@ -9,6 +9,7 @@ import { operationCompiler } from '../../src/lib/operation-compiler';
 import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
 import { buildSchema } from '../../src/lib/schema-builder';
 import { RefControlComment } from '../../src/lib/control-comments/ref';
+import { schemaUrl } from '../../src/lib/consts';
 
 describe('Schema builder', () => {
   it('file=different-types-in-one-item.yaml', () => {
@@ -22,6 +23,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems);
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'object',
         properties: {
@@ -82,6 +84,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems);
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'array',
         items: {
@@ -107,6 +110,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems);
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'array',
         items: {
@@ -117,7 +121,6 @@ describe('Schema builder', () => {
             { type: 'string' },
             {
               type: 'array',
-              items: { oneOf: [] },
             },
             {
               type: 'object',
@@ -142,6 +145,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems);
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'object',
         properties: {
@@ -153,7 +157,6 @@ describe('Schema builder', () => {
           prop6: {
             oneOf: [{
               type: 'array',
-              items: { oneOf: [] },
             }],
           },
           prop7: {
@@ -175,7 +178,6 @@ describe('Schema builder', () => {
                   { type: 'null' },
                   {
                     type: 'array',
-                    items: { oneOf: [] },
                   },
                   {
                     type: 'object',
@@ -199,7 +201,6 @@ describe('Schema builder', () => {
                 subprop6: {
                   oneOf: [{
                     type: 'array',
-                    items: { oneOf: [] },
                   }],
                 },
                 subprop7: {
@@ -233,6 +234,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems);
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'array',
         items: { oneOf: [ { type: 'string' } ] },
@@ -275,14 +277,15 @@ describe('Schema builder', () => {
     });
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [
         {
           type: 'object',
           properties: {
             someProp: { oneOf: [ { type: 'string' } ] },
             somePropWithComment: { oneOf: [ { type: 'string' } ] },
-            items: { oneOf: [ { $ref: '#/$def/ItemArray' } ] },
-            elements: { oneOf: [ { $ref: '#/$def/Elements' } ] },
+            items: { oneOf: [ { $ref: '#/definitions/ItemArray' } ] },
+            elements: { oneOf: [ { $ref: '#/definitions/Elements' } ] },
             props: {
               oneOf: [
                 {
@@ -302,7 +305,7 @@ describe('Schema builder', () => {
           additionalProperties: false,
         },
       ],
-      $def: {
+      definitions: {
         ItemArray: {
           type: 'array',
           items: {
@@ -341,6 +344,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems, {});
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'object',
         properties: {
@@ -391,7 +395,7 @@ describe('Schema builder', () => {
         'required': [ 'ingress' ],
         'additionalProperties': false,
       }],
-      $def: {},
+      definitions: {},
     });
   });
 
@@ -408,6 +412,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems, {});
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'object',
         properties: {
@@ -454,7 +459,7 @@ describe('Schema builder', () => {
         required: [ 'some' ],
         additionalProperties: false,
       }],
-      $def: {},
+      definitions: {},
     });
   });
 
@@ -471,6 +476,7 @@ describe('Schema builder', () => {
     const schema = buildSchema(flatCompiledItems, {});
 
     expect(schema).to.deep.equals({
+      $schema: schemaUrl,
       oneOf: [{
         type: 'object',
         properties: {
@@ -494,7 +500,7 @@ describe('Schema builder', () => {
         required: [ 'some' ],
         additionalProperties: false,
       }],
-      $def: {},
+      definitions: {},
     });
   });
 });

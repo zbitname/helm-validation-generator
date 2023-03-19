@@ -6,16 +6,17 @@ import {
   IJSONSchemaRoot,
   IJSONSchemaItem,
 } from './interfaces';
+import { schemaUrl } from './consts';
 
 const getParentPathTemplate = (pathTemplate: string) => pathTemplate.split(/(?<!\\)\./).slice(0, -1).join('.');
 
 // 4th stage
 export const buildSchema = (
   chartItems: ICompiledChartItem[],
-  schemaDefinitions?: IJSONSchemaRoot['$def'],
+  schemaDefinitions?: IJSONSchemaRoot['definitions'],
 ): IJSONSchemaRoot => {
   const result: IJSONSchemaRoot = {
-    $schema: 'http://json-schema.org/draft-07/schema#',
+    $schema: schemaUrl,
     oneOf: [],
   };
   const cache: Record<string, IJSONSchemaItem[]> = {};
@@ -59,7 +60,11 @@ export const buildSchema = (
     switch (parentSchemaItem.type) {
       case 'array':
         if (!parentSchemaItem.items?.oneOf?.find(i => i.type === schemaItem.type)) {
-          parentSchemaItem.items?.oneOf?.push(schemaItem);
+          if (!parentSchemaItem.items?.oneOf) {
+            parentSchemaItem.items = { oneOf: [ schemaItem ] };
+          } else {
+            parentSchemaItem.items?.oneOf?.push(schemaItem);
+          }
         }
         break;
 
@@ -86,6 +91,6 @@ export const buildSchema = (
 
   return {
     ...result,
-    ...schemaDefinitions && { $def: schemaDefinitions },
+    ...schemaDefinitions && { definitions: schemaDefinitions },
   };
 };

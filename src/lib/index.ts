@@ -14,7 +14,7 @@ const allControlComments: Record<string, TControlCommentConstructor> = {
 
 export const generateSchemaValidation = (
   content: string,
-  definitions: IJSONSchemaRoot['$def'],
+  definitions: IJSONSchemaRoot['definitions'],
   controlComments: Record<string, TControlCommentConstructor> = allControlComments,
 ) => {
   const controlCommentRepo = new ControlCommentRepo();

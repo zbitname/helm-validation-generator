@@ -31,9 +31,9 @@ export const operationCompiler = (
 
     switch (schemaItem.type) {
       case 'array':
-        schemaItem.items = {
-          oneOf: [],
-        };
+        // schemaItem.items = {
+        //   oneOf: [],
+        // };
         break;
 
       case 'object':

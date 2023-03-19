@@ -11,7 +11,7 @@ export class RefControlComment extends ControlComment {
       delete this.schemaItemParams.inputSchema[key as keyof IJSONSchemaItem];
     }
 
-    this.schemaItemParams.inputSchema.$ref = `#/$def/${definitionName}`;
+    this.schemaItemParams.inputSchema.$ref = `#/definitions/${definitionName}`;
     this.schemaParams.skipTemplatePaths.push(this.schemaItemParams.templatePath + '.');
   }
 }

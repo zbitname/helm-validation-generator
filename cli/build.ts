@@ -41,8 +41,12 @@ export default (program: Command) => {
       const schema = generateSchemaValidation(values, def);
 
       if (!opts.skipValidation) {
+        console.log('Validation: start');
+
         const ajv = new Ajv();
         ajv.validate(schema, parse(values));
+
+        console.log('Validation: finish');
       }
 
       writeFileSync(outPath, JSON.stringify(schema, null, 2));
