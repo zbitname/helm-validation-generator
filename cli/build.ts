@@ -43,8 +43,13 @@ export default (program: Command) => {
       if (!opts.skipValidation) {
         console.log('Validation: start');
 
-        const ajv = new Ajv();
-        ajv.validate(schema, parse(values));
+        const ajv = new Ajv({
+          allErrors: true,
+          strictTypes: true,
+          allowUnionTypes: true,
+        });
+        const validate = ajv.compile(schema);
+        validate(parse(values));
 
         console.log('Validation: finish');
       }
