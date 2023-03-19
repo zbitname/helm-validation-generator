@@ -1,6 +1,10 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readFileSync, existsSync, writeFileSync } from 'fs';
+import { resolve, dirname, isAbsolute } from 'path';
 import { Command, Option } from 'commander';
+import Ajv from 'ajv';
+import {
+  parse,
+} from 'yaml';
 
 import { generateSchemaValidation } from '../src/lib';
 
@@ -8,13 +12,39 @@ export default (program: Command) => {
   program
     .command('build')
     .requiredOption('-v, --values <path>')
+    .option('-d, --def <path>')
+    .option('-o, --out <path>')
     .addOption(new Option('-i --indentation <number>', 'indentation for serialization').preset('2').argParser(parseInt))
+    .addOption(new Option('-f --skip-validation', 'indentation for serialization').preset(true))
     .action(opts => {
-      const valuesPath = resolve(process.cwd(), opts.values);
-      const content = readFileSync(valuesPath).toString();
+      const valuesPath = isAbsolute(opts.values) ? opts.values : resolve(process.cwd(), opts.values);
+      const values = readFileSync(valuesPath).toString();
 
-      const schema = generateSchemaValidation(content, {});
+      let def: any = {};
 
-      console.log(JSON.stringify(schema, null, 2));
+      if (opts.def) {
+        const defPath = isAbsolute(opts.def) ? opts.def : resolve(process.cwd(), opts.def);
+
+        if (existsSync(defPath)) {
+          def = JSON.parse(readFileSync(defPath).toString());
+        } else {
+          throw new Error('Definition file not found');
+        }
+      }
+
+      let outPath = `${dirname(resolve(process.cwd(), opts.values))}/values.schema.json`;
+
+      if (opts.out) {
+        outPath = isAbsolute(opts.out) ? opts.out : resolve(process.cwd(), opts.out);
+      }
+
+      const schema = generateSchemaValidation(values, def);
+
+      if (!opts.skipValidation) {
+        const ajv = new Ajv();
+        ajv.validate(schema, parse(values));
+      }
+
+      writeFileSync(outPath, JSON.stringify(schema, null, 2));
     });
 };

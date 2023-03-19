@@ -15,6 +15,7 @@ export const buildSchema = (
   schemaDefinitions?: IJSONSchemaRoot['$def'],
 ): IJSONSchemaRoot => {
   const result: IJSONSchemaRoot = {
+    $schema: 'http://json-schema.org/draft-07/schema#',
     oneOf: [],
   };
   const cache: Record<string, IJSONSchemaItem[]> = {};

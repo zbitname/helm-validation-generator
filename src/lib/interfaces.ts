@@ -49,6 +49,7 @@ export interface IJSONSchemaItem {
 }
 
 export interface IJSONSchemaRoot {
+  $schema: string;
   oneOf?: IJSONSchemaItem[];
   $def?: Record<string, Omit<IJSONSchemaItem, '$ref'>>;
 }
