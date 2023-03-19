@@ -13,7 +13,7 @@ const getParentPathTemplate = (pathTemplate: string) => pathTemplate.split(/(?<!
 // 4th stage
 export const buildSchema = (
   chartItems: ICompiledChartItem[],
-  schemaDefinitions?: IJSONSchemaRoot['definitions'],
+  schemaDefinitions?: IJSONSchemaRoot['$defs'],
 ): IJSONSchemaRoot => {
   const result: IJSONSchemaRoot = {
     $schema: schemaUrl,
@@ -91,6 +91,6 @@ export const buildSchema = (
 
   return {
     ...result,
-    ...schemaDefinitions && { definitions: schemaDefinitions },
+    ...schemaDefinitions && { $defs: schemaDefinitions },
   };
 };

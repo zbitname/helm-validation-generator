@@ -284,8 +284,8 @@ describe('Schema builder', () => {
           properties: {
             someProp: { oneOf: [ { type: 'string' } ] },
             somePropWithComment: { oneOf: [ { type: 'string' } ] },
-            items: { oneOf: [ { $ref: '#/definitions/ItemArray' } ] },
-            elements: { oneOf: [ { $ref: '#/definitions/Elements' } ] },
+            items: { oneOf: [ { $ref: '#/$defs/ItemArray' } ] },
+            elements: { oneOf: [ { $ref: '#/$defs/Elements' } ] },
             props: {
               oneOf: [
                 {
@@ -305,7 +305,7 @@ describe('Schema builder', () => {
           additionalProperties: false,
         },
       ],
-      definitions: {
+      $defs: {
         ItemArray: {
           type: 'array',
           items: {
@@ -395,7 +395,7 @@ describe('Schema builder', () => {
         'required': [ 'ingress' ],
         'additionalProperties': false,
       }],
-      definitions: {},
+      $defs: {},
     });
   });
 
@@ -459,7 +459,7 @@ describe('Schema builder', () => {
         required: [ 'some' ],
         additionalProperties: false,
       }],
-      definitions: {},
+      $defs: {},
     });
   });
 
@@ -500,7 +500,7 @@ describe('Schema builder', () => {
         required: [ 'some' ],
         additionalProperties: false,
       }],
-      definitions: {},
+      $defs: {},
     });
   });
 });

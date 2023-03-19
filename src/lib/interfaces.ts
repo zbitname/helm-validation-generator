@@ -51,7 +51,7 @@ export interface IJSONSchemaItem {
 export interface IJSONSchemaRoot {
   $schema: string;
   oneOf?: IJSONSchemaItem[];
-  definitions?: Record<string, Omit<IJSONSchemaItem, '$ref'>>;
+  $defs?: Record<string, Omit<IJSONSchemaItem, '$ref'>>;
 }
 
 export interface ICompiledChartItem extends Pick<IChartItem, 'type' | 'path' | 'prop'> {
