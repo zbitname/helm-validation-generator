@@ -60,9 +60,12 @@ export const buildSchema = (
       case 'object':
         if (!item.prop) throw new Error('How an object can has empty property name?');
         if (!parentSchemaItem.properties) parentSchemaItem.properties = {};
-        if (!parentSchemaItem.properties[item.prop]) parentSchemaItem.properties[item.prop] = {
-          oneOf: [],
-        };
+
+        if (!parentSchemaItem.properties[item.prop]) {
+          parentSchemaItem.properties[item.prop] = {
+            oneOf: [],
+          };
+        }
 
         if (parentSchemaItem.required?.indexOf(item.prop) === -1) {
           parentSchemaItem.required?.push(item.prop);
