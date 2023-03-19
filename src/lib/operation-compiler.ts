@@ -1,3 +1,5 @@
+import { uniq } from 'lodash';
+
 import {
   IChartItemWithOptions,
   IControlComment,
@@ -57,12 +59,19 @@ export const operationCompiler = (
       continue;
     }
 
+    const sameChartItemsMatch = item.path.match(/(.*)\[\d+\]/);
+    const sameChartItems = chartItems.filter(i =>
+      sameChartItemsMatch ? i.path.startsWith(sameChartItemsMatch[1]) : false
+    );
+
     result.push({
       type: item.type,
       path: item.path,
       prop: item.prop,
       pathTemplate: item.pathTemplate,
       precompiledSchemaItem: schemaItem,
+      countThis: sameChartItems.filter(i => i.pathTemplate === item.pathTemplate).length,
+      countOf: uniq(sameChartItems.map(i => i.path.match(/.*\[(\d+)\]/)).filter(Boolean).map(i => i![1])).length,
     });
   }
 

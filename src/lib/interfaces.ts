@@ -56,6 +56,8 @@ export interface IJSONSchemaRoot {
 export interface ICompiledChartItem extends Pick<IChartItem, 'type' | 'path' | 'prop'> {
   pathTemplate: string;
   precompiledSchemaItem: IJSONSchemaItem;
+  countThis: number;
+  countOf: number;
 }
 
 export interface IChartItemGenerator {

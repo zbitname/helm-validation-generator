@@ -1,0 +1,6 @@
+some:
+  - foo: some string for single foo
+    bar: some string for single bar
+  - bar: some string for single bar
+  - foo: some string for foo
+    bar: some string for bar

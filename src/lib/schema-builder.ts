@@ -1,4 +1,7 @@
 import {
+  isEqual,
+} from 'lodash';
+import {
   ICompiledChartItem,
   IJSONSchemaRoot,
   IJSONSchemaItem,
@@ -44,7 +47,9 @@ export const buildSchema = (
 
     cache[item.pathTemplate].push(schemaItem);
 
-    const parentSchemaItem = parentSchemaItems.find(i => item.prop ? i.type === 'object' : i.type === 'array');
+    const parentSchemaItem = item.prop
+      ? parentSchemaItems.find(i => i.type === 'object')
+      : parentSchemaItems.find(i => i.type === 'array');
 
     if (!parentSchemaItem) {
       throw new Error('Parent schema not found');
@@ -67,11 +72,11 @@ export const buildSchema = (
           };
         }
 
-        if (parentSchemaItem.required?.indexOf(item.prop) === -1) {
+        if (item.countOf === item.countThis && parentSchemaItem.required?.indexOf(item.prop) === -1) {
           parentSchemaItem.required?.push(item.prop);
         }
 
-        if (!parentSchemaItem.properties[item.prop].oneOf?.find(i => i.type === schemaItem.type)) {
+        if (!parentSchemaItem.properties[item.prop].oneOf!.find(i => isEqual(i, schemaItem))) {
           parentSchemaItem.properties[item.prop].oneOf!.push(schemaItem);
         }
         break;

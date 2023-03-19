@@ -457,4 +457,44 @@ describe('Schema builder', () => {
       $def: {},
     });
   });
+
+  it('file=array-different-objects.yaml', () => {
+    const content = readFileSync(`${__dirname}/files/array-different-objects.yaml`).toString();
+    const controlCommentRepo = new ControlCommentRepo();
+    controlCommentRepo.add('ref', RefControlComment);
+
+    const res = parse(content);
+    const flat = flatten([], res[0].getChartItem());
+    const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
+      additionalProperties: false,
+    });
+    const schema = buildSchema(flatCompiledItems, {});
+
+    expect(schema).to.deep.equals({
+      oneOf: [{
+        type: 'object',
+        properties: {
+          some: {
+            oneOf: [{
+              type: 'array',
+              items: {
+                oneOf: [{
+                  type: 'object',
+                  properties: {
+                    foo: { oneOf: [ { type: 'string' } ] },
+                    bar: { oneOf: [ { type: 'string' } ] },
+                  },
+                  required: [ 'bar' ],
+                  additionalProperties: false,
+                }],
+              },
+            }],
+          },
+        },
+        required: [ 'some' ],
+        additionalProperties: false,
+      }],
+      $def: {},
+    });
+  });
 });

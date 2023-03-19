@@ -36,7 +36,6 @@ export class ChartMap extends ChartItemGenerator<YAMLMap> {
 
       if (item instanceof Pair) {
         chartPart.children!.push(new ChartPair(item, {
-          // path: `${this.path}[${i}]`,
           path: this.path,
         }).getChartItem());
         continue;
