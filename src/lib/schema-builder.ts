@@ -71,7 +71,9 @@ export const buildSchema = (
           parentSchemaItem.required?.push(item.prop);
         }
 
-        parentSchemaItem.properties[item.prop].oneOf!.push(schemaItem);
+        if (!parentSchemaItem.properties[item.prop].oneOf?.find(i => i.type === schemaItem.type)) {
+          parentSchemaItem.properties[item.prop].oneOf!.push(schemaItem);
+        }
         break;
     }
   }

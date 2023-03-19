@@ -1,0 +1,13 @@
+some:
+  - if:
+      args:
+        status: 'new'
+    then: ['only for new']
+  - if:
+      args:
+        status: 'debug'
+    then: ['only for debug']
+  - if:
+      args:
+        status: 'error'
+    then: ['so sad...']

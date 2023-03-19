@@ -394,4 +394,67 @@ describe('Schema builder', () => {
       $def: {},
     });
   });
+
+  it('file=array-similar-objects.yaml', () => {
+    const content = readFileSync(`${__dirname}/files/array-similar-objects.yaml`).toString();
+    const controlCommentRepo = new ControlCommentRepo();
+    controlCommentRepo.add('ref', RefControlComment);
+
+    const res = parse(content);
+    const flat = flatten([], res[0].getChartItem());
+    const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
+      additionalProperties: false,
+    });
+    const schema = buildSchema(flatCompiledItems, {});
+
+    expect(schema).to.deep.equals({
+      oneOf: [{
+        type: 'object',
+        properties: {
+          some: {
+            oneOf: [{
+              type: 'array',
+              items: {
+                oneOf: [{
+                  type: 'object',
+                  properties: {
+                    if: {
+                      oneOf: [{
+                        type: 'object',
+                        properties: {
+                          args: {
+                            oneOf: [{
+                              type: 'object',
+                              properties: {
+                                status: { oneOf: [ { type: 'string' } ] },
+                              },
+                              required: [ 'status' ],
+                              additionalProperties: false,
+                            }],
+                          },
+                        },
+                        required: [ 'args' ],
+                        additionalProperties: false,
+                      }],
+                    },
+                    then: {
+                      oneOf: [{
+                        type: 'array',
+                        items: { oneOf: [ { type: 'string' } ] },
+                      }],
+                    },
+                  },
+                  required: [ 'if', 'then' ],
+                  additionalProperties: false,
+                }],
+              },
+            }],
+          },
+        },
+        required: [ 'some' ],
+        additionalProperties: false,
+      }],
+      $def: {},
+    });
+  });
 });
