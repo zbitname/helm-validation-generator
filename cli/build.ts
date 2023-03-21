@@ -44,12 +44,15 @@ export default (program: Command) => {
         console.log('Validation: start');
 
         const ajv = new Ajv({
-          allErrors: true,
-          strictTypes: true,
-          allowUnionTypes: true,
+          inlineRefs: true,
+          discriminator: true,
         });
         const validate = ajv.compile(schema);
-        validate(parse(values));
+        const success = validate(parse(values));
+
+        if (!success) {
+          console.log('Errors', validate.errors);
+        }
 
         console.log('Validation: finish');
       }
