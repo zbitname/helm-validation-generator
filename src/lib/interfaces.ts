@@ -46,6 +46,7 @@ export interface IJSONSchemaItem {
   }>;
   required?: string[];
   additionalProperties?: boolean;
+  deprecated?: boolean;
 }
 
 export interface IJSONSchemaRoot {
