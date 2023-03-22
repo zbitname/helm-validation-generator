@@ -45,6 +45,12 @@ export const generateSchemaValidation = (
     return true;
   }).sortBy('path').value();
 
+  const rootItems = uniqFlatItems.filter(i => i.path === '');
+
+  if (rootItems.length !== 1) {
+    throw new Error(`Expected one root item, but got ${rootItems.length} with types [${rootItems.map(i => i.type).join(', ')}]`);
+  }
+
   const flatCompiledItems = operationCompiler(uniqFlatItems, controlCommentRepo, {
     additionalProperties: false,
   });
