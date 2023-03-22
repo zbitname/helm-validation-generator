@@ -35,7 +35,7 @@ export class ChartItem implements IChartItemWithOptions {
   }
 
   private getParsedComment(): TControlFncDesc[] | undefined {
-    const match = this.comment?.match(/^schema:\s*([\w\d;\s()]+)/i);
+    const match = this.comment?.match(/^schema:\s*([\w\d;\s()./]+)/i);
 
     if (!match || !match[1]) {
       return;
@@ -43,7 +43,7 @@ export class ChartItem implements IChartItemWithOptions {
 
     const functions = match[1].split(';').map(i => i.trim()).filter(Boolean);
     const parsedCommentArray: TControlFncDesc[] = functions.map(i => {
-      const parsedFnc = i.match(/^([\w\d]+)(?:\(([\w\d,]+)\))*/i);
+      const parsedFnc = i.match(/^([\w\d]+)(?:\(([\w\d,/.]+)\))*/i);
 
       if (!parsedFnc || !parsedFnc[1]) {
         throw new Error(`Incorrect syntax of "${i}" function`);

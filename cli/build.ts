@@ -77,7 +77,7 @@ export default (program: Command) => {
         const success = validate(parse(mainValues));
 
         if (!success) {
-          console.log('Validation errors:', validate.errors);
+          console.log('Validation errors:', JSON.stringify(validate.errors, null, 2));
           process.exit(1);
         }
 
