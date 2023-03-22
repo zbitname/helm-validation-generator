@@ -1,5 +1,5 @@
-import { readFileSync, existsSync, writeFileSync } from 'fs';
-import { resolve, dirname, isAbsolute } from 'path';
+import { readFileSync, existsSync, writeFileSync, readdirSync } from 'fs';
+import { resolve, dirname, isAbsolute, basename } from 'path';
 import { Command, Option } from 'commander';
 import Ajv from 'ajv';
 import {
@@ -7,6 +7,7 @@ import {
 } from 'yaml';
 
 import { generateSchemaValidation } from '../src/lib';
+import { IJSONSchemaRoot } from '../src/lib/interfaces';
 
 export default (program: Command) => {
   program
@@ -14,11 +15,15 @@ export default (program: Command) => {
     .requiredOption('-v, --values <path>')
     .option('-d, --def <path>')
     .option('-o, --out <path>')
-    .addOption(new Option('-i --indentation <number>', 'indentation for serialization').preset('2').argParser(parseInt))
-    .addOption(new Option('-f --skip-validation', 'indentation for serialization').preset(true))
+    .addOption(new Option('-i --indentation <number>', 'Indentation for serialization').preset('2').argParser(parseInt))
+    .addOption(new Option('--skip-validation', 'Skip validation after build the schema').preset(true))
+    .addOption(new Option('--skip-ci', 'Skip CI configs').preset(true))
     .action(opts => {
       const valuesPath = isAbsolute(opts.values) ? opts.values : resolve(process.cwd(), opts.values);
-      const values = readFileSync(valuesPath).toString();
+      console.log('Load values file', `"${basename(valuesPath)}"`);
+      const mainValues = readFileSync(valuesPath).toString();
+      const values = [mainValues];
+      const valuesDir = dirname(resolve(process.cwd(), opts.values));
 
       let def: any = {};
 
@@ -31,36 +36,52 @@ export default (program: Command) => {
           throw new Error('Definition file not found');
         }
       } else {
-        const defaultDefPath = `${dirname(resolve(process.cwd(), opts.values))}/values.definitions.json`;
+        const defaultDefPath = `${valuesDir}/values.definitions.json`;
 
         if (existsSync(defaultDefPath)) {
           def = JSON.parse(readFileSync(defaultDefPath).toString());
         }
       }
 
-      let outPath = `${dirname(resolve(process.cwd(), opts.values))}/values.schema.json`;
+      let outPath = `${valuesDir}/values.schema.json`;
 
       if (opts.out) {
         outPath = isAbsolute(opts.out) ? opts.out : resolve(process.cwd(), opts.out);
       }
 
-      const schema = generateSchemaValidation(values, def);
+      if (!opts.skipCi) {
+        console.log('Parse ci directory');
+        const ciDir = `${valuesDir}/ci`;
+        const ciFilePaths = readdirSync(ciDir).filter(f => /\.ya{0,1}ml/i.test(f));
+
+        for (const ciFilePath of ciFilePaths) {
+          console.log('Load values file', `"ci/${ciFilePath}"`);
+          values.push(readFileSync(`${ciDir}/${ciFilePath}`).toString());
+        }
+      }
+
+      let schema: IJSONSchemaRoot;
+      try {
+        schema = generateSchemaValidation(values, def)
+      } catch (e) {
+        console.log('Schema generation error:', (e as Error).message);
+        process.exit(1);
+      }
 
       if (!opts.skipValidation) {
-        console.log('Validation: start');
-
         const ajv = new Ajv({
           inlineRefs: true,
           discriminator: true,
         });
         const validate = ajv.compile(schema);
-        const success = validate(parse(values));
+        const success = validate(parse(mainValues));
 
         if (!success) {
-          console.log('Errors', validate.errors);
+          console.log('Validation errors:', validate.errors);
+          process.exit(1);
         }
 
-        console.log('Validation: finish');
+        console.log('Validation has finihed successfuly');
       }
 
       writeFileSync(outPath, JSON.stringify(schema, null, 2));
