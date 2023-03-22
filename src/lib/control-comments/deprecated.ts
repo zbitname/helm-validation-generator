@@ -6,7 +6,10 @@ export class DeprecatedControlComment extends ControlComment {
     // nothing
   }
 
-  after(...args: any[]): IJSONSchemaRoot | void {
+  after(comment?: string): IJSONSchemaRoot | void {
     this.schemaItemParams.inputSchema.deprecated = true;
+    if (comment) {
+      this.schemaItemParams.inputSchema.description = comment;
+    }
   }
 }

@@ -41,9 +41,9 @@ export class ChartItem implements IChartItemWithOptions {
       return;
     }
 
-    const functions = match[1].split(';').map(i => i.trim()).filter(Boolean);
+    const functions = match[1].split(/(?<!\\);/).map(i => i.trim()).filter(Boolean);
     const parsedCommentArray: TControlFncDesc[] = functions.map(i => {
-      const parsedFnc = i.match(/^([\w\d]+)(?:\(([\w\d,/.]+)\))*/i);
+      const parsedFnc = i.match(/^([\w\d]+)(?:\(([\w\d\s,/.]+)\))*/i);
 
       if (!parsedFnc || !parsedFnc[1]) {
         throw new Error(`Incorrect syntax of "${i}" function`);
@@ -51,7 +51,7 @@ export class ChartItem implements IChartItemWithOptions {
 
       return {
         name: parsedFnc[1],
-        args: parsedFnc[2]?.split(',').map(i => i.trim()) || [],
+        args: parsedFnc[2]?.split(/(?<!\\),/).map(i => i.trim()) || [],
       };
     });
 
