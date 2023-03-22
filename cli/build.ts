@@ -58,7 +58,7 @@ export default (program: Command) => {
           const ciFilePaths = readdirSync(ciDir).filter(f => /\.ya{0,1}ml/i.test(f));
 
           for (const ciFilePath of ciFilePaths) {
-            console.log('Load values file', `"ci/${ciFilePath}"`);
+            console.log(' - Load values file', `"ci/${ciFilePath}"`);
             values.push(readFileSync(`${ciDir}/${ciFilePath}`).toString());
           }
         }
