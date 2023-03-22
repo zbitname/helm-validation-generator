@@ -65,11 +65,11 @@ export default (program: Command) => {
       }
 
       if (!opts.skipDeprecation) {
-        const deprecationsFilePath = `${valuesDir}/values.deprecations.json`;
+        const depracationFilePaths = readdirSync(valuesDir).filter(f => /values\.deprecations\.ya{0,1}ml/i.test(f));
 
-        if (existsSync(deprecationsFilePath)) {
-          console.log('Parse deprecation file');
-          values.push(readFileSync(deprecationsFilePath).toString());
+        for (const fileName of depracationFilePaths) {
+          console.log(`Parse deprecation file "${fileName}"`);
+          values.push(readFileSync(`${valuesDir}/${fileName}`).toString());
         }
       }
 
