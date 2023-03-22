@@ -30,6 +30,12 @@ export default (program: Command) => {
         } else {
           throw new Error('Definition file not found');
         }
+      } else {
+        const defaultDefPath = `${dirname(resolve(process.cwd(), opts.values))}/values.definitions.json`;
+
+        if (existsSync(defaultDefPath)) {
+          def = JSON.parse(readFileSync(defaultDefPath).toString());
+        }
       }
 
       let outPath = `${dirname(resolve(process.cwd(), opts.values))}/values.schema.json`;
