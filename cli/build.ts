@@ -18,6 +18,7 @@ export default (program: Command) => {
     .addOption(new Option('-i --indentation <number>', 'Indentation for serialization').preset('2').argParser(parseInt))
     .addOption(new Option('--skip-validation', 'Skip validation after build the schema').preset(true))
     .addOption(new Option('--skip-ci', 'Skip CI configs').preset(true))
+    .addOption(new Option('--skip-deprecation', 'Skip deprecation file').preset(true))
     .action(opts => {
       const valuesPath = isAbsolute(opts.values) ? opts.values : resolve(process.cwd(), opts.values);
       console.log('Load values file', `"${basename(valuesPath)}"`);
@@ -50,16 +51,25 @@ export default (program: Command) => {
       }
 
       if (!opts.skipCi) {
-        console.log('Parse ci directory');
         const ciDir = `${valuesDir}/ci`;
 
         if (existsSync(ciDir)) {
+          console.log('Parse ci directory');
           const ciFilePaths = readdirSync(ciDir).filter(f => /\.ya{0,1}ml/i.test(f));
 
           for (const ciFilePath of ciFilePaths) {
             console.log('Load values file', `"ci/${ciFilePath}"`);
             values.push(readFileSync(`${ciDir}/${ciFilePath}`).toString());
           }
+        }
+      }
+
+      if (!opts.skipDeprecation) {
+        const deprecationsFilePath = `${valuesDir}/values.deprecations.json`;
+
+        if (existsSync(deprecationsFilePath)) {
+          console.log('Parse deprecation file');
+          values.push(readFileSync(deprecationsFilePath).toString());
         }
       }
 
