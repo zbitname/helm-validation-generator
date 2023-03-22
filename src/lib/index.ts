@@ -11,10 +11,12 @@ import {
   TControlCommentConstructor,
 } from './interfaces';
 import { chain, isEqual } from 'lodash';
+import { DeprecatedControlComment } from './control-comments/deprecated';
 
 const allControlComments: Record<string, TControlCommentConstructor> = {
   ref: RefControlComment,
   skip: SkipControlComment,
+  deprecated: DeprecatedControlComment,
 };
 
 export const generateSchemaValidation = (
