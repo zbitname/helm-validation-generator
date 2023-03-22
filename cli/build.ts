@@ -52,11 +52,14 @@ export default (program: Command) => {
       if (!opts.skipCi) {
         console.log('Parse ci directory');
         const ciDir = `${valuesDir}/ci`;
-        const ciFilePaths = readdirSync(ciDir).filter(f => /\.ya{0,1}ml/i.test(f));
 
-        for (const ciFilePath of ciFilePaths) {
-          console.log('Load values file', `"ci/${ciFilePath}"`);
-          values.push(readFileSync(`${ciDir}/${ciFilePath}`).toString());
+        if (existsSync(ciDir)) {
+          const ciFilePaths = readdirSync(ciDir).filter(f => /\.ya{0,1}ml/i.test(f));
+
+          for (const ciFilePath of ciFilePaths) {
+            console.log('Load values file', `"ci/${ciFilePath}"`);
+            values.push(readFileSync(`${ciDir}/${ciFilePath}`).toString());
+          }
         }
       }
 
