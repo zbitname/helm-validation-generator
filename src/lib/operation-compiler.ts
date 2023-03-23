@@ -23,6 +23,12 @@ export const operationCompiler = (
   };
 
   for (const item of chartItems) {
+    const compiledChartItem: Partial<ICompiledChartItem> = {
+      type: item.type,
+      path: item.path,
+      prop: item.prop,
+      pathTemplate: item.pathTemplate,
+    };
     const schemaItem: IJSONSchemaItem = {
       type: item.type,
     };
@@ -47,6 +53,7 @@ export const operationCompiler = (
       const ControlComment = controlCommentsRepo.get(option.name);
       const controlComment = new ControlComment(schemaParams, {
         inputSchema: schemaItem,
+        inputCompiledChartItem: compiledChartItem,
         templatePath: item.pathTemplate,
       }) as IControlComment;
 
@@ -72,6 +79,7 @@ export const operationCompiler = (
       precompiledSchemaItem: schemaItem,
       countThis: sameChartItems.filter(i => i.pathTemplate === item.pathTemplate).length,
       countOf: uniq(sameChartItems.map(i => i.path.match(/.*\[(\d+)\]/)).filter(Boolean).map(i => i![1])).length,
+      ...compiledChartItem,
     });
   }
 

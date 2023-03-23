@@ -90,15 +90,13 @@ describe('Operation compiler (optional)', () => {
 
         const caseElement = flatCompiledItems.find(i => i.path === variant.path);
 
-        expect(caseElement).to.have.property('precompiledSchemaItem');
-        expect(caseElement!.precompiledSchemaItem).to.have.property('optional');
-        expect(caseElement!.precompiledSchemaItem.optional).to.be.equals(true);
+        expect(caseElement).to.have.property('optional');
+        expect(caseElement!.optional).to.be.equals(true);
 
         const otherElements = flatCompiledItems.filter(i => i.path !== variant.path);
 
         for (const el of otherElements) {
-          expect(el).to.have.property('precompiledSchemaItem');
-          expect(el.precompiledSchemaItem).to.not.have.property('optional');
+          expect(el).to.not.have.property('optional');
         }
       });
     }

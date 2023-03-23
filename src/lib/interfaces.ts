@@ -48,7 +48,6 @@ export interface IJSONSchemaItem {
   additionalProperties?: boolean;
   deprecated?: boolean;
   description?: string;
-  optional?: boolean;
 }
 
 export interface IJSONSchemaRoot {
@@ -62,6 +61,7 @@ export interface ICompiledChartItem extends Pick<IChartItem, 'type' | 'path' | '
   precompiledSchemaItem: IJSONSchemaItem;
   countThis: number;
   countOf: number;
+  optional?: boolean;
 }
 
 export interface IChartItemGenerator {
@@ -124,6 +124,7 @@ export interface ISchemaParams {
 
 export interface ISchemaItemParams {
   readonly templatePath: IJSONSchemaForProcessing['pathTemplate'];
+  readonly inputCompiledChartItem: Partial<ICompiledChartItem>;
   readonly inputSchema: IJSONSchemaItem;
 }
 
