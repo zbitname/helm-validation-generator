@@ -78,7 +78,10 @@ export const buildSchema = (
           };
         }
 
-        if (item.countOf === item.countThis && parentSchemaItem.required?.indexOf(item.prop) === -1) {
+        if (
+          (item.countOf === item.countThis && parentSchemaItem.required?.indexOf(item.prop) === -1)
+          && !item.precompiledSchemaItem.optional
+        ) {
           parentSchemaItem.required?.push(item.prop);
         }
 
