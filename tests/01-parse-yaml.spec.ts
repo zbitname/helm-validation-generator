@@ -4,7 +4,7 @@
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
 import { parse } from '../src/parse-yaml';
-import { compact } from './helpers';
+import { prune } from './helpers';
 
 describe('YAML parse', () => {
   it('empty input', () => {
@@ -18,7 +18,7 @@ describe('YAML parse', () => {
     const res = parse(content);
     const documentItem = res[0].getDocumentItem();
 
-    expect(compact(documentItem)).to.deep.equals({
+    expect(prune(documentItem)).to.deep.equals({
       type: 'object',
       values: [],
       path: '',
@@ -113,7 +113,7 @@ describe('YAML parse', () => {
     const content = readFileSync(`${__dirname}/files/root-array.yaml`).toString();
     const res = parse(content);
     const documentItem = res[0].getDocumentItem();
-    expect(compact(documentItem)).to.deep.equals({
+    expect(prune(documentItem)).to.deep.equals({
       type: 'array',
       values: [],
       path: '',
@@ -130,7 +130,7 @@ describe('YAML parse', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const res = parse(content);
     const documentItem = res[0].getDocumentItem();
-    expect(compact(documentItem)).to.deep.equals({
+    expect(prune(documentItem)).to.deep.equals({
       type: 'array',
       values: [],
       path: '',
@@ -152,7 +152,7 @@ describe('YAML parse', () => {
     const res = parse(content);
     const documentItItem = res[0].getDocumentItem();
 
-    expect(compact(documentItItem)).to.deep.equals({
+    expect(prune(documentItItem)).to.deep.equals({
       type: 'object',
       values: [],
       path: '',
@@ -271,7 +271,7 @@ describe('YAML parse', () => {
     const res = parse(content);
     const documentItItem = res[0].getDocumentItem();
 
-    expect(compact(documentItItem)).to.deep.equals({
+    expect(prune(documentItItem)).to.deep.equals({
       children: [
         {
           children: [

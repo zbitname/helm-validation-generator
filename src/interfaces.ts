@@ -37,7 +37,7 @@ export interface IDocumentItemWithOptions extends IDocumentItem {
 
 export interface IJSONSchemaItem {
   $ref?: string;
-  type?: TJSONSchemaType;
+  type?: TJSONSchemaType | TJSONSchemaType[];
   items?: IJSONSchemaItem;
   properties?: Record<string, IJSONSchemaItem>;
   required?: string[];
@@ -48,9 +48,8 @@ export interface IJSONSchemaItem {
   oneOf?: IJSONSchemaItem[];
 }
 
-export interface IJSONSchemaRoot {
+export interface IJSONSchemaRoot extends IJSONSchemaItem {
   $schema: string;
-  oneOf?: IJSONSchemaItem[];
   $defs?: Record<string, Omit<IJSONSchemaItem, '$ref'>>;
 }
 

@@ -5,7 +5,7 @@ import { readFileSync } from 'fs';
 import { parse } from '../src/parse-yaml';
 import { expect } from 'chai';
 import { flatten } from '../src/flatten';
-import { compact } from './helpers';
+import { prune } from './helpers';
 
 describe('Flatten', () => {
   it('different-types-in-one-item.yaml', () => {
@@ -14,7 +14,7 @@ describe('Flatten', () => {
     const documentItItem = res[0].getDocumentItem();
     const flatItems = flatten([], documentItItem);
 
-    expect(compact(flatItems)).to.deep.equals([
+    expect(prune(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'object', values: [] },
       { path: '.prop1', pathTemplate: '.prop1', type: 'object', values: [], prop: 'prop1' },
       { path: '.prop1.num', pathTemplate: '.prop1.num', type: 'number', values: [ 123.456 ], prop: 'num' },
@@ -40,7 +40,7 @@ describe('Flatten', () => {
     const documentItItem = res[0].getDocumentItem();
     const flatItems = flatten([], documentItItem);
 
-    expect(compact(flatItems)).to.deep.equals([
+    expect(prune(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'array', values: [] },
       { path: '[0]', pathTemplate: '.[]', type: 'null', values: [ null ] },
       { path: '[1]', pathTemplate: '.[]', type: 'number', values: [ 123 ] },
@@ -58,7 +58,7 @@ describe('Flatten', () => {
     const documentItItem = res[0].getDocumentItem();
     const flatItems = flatten([], documentItItem);
 
-    expect(compact(flatItems)).to.deep.equals([
+    expect(prune(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'object', values: [] },
       { path: '.prop1', pathTemplate: '.prop1', prop: 'prop1', type: 'string', values: [ 'some string' ] },
       { path: '.prop2', pathTemplate: '.prop2', prop: 'prop2', type: 'number', values: [ 123 ] },
@@ -92,7 +92,7 @@ describe('Flatten', () => {
     const documentItItem = res[0].getDocumentItem();
     const flatItems = flatten([], documentItItem);
 
-    expect(compact(flatItems)).to.deep.equals([
+    expect(prune(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'array', values: [] },
       { path: '[0]', pathTemplate: '.[]', type: 'string', values: [ 'item1' ] },
       { path: '[1]', pathTemplate: '.[]', type: 'string', values: [ 'item2' ] },
@@ -106,7 +106,7 @@ describe('Flatten', () => {
     const documentItem = res[0].getDocumentItem();
     const flatItems = flatten([], documentItem);
 
-    expect(compact(flatItems)).to.deep.equals([
+    expect(prune(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'object', values: [] },
       { path: '.someProp', pathTemplate: '.someProp', prop: 'someProp', type: 'string', values: [ 'val' ] },
       {
@@ -300,7 +300,7 @@ describe('Flatten', () => {
 
         for (let i = 0; i < flat.length; i++) {
           if (i === variant.index) continue;
-          expect(compact(flat[i])).to.not.have.property('options');
+          expect(prune(flat[i])).to.not.have.property('options');
         }
       });
     }
