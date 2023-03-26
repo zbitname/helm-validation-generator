@@ -31,7 +31,7 @@ export class DocumentPair extends DocumentItemGenerator<Pair> {
 
   public getDocumentItem(): DocumentItem {
     if (!(this.doc.key instanceof Scalar)) {
-      console.debug('failed pair', this.doc);
+      // console.debug('failed pair', this.doc);
       throw new Error('Key must be Scalar type');
     }
 
@@ -67,7 +67,7 @@ export class DocumentPair extends DocumentItemGenerator<Pair> {
       }).getDocumentItem();
     }
 
-    console.error('DocumentPair.getDocumentItem->(this.doc.value)', this.doc.value);
+    // console.error('DocumentPair.getDocumentItem->(this.doc.value)', this.doc.value);
     throw new Error('Unsupported type');
   }
 }

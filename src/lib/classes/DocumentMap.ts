@@ -41,7 +41,7 @@ export class DocumentMap extends DocumentItemGenerator<YAMLMap> {
         continue;
       }
 
-      console.error('DocumentMap.getDocumentItem->item', item);
+      // console.error('DocumentMap.getDocumentItem->item', item);
       throw new Error('Unsupported type');
     }
 

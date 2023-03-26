@@ -59,7 +59,7 @@ export class DocumentSeq extends DocumentItemGenerator<YAMLSeq> {
         continue;
       }
 
-      console.error('CodumentSeq.getDocumentItem->item', item);
+      // console.error('CodumentSeq.getDocumentItem->item', item);
       throw new Error('Unsupported type');
     }
 
