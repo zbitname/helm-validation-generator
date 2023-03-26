@@ -31,10 +31,10 @@ export class DocumentItem implements IDocumentItemWithOptions {
     this.children = _doc.children as IDocumentItemWithOptions[];
     this.comment = _doc.comment;
 
-    this.options = this.getParsedComment();
+    this.options = this.#getParsedComment();
   }
 
-  private getParsedComment(): TControlFncDesc[] | undefined {
+  #getParsedComment(): TControlFncDesc[] | undefined {
     const match = this.comment?.match(/^schema:\s*([\w\d;\s()./]+)/i);
 
     if (!match || !match[1]) {
