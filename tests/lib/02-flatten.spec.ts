@@ -11,8 +11,8 @@ describe('Flatten', () => {
   it('different-types-in-one-item.yaml', () => {
     const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    const flatItems = flatten([], chartItem);
+    const documentItItem = res[0].getDocumentItem();
+    const flatItems = flatten([], documentItItem);
 
     expect(compact(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'object', values: [] },
@@ -37,8 +37,8 @@ describe('Flatten', () => {
   it('mixed-types-root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    const flatItems = flatten([], chartItem);
+    const documentItItem = res[0].getDocumentItem();
+    const flatItems = flatten([], documentItItem);
 
     expect(compact(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'array', values: [] },
@@ -55,8 +55,8 @@ describe('Flatten', () => {
   it('prop.yaml', () => {
     const content = readFileSync(`${__dirname}/files/prop.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    const flatItems = flatten([], chartItem);
+    const documentItItem = res[0].getDocumentItem();
+    const flatItems = flatten([], documentItItem);
 
     expect(compact(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'object', values: [] },
@@ -89,8 +89,8 @@ describe('Flatten', () => {
   it('root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/root-array.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    const flatItems = flatten([], chartItem);
+    const documentItItem = res[0].getDocumentItem();
+    const flatItems = flatten([], documentItItem);
 
     expect(compact(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'array', values: [] },
@@ -103,8 +103,8 @@ describe('Flatten', () => {
   it('simple-comments.yaml', () => {
     const content = readFileSync(`${__dirname}/files/simple-comments.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    const flatItems = flatten([], chartItem);
+    const documentItem = res[0].getDocumentItem();
+    const flatItems = flatten([], documentItem);
 
     expect(compact(flatItems)).to.deep.equals([
       { path: '', pathTemplate: '', type: 'object', values: [] },
@@ -289,7 +289,7 @@ describe('Flatten', () => {
       it(`path: "${variant.path}", operator: "${variant.operator}"`, () => {
         const content = BASE_CONTENT.replace(variant.replaceOf, variant.replaceTo);
         const res = parse(content);
-        const flat = flatten([], res[0].getChartItem());
+        const flat = flatten([], res[0].getDocumentItem());
 
         expect(flat[variant.index]).to.have.property('options');
         expect(flat[variant.index].path).to.be.equals(variant.path);

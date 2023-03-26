@@ -6,7 +6,7 @@ import { operationCompiler } from './operation-compiler';
 import { parse } from './parse-yaml';
 import { buildSchema } from './schema-builder';
 import {
-  IChartItemWithOptions,
+  IDocumentItemWithOptions,
   IJSONSchemaRoot,
   TControlCommentConstructor,
 } from './interfaces';
@@ -32,18 +32,18 @@ export const generateSchemaValidation = (
     controlCommentRepo.add(name, controlComments[name]);
   }
 
-  const flat: IChartItemWithOptions[] = [];
+  const flat: IDocumentItemWithOptions[] = [];
 
   for (const content of contents) {
     const res = parse(content);
 
     for (const r of res) {
-      flat.push(...flatten([], r.getChartItem()));
+      flat.push(...flatten([], r.getDocumentItem()));
     }
   }
 
   const uniqFlatItems = chain(flat).uniqWith((a, b) => {
-    for (const key of (['path', 'type', 'comment', 'options', 'prop'] as (keyof IChartItemWithOptions)[])) {
+    for (const key of (['path', 'type', 'comment', 'options', 'prop'] as (keyof IDocumentItemWithOptions)[])) {
       if (!isEqual(a[key], b[key])) return false;
     }
     return true;

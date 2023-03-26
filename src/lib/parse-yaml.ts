@@ -2,16 +2,16 @@ import {
   parseAllDocuments,
 } from 'yaml';
 
-import { ChartRoot } from './classes/ChartRoot';
+import { DocumentRoot } from './classes/DocumentRoot';
 
 // 1st stage
-export const parse = (inputChart: string) => {
-  const docs = parseAllDocuments(inputChart);
-  const charts: ChartRoot[] = [];
+export const parse = (input: string) => {
+  const docs = parseAllDocuments(input);
+  const documentItems: DocumentRoot[] = [];
 
   for (const doc of docs) {
-    charts.push(new ChartRoot(doc));
+    documentItems.push(new DocumentRoot(doc));
   }
 
-  return charts;
+  return documentItems;
 };

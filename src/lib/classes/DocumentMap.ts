@@ -5,21 +5,21 @@ import {
   YAMLMap,
 } from 'yaml';
 
-import { IChartItem } from '../interfaces';
-import { ChartPair } from './ChartPair';
-import { ChartItem } from './ChartItem';
-import { ChartItemGenerator, IChartItemGeneratorParams } from './ChartItemGenerator';
+import { IDocumentItem } from '../interfaces';
+import { DocumentPair } from './DocumentPair';
+import { DocumentItem } from './DocumentItem';
+import { DocumentItemGenerator, ICodumentItemGeneratorParams } from './DocumentItemGenerator';
 
-export class ChartMap extends ChartItemGenerator<YAMLMap> {
+export class DocumentMap extends DocumentItemGenerator<YAMLMap> {
   constructor(
     doc: YAMLMap,
-    params: IChartItemGeneratorParams,
+    params: ICodumentItemGeneratorParams,
   ) {
     super(doc, params);
   }
 
-  public getChartItem(): ChartItem {
-    const chartPart: IChartItem = {
+  public getDocumentItem(): DocumentItem {
+    const documentItem: IDocumentItem = {
       type: 'object',
       values: [],
       children: [],
@@ -35,16 +35,16 @@ export class ChartMap extends ChartItemGenerator<YAMLMap> {
       const item = this.doc.items[i];
 
       if (item instanceof Pair) {
-        chartPart.children!.push(new ChartPair(item, {
+        documentItem.children!.push(new DocumentPair(item, {
           path: this.path,
-        }).getChartItem());
+        }).getDocumentItem());
         continue;
       }
 
-      console.log('ChartMap.getChartItem->item', item);
+      console.error('DocumentMap.getDocumentItem->item', item);
       throw new Error('Unsupported type');
     }
 
-    return new ChartItem(chartPart);
+    return new DocumentItem(documentItem);
   }
 }

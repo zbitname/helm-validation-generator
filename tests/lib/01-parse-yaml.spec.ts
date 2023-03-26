@@ -16,9 +16,9 @@ describe('YAML parse', () => {
   it('file=prop.yaml', () => {
     const content = readFileSync(`${__dirname}/files/prop.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
+    const documentItem = res[0].getDocumentItem();
 
-    expect(compact(chartItem)).to.deep.equals({
+    expect(compact(documentItem)).to.deep.equals({
       type: 'object',
       values: [],
       path: '',
@@ -112,8 +112,8 @@ describe('YAML parse', () => {
   it('file=root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/root-array.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    expect(compact(chartItem)).to.deep.equals({
+    const documentItem = res[0].getDocumentItem();
+    expect(compact(documentItem)).to.deep.equals({
       type: 'array',
       values: [],
       path: '',
@@ -129,8 +129,8 @@ describe('YAML parse', () => {
   it('file=mixed-types-root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
-    expect(compact(chartItem)).to.deep.equals({
+    const documentItem = res[0].getDocumentItem();
+    expect(compact(documentItem)).to.deep.equals({
       type: 'array',
       values: [],
       path: '',
@@ -150,9 +150,9 @@ describe('YAML parse', () => {
   it('file=simple-comments.yaml', () => {
     const content = readFileSync(`${__dirname}/files/simple-comments.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
+    const documentItItem = res[0].getDocumentItem();
 
-    expect(compact(chartItem)).to.deep.equals({
+    expect(compact(documentItItem)).to.deep.equals({
       type: 'object',
       values: [],
       path: '',
@@ -269,9 +269,9 @@ describe('YAML parse', () => {
   it('file=different-types-in-one-item.yaml', () => {
     const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
     const res = parse(content);
-    const chartItem = res[0].getChartItem();
+    const documentItItem = res[0].getDocumentItem();
 
-    expect(compact(chartItem)).to.deep.equals({
+    expect(compact(documentItItem)).to.deep.equals({
       children: [
         {
           children: [

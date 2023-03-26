@@ -6,6 +6,6 @@ export class OptionalControlComment extends ControlComment {
   }
 
   after(...args: any[]): void {
-    this.schemaItemParams.inputCompiledChartItem.optional = true;
+    this.schemaItemParams.inputCompiledDocumentItem.optional = true;
   }
 }

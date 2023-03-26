@@ -20,19 +20,19 @@ export type TControlOperations = {
 
 // export type TControlCommentFnc = (...args: any[]) => TControlOperators;
 
-export interface IChartItem {
+export interface IDocumentItem {
   values: any[];
   type: TJSONSchemaType;
   path: string;
   prop?: string;
-  children?: IChartItem[];
+  children?: IDocumentItem[];
   comment?: string | null;
 }
 
-export interface IChartItemWithOptions extends IChartItem {
+export interface IDocumentItemWithOptions extends IDocumentItem {
   pathTemplate: string;
   options?: TControlFncDesc[];
-  children?: IChartItemWithOptions[];
+  children?: IDocumentItemWithOptions[];
 }
 
 export interface IJSONSchemaItem {
@@ -56,7 +56,7 @@ export interface IJSONSchemaRoot {
   $defs?: Record<string, Omit<IJSONSchemaItem, '$ref'>>;
 }
 
-export interface ICompiledChartItem extends Pick<IChartItem, 'type' | 'path' | 'prop'> {
+export interface ICompiledDocumentItem extends Pick<IDocumentItem, 'type' | 'path' | 'prop'> {
   pathTemplate: string;
   precompiledSchemaItem: IJSONSchemaItem;
   countThis: number;
@@ -64,15 +64,15 @@ export interface ICompiledChartItem extends Pick<IChartItem, 'type' | 'path' | '
   optional?: boolean;
 }
 
-export interface IChartItemGenerator {
-  getChartItem(): IChartItem;
+export interface IDocumentItemGenerator {
+  getDocumentItem(): IDocumentItem;
   // setControlCommentRepo(repo: IControlCommentRepo): this;
   // getControlCommentRepo(): IControlCommentRepo;
 }
 
 interface IJSONSchemaForProcessingBase {
-  chartItems: IChartItemWithOptions[];
-  pathTemplate: IChartItemWithOptions['pathTemplate'];
+  documentItems: IDocumentItemWithOptions[];
+  pathTemplate: IDocumentItemWithOptions['pathTemplate'];
 }
 
 export interface IJSONSchemaForProcessingObject extends IJSONSchemaForProcessingBase {
@@ -124,7 +124,7 @@ export interface ISchemaParams {
 
 export interface ISchemaItemParams {
   readonly templatePath: IJSONSchemaForProcessing['pathTemplate'];
-  readonly inputCompiledChartItem: Partial<ICompiledChartItem>;
+  readonly inputCompiledDocumentItem: Partial<ICompiledDocumentItem>;
   readonly inputSchema: IJSONSchemaItem;
 }
 

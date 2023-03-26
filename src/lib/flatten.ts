@@ -1,7 +1,7 @@
-import { IChartItemWithOptions } from './interfaces';
+import { IDocumentItemWithOptions } from './interfaces';
 
 // 2nd stage
-export const flatten = (parent: IChartItemWithOptions[], element: IChartItemWithOptions): IChartItemWithOptions[] => {
+export const flatten = (parent: IDocumentItemWithOptions[], element: IDocumentItemWithOptions): IDocumentItemWithOptions[] => {
   parent.push({
     path: element.path,
     pathTemplate: element.pathTemplate,

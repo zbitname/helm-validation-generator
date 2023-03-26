@@ -83,7 +83,7 @@ describe('Operation compiler (optional)', () => {
       it(`path: "${variant.path}"`, () => {
         const content = BASE_CONTENT.replace(variant.replaceOf, variant.replaceTo);
         const res = parse(content);
-        const flat = flatten([], res[0].getChartItem());
+        const flat = flatten([], res[0].getDocumentItem());
         const flatCompiledItems = operationCompiler(flat, controlCommentRepo);
 
         expect(flatCompiledItems).to.be.an('array');

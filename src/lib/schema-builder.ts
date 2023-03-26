@@ -2,7 +2,7 @@ import {
   isEqual,
 } from 'lodash';
 import {
-  ICompiledChartItem,
+  ICompiledDocumentItem,
   IJSONSchemaRoot,
   IJSONSchemaItem,
 } from './interfaces';
@@ -12,7 +12,7 @@ const getParentPathTemplate = (pathTemplate: string) => pathTemplate.split(/(?<!
 
 // 4th stage
 export const buildSchema = (
-  chartItems: ICompiledChartItem[],
+  documentItems: ICompiledDocumentItem[],
   schemaDefinitions?: IJSONSchemaRoot['$defs'],
 ): IJSONSchemaRoot => {
   const result: IJSONSchemaRoot = {
@@ -21,7 +21,7 @@ export const buildSchema = (
   };
   const cache: Record<string, IJSONSchemaItem[]> = {};
 
-  for (const item of chartItems) {
+  for (const item of documentItems) {
     if (!result.oneOf) {
       result.oneOf = [];
     }

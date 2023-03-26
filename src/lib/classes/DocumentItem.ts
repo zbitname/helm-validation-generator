@@ -1,22 +1,22 @@
 import {
-  IChartItem,
-  IChartItemWithOptions,
+  IDocumentItem,
+  IDocumentItemWithOptions,
   TControlFncDesc,
   TJSONSchemaType,
 } from '../interfaces';
 
-export class ChartItem implements IChartItemWithOptions {
+export class DocumentItem implements IDocumentItemWithOptions {
   public readonly values: any[];
   public readonly type: TJSONSchemaType;
   public readonly path: string;
   public readonly pathTemplate: string;
   public readonly prop?: string;
-  public readonly children?: IChartItemWithOptions[] = [];
+  public readonly children?: IDocumentItemWithOptions[] = [];
   public readonly comment?: string | null = null;
   public readonly options?: TControlFncDesc[] = [];
 
   constructor(
-    _doc: IChartItem,
+    _doc: IDocumentItem,
   ) {
     if (_doc.prop === null) {
       this.prop = 'null';
@@ -28,7 +28,7 @@ export class ChartItem implements IChartItemWithOptions {
     this.type = _doc.type;
     this.path = _doc.path;
     this.pathTemplate = _doc.path.replace(/\[\d+\]/g, '.[]');
-    this.children = _doc.children as IChartItemWithOptions[];
+    this.children = _doc.children as IDocumentItemWithOptions[];
     this.comment = _doc.comment;
 
     this.options = this.getParsedComment();

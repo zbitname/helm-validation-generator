@@ -7,11 +7,11 @@ import {
   YAMLSeq,
 } from 'yaml';
 
-import { ChartMap } from './ChartMap';
-import { ChartSeq } from './ChartSeq';
+import { DocumentMap } from './DocumentMap';
+import { DocumentSeq } from './DocumentSeq';
 import { getTypeByValue } from './helpers';
-import { ChartItem } from './ChartItem';
-import { ChartItemGenerator, IChartItemGeneratorParams } from './ChartItemGenerator';
+import { DocumentItem } from './DocumentItem';
+import { DocumentItemGenerator, ICodumentItemGeneratorParams } from './DocumentItemGenerator';
 
 const buildPathKey = (key: string) => {
   let k = key;
@@ -21,15 +21,15 @@ const buildPathKey = (key: string) => {
   return k.replace(/\./g, '\\.');
 };
 
-export class ChartPair extends ChartItemGenerator<Pair> {
+export class DocumentPair extends DocumentItemGenerator<Pair> {
   constructor(
     doc: Pair,
-    params: IChartItemGeneratorParams,
+    params: ICodumentItemGeneratorParams,
   ) {
     super(doc, params);
   }
 
-  public getChartItem(): ChartItem {
+  public getDocumentItem(): DocumentItem {
     if (!(this.doc.key instanceof Scalar)) {
       console.debug('failed pair', this.doc);
       throw new Error('Key must be Scalar type');
@@ -38,7 +38,7 @@ export class ChartPair extends ChartItemGenerator<Pair> {
     if (this.doc.value instanceof Scalar) {
       const path = `${this.path}.${buildPathKey(this.doc.key.value)}`;
 
-      return new ChartItem({
+      return new DocumentItem({
         prop: this.doc.key.value,
         type: getTypeByValue(this.doc.value?.value),
         values: [ this.doc.value.value ],
@@ -48,26 +48,26 @@ export class ChartPair extends ChartItemGenerator<Pair> {
     }
 
     if (this.doc.value instanceof Pair) {
-      return new ChartPair(this.doc.value, {
+      return new DocumentPair(this.doc.value, {
         path: this.path,
-      }).getChartItem();
+      }).getDocumentItem();
     }
 
     if (this.doc.value instanceof YAMLMap) {
-      return new ChartMap(this.doc.value, {
+      return new DocumentMap(this.doc.value, {
         propName: this.doc.key.value,
         path: `${this.path}.${buildPathKey(this.doc.key.value)}`,
-      }).getChartItem();
+      }).getDocumentItem();
     }
 
     if (this.doc.value instanceof YAMLSeq) {
-      return new ChartSeq(this.doc.value, {
+      return new DocumentSeq(this.doc.value, {
         propName: this.doc.key.value,
         path: `${this.path}.${buildPathKey(this.doc.key.value)}`,
-      }).getChartItem();
+      }).getDocumentItem();
     }
 
-    console.log('ChartPair.getChartItem->(this.doc.value)', this.doc.value);
+    console.error('DocumentPair.getDocumentItem->(this.doc.value)', this.doc.value);
     throw new Error('Unsupported type');
   }
 }

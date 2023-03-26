@@ -1,21 +1,21 @@
 import {
-  IChartItem,
-  IChartItemGenerator,
+  IDocumentItem,
+  IDocumentItemGenerator,
 } from '../interfaces';
 
-export interface IChartItemGeneratorParams {
+export interface ICodumentItemGeneratorParams {
   path: string;
   propName?: string;
 }
 
-export abstract class ChartItemGenerator<T> implements IChartItemGenerator {
+export abstract class DocumentItemGenerator<T> implements IDocumentItemGenerator {
   #propName?: string;
   #path: string;
   #doc: T;
 
   public constructor(
     doc: T,
-    params?: IChartItemGeneratorParams,
+    params?: ICodumentItemGeneratorParams,
   ) {
     this.#propName = params?.propName;
     this.#path = params?.path || '';
@@ -34,5 +34,5 @@ export abstract class ChartItemGenerator<T> implements IChartItemGenerator {
     return this.#doc;
   }
 
-  public abstract getChartItem(): IChartItem;
+  public abstract getDocumentItem(): IDocumentItem;
 }

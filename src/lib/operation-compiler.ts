@@ -1,29 +1,29 @@
 import { uniq } from 'lodash';
 
 import {
-  IChartItemWithOptions,
+  IDocumentItemWithOptions,
   IControlComment,
   IControlCommentRepo,
   ISchemaParams,
   IJSONSchemaItem,
-  ICompiledChartItem,
+  ICompiledDocumentItem,
   TSchemaOptions,
 } from './interfaces';
 
 // 3rd stage
 export const operationCompiler = (
-  chartItems: IChartItemWithOptions[],
+  documentItems: IDocumentItemWithOptions[],
   controlCommentsRepo: IControlCommentRepo,
   params: TSchemaOptions = {},
-): ICompiledChartItem[] => {
+): ICompiledDocumentItem[] => {
   const additionalProperties = params.additionalProperties ?? false;
-  const result: ICompiledChartItem[] = [];
+  const result: ICompiledDocumentItem[] = [];
   const schemaParams: ISchemaParams = {
     skipTemplatePaths: [],
   };
 
-  for (const item of chartItems) {
-    const compiledChartItem: Partial<ICompiledChartItem> = {
+  for (const item of documentItems) {
+    const compiledDocumentItem: Partial<ICompiledDocumentItem> = {
       type: item.type,
       path: item.path,
       prop: item.prop,
@@ -53,7 +53,7 @@ export const operationCompiler = (
       const ControlComment = controlCommentsRepo.get(option.name);
       const controlComment = new ControlComment(schemaParams, {
         inputSchema: schemaItem,
-        inputCompiledChartItem: compiledChartItem,
+        inputCompiledDocumentItem: compiledDocumentItem,
         templatePath: item.pathTemplate,
       }) as IControlComment;
 
@@ -66,9 +66,9 @@ export const operationCompiler = (
       continue;
     }
 
-    const sameChartItemsMatch = item.path.match(/(.*)\[\d+\]/);
-    const sameChartItems = chartItems.filter(i =>
-      sameChartItemsMatch ? i.path.startsWith(sameChartItemsMatch[1]) : false
+    const sameDocumentItemsMatch = item.path.match(/(.*)\[\d+\]/);
+    const sameDocumentItems = documentItems.filter(i =>
+      sameDocumentItemsMatch ? i.path.startsWith(sameDocumentItemsMatch[1]) : false
     );
 
     result.push({
@@ -77,9 +77,9 @@ export const operationCompiler = (
       prop: item.prop,
       pathTemplate: item.pathTemplate,
       precompiledSchemaItem: schemaItem,
-      countThis: sameChartItems.filter(i => i.pathTemplate === item.pathTemplate).length,
-      countOf: uniq(sameChartItems.map(i => i.path.match(/.*\[(\d+)\]/)).filter(Boolean).map(i => i![1])).length,
-      ...compiledChartItem,
+      countThis: sameDocumentItems.filter(i => i.pathTemplate === item.pathTemplate).length,
+      countOf: uniq(sameDocumentItems.map(i => i.path.match(/.*\[(\d+)\]/)).filter(Boolean).map(i => i![1])).length,
+      ...compiledDocumentItem,
     });
   }
 

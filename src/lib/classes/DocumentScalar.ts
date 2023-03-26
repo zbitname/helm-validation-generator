@@ -5,19 +5,19 @@ import {
 } from 'yaml';
 
 import { getTypeByValue } from './helpers';
-import { ChartItem } from './ChartItem';
-import { ChartItemGenerator, IChartItemGeneratorParams } from './ChartItemGenerator';
+import { DocumentItem } from './DocumentItem';
+import { DocumentItemGenerator, ICodumentItemGeneratorParams } from './DocumentItemGenerator';
 
-export class ChartScalar extends ChartItemGenerator<Scalar> {
+export class DocumentScalar extends DocumentItemGenerator<Scalar> {
   constructor(
     doc: Scalar,
-    params: IChartItemGeneratorParams,
+    params: ICodumentItemGeneratorParams,
   ) {
     super(doc, params);
   }
 
-  public getChartItem(): ChartItem {
-    return new ChartItem({
+  public getDocumentItem(): DocumentItem {
+    return new DocumentItem({
       type: getTypeByValue(this.doc.value),
       values: [ this.doc.value ],
       path: this.path,

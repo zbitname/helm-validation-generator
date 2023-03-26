@@ -16,7 +16,7 @@ describe('Schema builder', () => {
     const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -77,7 +77,7 @@ describe('Schema builder', () => {
     const content = readFileSync(`${__dirname}/files/1-lvl-array-with-scalars-twice.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -103,7 +103,7 @@ describe('Schema builder', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -138,7 +138,7 @@ describe('Schema builder', () => {
     const content = readFileSync(`${__dirname}/files/prop.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -227,7 +227,7 @@ describe('Schema builder', () => {
     const content = readFileSync(`${__dirname}/files/root-array.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -248,7 +248,7 @@ describe('Schema builder', () => {
     controlCommentRepo.add('ref', RefControlComment);
 
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -337,7 +337,7 @@ describe('Schema builder', () => {
     controlCommentRepo.add('ref', RefControlComment);
 
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -405,7 +405,7 @@ describe('Schema builder', () => {
     controlCommentRepo.add('ref', RefControlComment);
 
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
@@ -469,7 +469,7 @@ describe('Schema builder', () => {
     controlCommentRepo.add('ref', RefControlComment);
 
     const res = parse(content);
-    const flat = flatten([], res[0].getChartItem());
+    const flat = flatten([], res[0].getDocumentItem());
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
