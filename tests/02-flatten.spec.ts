@@ -2,9 +2,9 @@
 /* eslint-env mocha */
 
 import { readFileSync } from 'fs';
-import { parse } from '../../src/lib/parse-yaml';
+import { parse } from '../src/parse-yaml';
 import { expect } from 'chai';
-import { flatten } from '../../src/lib/flatten';
+import { flatten } from '../src/flatten';
 import { compact } from './helpers';
 
 describe('Flatten', () => {

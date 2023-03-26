@@ -2,14 +2,14 @@
 /* eslint-env mocha */
 
 import { readFileSync } from 'fs';
-import { parse } from '../../src/lib/parse-yaml';
+import { parse } from '../src/parse-yaml';
 import { expect } from 'chai';
-import { flatten } from '../../src/lib/flatten';
-import { operationCompiler } from '../../src/lib/operation-compiler';
-import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
-import { buildSchema } from '../../src/lib/schema-builder';
-import { RefControlComment } from '../../src/lib/control-comments/ref';
-import { schemaUrl } from '../../src/lib/consts';
+import { flatten } from '../src/flatten';
+import { operationCompiler } from '../src/operation-compiler';
+import { ControlCommentRepo } from '../src/classes/ControlCommentRepo';
+import { buildSchema } from '../src/schema-builder';
+import { RefControlComment } from '../src/control-comments/ref';
+import { schemaUrl } from '../src/consts';
 
 describe('Schema builder', () => {
   it('file=different-types-in-one-item.yaml', () => {

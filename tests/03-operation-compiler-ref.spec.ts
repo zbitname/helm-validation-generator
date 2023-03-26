@@ -4,11 +4,11 @@
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
 
-import { parse } from '../../src/lib/parse-yaml';
-import { flatten } from '../../src/lib/flatten';
-import { operationCompiler } from '../../src/lib/operation-compiler';
-import { ControlCommentRepo } from '../../src/lib/classes/ControlCommentRepo';
-import { RefControlComment } from '../../src/lib/control-comments/ref';
+import { parse } from '../src/parse-yaml';
+import { flatten } from '../src/flatten';
+import { operationCompiler } from '../src/operation-compiler';
+import { ControlCommentRepo } from '../src/classes/ControlCommentRepo';
+import { RefControlComment } from '../src/control-comments/ref';
 
 describe('Operation compiler (ref)', () => {
   describe('file=different-types-in-one-item.yaml', () => {

@@ -1,14 +1,40 @@
 {
-  "name": "helm-validation-generator",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@zbit/helm-validation-generator",
+  "version": "0.0.1",
+  "description": "Tool for generation validation files for Helm",
+  "main": "dist/src/index.js",
+  "preferGlobal": true,
+  "displayName": "Helm validation generator",
   "scripts": {
     "test": "mocha -r ts-node/register --exit",
     "test-coverage": "nyc --reporter=lcovonly --require ts-node/register --require source-map-support/register npm run test",
-    "cli": "node -r ts-node/register cli"
+    "cli": "node dist/bin",
+    "cli-dev": "node -r ts-node/register bin",
+    "build": "tsc"
   },
-  "author": "",
+  "bin": {
+    "helmvg": "node dist/bin/index.js"
+  },
+  "files": [
+    "README.md",
+    "bin",
+    "src",
+    "dist"
+  ],
+  "typings": "./dist/**/*.d.ts",
+  "directories": {
+    "lib": "./dist/src",
+    "test": "./tests"
+  },
+  "author": {
+    "name" : "Alexey Kheben",
+    "email" : "i@zbit.name",
+    "url" : "https://github.com/zbitname"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zbitname/helm-validation-generator.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "1.0.2",
@@ -35,5 +61,6 @@
     "commander": "10.0.0",
     "lodash": "4.17.21",
     "yaml": "2.2.1"
-  }
+  },
+  "keywords": ["yaml", "helm", "validation", "schema", "generator", "k8s", "kubernetes"]
 }

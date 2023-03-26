@@ -3,7 +3,7 @@
 
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
-import { generateSchemaValidation } from '../../src/lib';
+import { generateSchemaValidation } from '../src';
 
 describe('Few value files', () => {
   it('1-lvl-array-with-scalars-twice.yaml + root-array.yaml', () => {

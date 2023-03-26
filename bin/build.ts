@@ -6,8 +6,8 @@ import {
   parse,
 } from 'yaml';
 
-import { generateSchemaValidation } from '../src/lib';
-import { IJSONSchemaRoot } from '../src/lib/interfaces';
+import { generateSchemaValidation } from '../src';
+import { IJSONSchemaRoot } from '../src/interfaces';
 
 export default (program: Command) => {
   program
