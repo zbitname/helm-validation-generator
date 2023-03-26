@@ -1,6 +1,6 @@
 # Comments syntax
 
-Example
+Example of base usage
 ### values.yaml
 ```yaml
 image: # schema: ref(ImageRef)
@@ -22,12 +22,8 @@ debugMode: false # schema: optional
         "type": "string",
         "enum": ["Always", "IfNotPresent"]
       },
-      "repository": {
-        "type": "string"
-      },
-      "tag": {
-        "type": "string"
-      }
+      "repository": { "type": "string" },
+      "tag": { "type": "string" }
     },
     "required": ["pullPolicy", "repository", "tag"]
   }
@@ -36,7 +32,41 @@ debugMode: false # schema: optional
 
 ### values.schema.json
 ```json
-
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "debugMode": {
+          "oneOf": [ { "type": "boolean" } ]
+        },
+        "image": {
+          "oneOf": [ { "$ref": "#/$defs/ImageRef" } ]
+        },
+        "replicas": {
+          "oneOf": [ { "type": "number" } ]
+        }
+      },
+      "required": [ "image", "replicas" ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "ImageRef": {
+      "type": "object",
+      "properties": {
+        "pullPolicy": {
+          "type": "string",
+          "enum": [ "Always", "IfNotPresent" ]
+        },
+        "repository": { "type": "string" },
+        "tag": { "type": "string" }
+      },
+      "required": [ "pullPolicy", "repository", "tag" ]
+    }
+  }
+}
 ```
 
 Control comments:

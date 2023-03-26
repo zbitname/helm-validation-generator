@@ -38,16 +38,14 @@ export interface IDocumentItemWithOptions extends IDocumentItem {
 export interface IJSONSchemaItem {
   $ref?: string;
   type?: TJSONSchemaType;
-  items?: {
-    oneOf?: IJSONSchemaItem[];
-  };
-  properties?: Record<string, {
-    oneOf?: IJSONSchemaItem[];
-  }>;
+  items?: IJSONSchemaItem;
+  properties?: Record<string, IJSONSchemaItem>;
   required?: string[];
   additionalProperties?: boolean;
   deprecated?: boolean;
   description?: string;
+  enum?: string[];
+  oneOf?: IJSONSchemaItem[];
 }
 
 export interface IJSONSchemaRoot {

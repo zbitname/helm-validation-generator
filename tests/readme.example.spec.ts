@@ -4,8 +4,8 @@
 import { expect } from 'chai';
 import { generateSchemaValidation } from '../src';
 
-describe('Readme example', () => {
-  it('1-lvl-array-with-scalars-twice.yaml + root-array.yaml', () => {
+describe('Readme', () => {
+  it('Example of base usage', () => {
     const content = `
     image: # schema: ref(ImageRef)
       pullPolicy: Always
@@ -14,7 +14,7 @@ describe('Readme example', () => {
     replicas: 1
     foo: bar # schema: skip
     debugMode: false # schema: optional
-  `;
+    `;
     const schema = generateSchemaValidation([content], {
       "ImageRef": {
         "type": "object",
@@ -33,7 +33,7 @@ describe('Readme example', () => {
         "required": ["pullPolicy", "repository", "tag"]
       }
     });
-
+    // console.log(JSON.stringify(schema, null, 2));
     expect(schema).to.deep.equals({
       "$schema": "http://json-schema.org/draft-07/schema#",
       "oneOf": [
@@ -41,35 +41,33 @@ describe('Readme example', () => {
           "type": "object",
           "properties": {
             "debugMode": {
-              "oneOf": [
-                {
-                  "type": "boolean"
-                }
-              ]
+              "oneOf": [ { "type": "boolean" } ]
             },
             "image": {
-              "oneOf": [
-                {
-                  "$ref": "#/$defs/ImageRef"
-                }
-              ]
+              "oneOf": [ { "$ref": "#/$defs/ImageRef" } ]
             },
             "replicas": {
-              "oneOf": [
-                {
-                  "type": "number"
-                }
-              ]
+              "oneOf": [ { "type": "number" } ]
             }
           },
-          "required": [
-            "image",
-            "replicas"
-          ],
+          "required": [ "image", "replicas" ],
           "additionalProperties": false
         }
       ],
-      "$defs": {}
+      "$defs": {
+        "ImageRef": {
+          "type": "object",
+          "properties": {
+            "pullPolicy": {
+              "type": "string",
+              "enum": [ "Always", "IfNotPresent" ]
+            },
+            "repository": { "type": "string" },
+            "tag": { "type": "string" }
+          },
+          "required": [ "pullPolicy", "repository", "tag" ]
+        }
+      }
     });
   });
 });
