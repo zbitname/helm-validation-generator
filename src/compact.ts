@@ -1,13 +1,13 @@
 // 5th stage
 
-import { uniq } from 'lodash';
+// import { uniq } from 'lodash';
 import {
   IJSONSchemaItem,
   IJSONSchemaRoot,
   TJSONSchemaType,
 } from './interfaces';
 
-const SCALARS: TJSONSchemaType[] = ['boolean', 'integer', 'null', 'number', 'string'];
+// const SCALARS: TJSONSchemaType[] = ['boolean', 'integer', 'null', 'number', 'string'];
 
 export const compact = (schema: IJSONSchemaRoot): IJSONSchemaRoot => {
   const result: IJSONSchemaRoot = {
@@ -23,7 +23,7 @@ export const compact = (schema: IJSONSchemaRoot): IJSONSchemaRoot => {
 const compactItem = (schema: IJSONSchemaItem): IJSONSchemaItem => {
   const result: IJSONSchemaItem = {};
 
-  if (schema.oneOf) {
+  if (schema.oneOf && schema.oneOf.length > 0) {
     if (schema.oneOf.length === 1) {
       Object.assign(result, schema.oneOf[0]);
 
@@ -35,17 +35,30 @@ const compactItem = (schema: IJSONSchemaItem): IJSONSchemaItem => {
         result.items = compactItem(result.items);
       }
     } else {
-      const types = uniq(schema.oneOf.map(i => i.type).filter(Boolean).flat()) as TJSONSchemaType[];
+      const groupedTypes: TJSONSchemaType[] = [];
+      const otherSchemas: IJSONSchemaItem[] = [];
+
+      for (const item of schema.oneOf) {
+        if (Object.keys(item).filter(i => i !== 'type').length === 0) {
+          if (item.type) {
+            groupedTypes.push(item.type as TJSONSchemaType);
+          }
+        } else {
+          otherSchemas.push(item);
+        }
+      }
 
       if (
-        types.every(i => SCALARS.includes(i))
-        && schema.oneOf.every(i => Object.keys(i).filter(k => k !== 'type').length === 0)
+        (groupedTypes.length > 0 && otherSchemas.length > 0)
+        || (otherSchemas.length > 1)
       ) {
-        Object.assign(result, {
-          type: types,
-        });
+        result.oneOf = [ ...otherSchemas ];
+
+        if (groupedTypes.length) {
+          result.oneOf.push({ type: groupedTypes });
+        }
       } else {
-        Object.assign(result, schema);
+        Object.assign(result, { type: groupedTypes });
       }
     }
   }

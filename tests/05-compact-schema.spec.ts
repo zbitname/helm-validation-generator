@@ -9,12 +9,11 @@ import { operationCompiler } from '../src/operation-compiler';
 import { ControlCommentRepo } from '../src/classes/ControlCommentRepo';
 import { buildSchema } from '../src/schema-builder';
 import { RefControlComment } from '../src/control-comments/ref';
-import { schemaUrl } from '../src/consts';
 import { compact } from '../src/compact';
 import { prune } from './helpers';
 
-describe.only('Compact schema', () => {
-  it.only('file=different-types-in-one-item.yaml', () => {
+describe('Compact schema', () => {
+  it('file=different-types-in-one-item.yaml', () => {
     const content = readFileSync(`${__dirname}/files/different-types-in-one-item.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
@@ -61,7 +60,7 @@ describe.only('Compact schema', () => {
     });
   });
 
-  it.only('file=1-lvl-array-with-scalars-twice.yaml', () => {
+  it('file=1-lvl-array-with-scalars-twice.yaml', () => {
     const content = readFileSync(`${__dirname}/files/1-lvl-array-with-scalars-twice.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
@@ -79,7 +78,7 @@ describe.only('Compact schema', () => {
     });
   });
 
-  it.only('file=mixed-types-root-array.yaml', () => {
+  it('file=mixed-types-root-array.yaml', () => {
     const content = readFileSync(`${__dirname}/files/mixed-types-root-array.yaml`).toString();
     const controlCommentRepo = new ControlCommentRepo();
     const res = parse(content);
@@ -89,9 +88,22 @@ describe.only('Compact schema', () => {
     });
     const schema = compact(buildSchema(flatCompiledItems));
 
-    console.log(JSON.stringify(schema, null, 2));
-
-    // expect(schema).to.deep.equals();
+    expect(schema).to.deep.equals({
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      $defs: {},
+      type: 'array',
+      items: {
+        oneOf: [
+          {
+            type: 'object',
+            properties: {},
+            required: [],
+            additionalProperties: false,
+          },
+          { type: [ 'null', 'number', 'boolean', 'string', 'array' ] },
+        ],
+      },
+    });
   });
 
   it('file=prop.yaml', () => {
@@ -102,84 +114,61 @@ describe.only('Compact schema', () => {
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
-    const schema = buildSchema(flatCompiledItems);
+    const schema = compact(buildSchema(flatCompiledItems));
 
     expect(schema).to.deep.equals({
-      $schema: schemaUrl,
-      oneOf: [{
-        type: 'object',
-        properties: {
-          prop1: { oneOf: [ { type: 'string' } ] },
-          prop2: { oneOf: [ { type: 'number' } ] },
-          prop3: { oneOf: [ { type: 'number' } ] },
-          prop4: { oneOf: [ { type: 'boolean' } ] },
-          prop5: { oneOf: [ { type: 'null' } ] },
-          prop6: {
-            oneOf: [{
-              type: 'array',
-            }],
-          },
-          prop7: {
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      $defs: {},
+      type: 'object',
+      properties: {
+        prop1: { type: 'string' },
+        prop2: { type: 'number' },
+        prop3: { type: 'number' },
+        prop4: { type: 'boolean' },
+        prop5: { type: 'null' },
+        prop6: { type: 'array' },
+        prop7: {
+          type: 'object',
+          properties: {},
+          required: [],
+          additionalProperties: false,
+        },
+        prop8: {
+          type: 'array',
+          items: {
             oneOf: [{
               type: 'object',
               properties: {},
               required: [],
               additionalProperties: false,
-            }],
-          },
-          prop8: {
-            oneOf: [{
-              type: 'array',
-              items: {
-                oneOf: [
-                  { type: 'string' },
-                  { type: 'number' },
-                  { type: 'boolean' },
-                  { type: 'null' },
-                  {
-                    type: 'array',
-                  },
-                  {
-                    type: 'object',
-                    properties: {},
-                    required: [],
-                    additionalProperties: false,
-                  },
-                ],
-              },
-            }],
-          },
-          prop9: {
-            oneOf: [{
-              type: 'object',
-              properties: {
-                subprop1: { oneOf: [ { type: 'string' } ] },
-                subprop2: { oneOf: [ { type: 'number' } ] },
-                subprop3: { oneOf: [ { type: 'number' } ] },
-                subprop4: { oneOf: [ { type: 'boolean' } ] },
-                subprop5: { oneOf: [ { type: 'null' } ] },
-                subprop6: {
-                  oneOf: [{
-                    type: 'array',
-                  }],
-                },
-                subprop7: {
-                  oneOf: [{
-                    type: 'object',
-                    properties: {},
-                    required: [],
-                    additionalProperties: false,
-                  }]
-                }
-              },
-              required: [ 'subprop1', 'subprop2', 'subprop3', 'subprop4', 'subprop5', 'subprop6', 'subprop7' ],
-              additionalProperties: false,
+            },
+            {
+              type: [ 'string', 'number', 'boolean', 'null', 'array' ],
             }],
           },
         },
-        required: [ 'prop1', 'prop2', 'prop3', 'prop4', 'prop5', 'prop6', 'prop7', 'prop8', 'prop9' ],
-        additionalProperties: false,
-      }],
+        prop9: {
+          type: 'object',
+          properties: {
+            subprop1: { type: 'string' },
+            subprop2: { type: 'number' },
+            subprop3: { type: 'number' },
+            subprop4: { type: 'boolean' },
+            subprop5: { type: 'null' },
+            subprop6: { type: 'array' },
+            subprop7: {
+              type: 'object',
+              properties: {},
+              required: [],
+              additionalProperties: false,
+            },
+          },
+          required: [ 'subprop1', 'subprop2', 'subprop3', 'subprop4', 'subprop5', 'subprop6', 'subprop7' ],
+          additionalProperties: false,
+        },
+      },
+      required: [ 'prop1', 'prop2', 'prop3', 'prop4', 'prop5', 'prop6', 'prop7', 'prop8', 'prop9' ],
+      additionalProperties: false,
     });
   });
 
@@ -191,14 +180,13 @@ describe.only('Compact schema', () => {
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
-    const schema = buildSchema(flatCompiledItems);
+    const schema = compact(buildSchema(flatCompiledItems));
 
     expect(schema).to.deep.equals({
-      $schema: schemaUrl,
-      oneOf: [{
-        type: 'array',
-        items: { oneOf: [ { type: 'string' } ] },
-      }],
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      $defs: {},
+      type: 'array',
+      items: { type: 'string' },
     });
   });
 
@@ -212,7 +200,7 @@ describe.only('Compact schema', () => {
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
-    const schema = buildSchema(flatCompiledItems, {
+    const schema = compact(buildSchema(flatCompiledItems, {
       ItemArray: {
         type: 'array',
           items: {
@@ -234,60 +222,50 @@ describe.only('Compact schema', () => {
         type: 'array',
         items: { oneOf: [ { type: 'string' } ] },
       },
-    });
+    }));
 
     expect(schema).to.deep.equals({
-      $schema: schemaUrl,
-      oneOf: [
-        {
-          type: 'object',
-          properties: {
-            someProp: { oneOf: [ { type: 'string' } ] },
-            somePropWithComment: { oneOf: [ { type: 'string' } ] },
-            items: { oneOf: [ { $ref: '#/$defs/ItemArray' } ] },
-            elements: { oneOf: [ { $ref: '#/$defs/Elements' } ] },
-            props: {
-              oneOf: [
-                {
-                  type: 'object',
-                  properties: {
-                    p1: { oneOf: [ { type: 'string' } ] },
-                    p2: { oneOf: [ { type: 'string' } ] },
-                    p3: { oneOf: [ { type: 'string' } ] },
-                  },
-                  required: [ 'p1', 'p2', 'p3' ],
-                  additionalProperties: false,
-                },
-              ],
-            },
-          },
-          required: [ 'someProp', 'somePropWithComment', 'items', 'elements', 'props' ],
-          additionalProperties: false,
-        },
-      ],
+      $schema: 'http://json-schema.org/draft-07/schema#',
       $defs: {
         ItemArray: {
           type: 'array',
           items: {
-            oneOf: [
-              {
-                type: 'object',
-                properties: {
-                  name: { oneOf: [ { type: 'string' } ] },
-                  value: { oneOf: [ { type: 'string' } ] },
-                  description: { oneOf: [ { type: 'string' } ] },
-                },
-                required: [ 'name', 'value', 'description' ],
-                additionalProperties: false,
+            oneOf: [{
+              type: 'object',
+              properties: {
+                name: { oneOf: [ { type: 'string' } ] },
+                value: { oneOf: [ { type: 'string' } ] },
+                description: { oneOf: [ { type: 'string' } ] },
               },
-            ],
+              required: [ 'name', 'value', 'description' ],
+              additionalProperties: false,
+            }],
           },
         },
         Elements: {
           type: 'array',
           items: { oneOf: [ { type: 'string' } ] },
-        },
+        }
       },
+      type: 'object',
+      properties: {
+        someProp: { type: 'string' },
+        somePropWithComment: { type: 'string' },
+        items: { $ref: '#/$defs/ItemArray' },
+        elements: { $ref: '#/$defs/Elements' },
+        props: {
+          type: 'object',
+          properties: {
+            p1: { type: 'string' },
+            p2: { type: 'string' },
+            p3: { type: 'string' },
+          },
+          required: [ 'p1', 'p2', 'p3' ],
+          additionalProperties: false,
+        }
+      },
+      required: [ 'someProp', 'somePropWithComment', 'items', 'elements', 'props' ],
+      additionalProperties: false,
     });
   });
 
@@ -301,61 +279,43 @@ describe.only('Compact schema', () => {
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
-    const schema = buildSchema(flatCompiledItems, {});
+    const schema = compact(buildSchema(flatCompiledItems, {}));
 
     expect(schema).to.deep.equals({
-      $schema: schemaUrl,
-      oneOf: [{
-        type: 'object',
-        properties: {
-          ingress: {
-            oneOf: [{
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      $defs: {},
+      type: 'object',
+      properties: {
+        ingress: {
+          type: 'object',
+          properties: {
+            annotations: {
               type: 'object',
               properties: {
-                annotations: {
-                  oneOf: [{
-                    type: 'object',
-                    properties: {
-                      'kubernetes.io/ingress.class': {
-                        oneOf: [ { type: 'string' } ],
-                      },
-                      'nginx.ingress.kubernetes.io/proxy-body-size': {
-                        oneOf: [ { type: 'string' } ],
-                      },
-                      'nginx.ingress.kubernetes.io/proxy-read-timeout': {
-                        oneOf: [ { type: 'string' } ],
-                      },
-                      'nginx.ingress.kubernetes.io/proxy-send-timeout': {
-                        oneOf: [ { type: 'string' } ],
-                      },
-                      'nginx.ingress.kubernetes.io/limit-rps': {
-                        oneOf: [ { type: 'string' } ],
-                      },
-                      'nginx.ingress.kubernetes.io/limit-rpm': {
-                        oneOf: [ { type: 'string' } ],
-                      },
-                    },
-                    required: [
-                      'kubernetes.io/ingress.class',
-                      'nginx.ingress.kubernetes.io/proxy-body-size',
-                      'nginx.ingress.kubernetes.io/proxy-read-timeout',
-                      'nginx.ingress.kubernetes.io/proxy-send-timeout',
-                      'nginx.ingress.kubernetes.io/limit-rps',
-                      'nginx.ingress.kubernetes.io/limit-rpm',
-                    ],
-                    additionalProperties: false,
-                  }],
-                },
+                'kubernetes.io/ingress.class': { type: 'string' },
+                'nginx.ingress.kubernetes.io/proxy-body-size': { type: 'string' },
+                'nginx.ingress.kubernetes.io/proxy-read-timeout': { type: 'string' },
+                'nginx.ingress.kubernetes.io/proxy-send-timeout': { type: 'string' },
+                'nginx.ingress.kubernetes.io/limit-rps': { type: 'string' },
+                'nginx.ingress.kubernetes.io/limit-rpm': { type: 'string' },
               },
-              required: [ 'annotations' ],
+              required: [
+                'kubernetes.io/ingress.class',
+                'nginx.ingress.kubernetes.io/proxy-body-size',
+                'nginx.ingress.kubernetes.io/proxy-read-timeout',
+                'nginx.ingress.kubernetes.io/proxy-send-timeout',
+                'nginx.ingress.kubernetes.io/limit-rps',
+                'nginx.ingress.kubernetes.io/limit-rpm',
+              ],
               additionalProperties: false,
-            }],
+            },
           },
+          required: [ 'annotations' ],
+          additionalProperties: false,
         },
-        'required': [ 'ingress' ],
-        'additionalProperties': false,
-      }],
-      $defs: {},
+      },
+      required: [ 'ingress' ],
+      additionalProperties: false,
     });
   });
 
@@ -369,57 +329,45 @@ describe.only('Compact schema', () => {
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
-    const schema = buildSchema(flatCompiledItems, {});
+    const schema = compact(buildSchema(flatCompiledItems, {}));
 
     expect(schema).to.deep.equals({
-      $schema: schemaUrl,
-      oneOf: [{
-        type: 'object',
-        properties: {
-          some: {
-            oneOf: [{
-              type: 'array',
-              items: {
-                oneOf: [{
-                  type: 'object',
-                  properties: {
-                    if: {
-                      oneOf: [{
-                        type: 'object',
-                        properties: {
-                          args: {
-                            oneOf: [{
-                              type: 'object',
-                              properties: {
-                                status: { oneOf: [ { type: 'string' } ] },
-                              },
-                              required: [ 'status' ],
-                              additionalProperties: false,
-                            }],
-                          },
-                        },
-                        required: [ 'args' ],
-                        additionalProperties: false,
-                      }],
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      $defs: {},
+      type: 'object',
+      properties: {
+        some: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              if: {
+                type: 'object',
+                properties: {
+                  args: {
+                    type: 'object',
+                    properties: {
+                      status: { type: 'string' },
                     },
-                    then: {
-                      oneOf: [{
-                        type: 'array',
-                        items: { oneOf: [ { type: 'string' } ] },
-                      }],
-                    },
-                  },
-                  required: [ 'if', 'then' ],
-                  additionalProperties: false,
-                }],
+                    required: [ 'status' ],
+                    additionalProperties: false,
+                  }
+                },
+                required: [ 'args' ],
+                additionalProperties: false,
               },
-            }],
+              then: {
+                type: 'array',
+                items: { type: 'string' },
+              }
+            },
+            required: [ 'if', 'then' ],
+            additionalProperties: false,
           },
         },
-        required: [ 'some' ],
-        additionalProperties: false,
-      }],
-      $defs: {},
+      },
+      required: [ 'some' ],
+      additionalProperties: false,
     });
   });
 
@@ -433,34 +381,28 @@ describe.only('Compact schema', () => {
     const flatCompiledItems = operationCompiler(flat, controlCommentRepo, {
       additionalProperties: false,
     });
-    const schema = buildSchema(flatCompiledItems, {});
+    const schema = compact(buildSchema(flatCompiledItems, {}));
 
     expect(schema).to.deep.equals({
-      $schema: schemaUrl,
-      oneOf: [{
-        type: 'object',
-        properties: {
-          some: {
-            oneOf: [{
-              type: 'array',
-              items: {
-                oneOf: [{
-                  type: 'object',
-                  properties: {
-                    foo: { oneOf: [ { type: 'string' } ] },
-                    bar: { oneOf: [ { type: 'string' } ] },
-                  },
-                  required: [ 'bar' ],
-                  additionalProperties: false,
-                }],
-              },
-            }],
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      $defs: {},
+      type: 'object',
+      properties: {
+        some: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              foo: { type: 'string' },
+              bar: { type: 'string' },
+            },
+            required: [ 'bar' ],
+            additionalProperties: false,
           },
         },
-        required: [ 'some' ],
-        additionalProperties: false,
-      }],
-      $defs: {},
+      },
+      required: [ 'some' ],
+      additionalProperties: false,
     });
   });
 });
