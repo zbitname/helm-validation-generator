@@ -20,6 +20,7 @@ export default (program: Command) => {
     .addOption(new Option('--skip-ci', 'Skip CI configs').preset(true))
     .addOption(new Option('--skip-deprecation', 'Skip deprecation file').preset(true))
     .addOption(new Option('-c --compact', 'Need to compact output').preset(true))
+    .addOption(new Option('-m --minify', 'Need to minify JSON').preset(true))
     .action(opts => {
       const valuesPath = isAbsolute(opts.values) ? opts.values : resolve(process.cwd(), opts.values);
       console.log('Load values file', `"${basename(valuesPath)}"`);
@@ -98,6 +99,11 @@ export default (program: Command) => {
         }
 
         console.log('Validation has finihed successfuly');
+      }
+
+      if (opts.minify) {
+        writeFileSync(outPath, JSON.stringify(schema));
+        return;
       }
 
       writeFileSync(outPath, JSON.stringify(schema, null, 2));
