@@ -19,6 +19,7 @@ export default (program: Command) => {
     .addOption(new Option('--skip-validation', 'Skip validation after build the schema').preset(true))
     .addOption(new Option('--skip-ci', 'Skip CI configs').preset(true))
     .addOption(new Option('--skip-deprecation', 'Skip deprecation file').preset(true))
+    .addOption(new Option('-c --compact', 'Need to compact output').preset(true))
     .action(opts => {
       const valuesPath = isAbsolute(opts.values) ? opts.values : resolve(process.cwd(), opts.values);
       console.log('Load values file', `"${basename(valuesPath)}"`);
@@ -75,7 +76,9 @@ export default (program: Command) => {
 
       let schema: IJSONSchemaRoot;
       try {
-        schema = generateSchemaValidation(values, def)
+        schema = generateSchemaValidation(values, def, undefined, {
+          compact: opts.compact,
+        })
       } catch (e) {
         console.log('Schema generation error:', (e as Error).message);
         process.exit(1);

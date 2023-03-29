@@ -7,12 +7,14 @@ import { parse } from './parse-yaml';
 import { buildSchema } from './schema-builder';
 import {
   IDocumentItemWithOptions,
+  IGenerateSchemaValidationOptions,
   IJSONSchemaRoot,
   TControlCommentConstructor,
 } from './interfaces';
 import { chain, isEqual } from 'lodash';
 import { DeprecatedControlComment } from './control-comments/deprecated';
 import { OptionalControlComment } from './control-comments/optional';
+import { compact } from './compact';
 
 const allControlComments: Record<string, TControlCommentConstructor> = {
   ref: RefControlComment,
@@ -25,6 +27,7 @@ export const generateSchemaValidation = (
   contents: string[],
   definitions: IJSONSchemaRoot['$defs'],
   controlComments: Record<string, TControlCommentConstructor> = allControlComments,
+  options: IGenerateSchemaValidationOptions = {},
 ) => {
   const controlCommentRepo = new ControlCommentRepo();
 
@@ -58,7 +61,12 @@ export const generateSchemaValidation = (
   const flatCompiledItems = operationCompiler(uniqFlatItems, controlCommentRepo, {
     additionalProperties: false,
   });
-  const schema = buildSchema(flatCompiledItems, definitions);
+  let schema = buildSchema(flatCompiledItems, definitions);
+
+  if (options.compact) {
+    const compactedSchema = compact(schema);
+    schema = compactedSchema;
+  }
 
   return schema;
 };

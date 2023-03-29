@@ -1,1 +1,1 @@
-export const compact = (input: any) => JSON.parse(JSON.stringify(input));
+export const prune = (input: any) => JSON.parse(JSON.stringify(input));
