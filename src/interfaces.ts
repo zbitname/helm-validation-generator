@@ -141,3 +141,7 @@ export interface IControlCommentRepo {
   add(name: string, impl: TControlCommentConstructor): this;
   get(name: string): TControlCommentConstructor;
 }
+
+export interface IGenerateSchemaValidationOptions {
+  compact?: boolean;
+}
