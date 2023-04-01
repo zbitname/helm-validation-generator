@@ -18,8 +18,8 @@
   "files": [
     "README.md",
     "bin",
-    "src",
-    "dist"
+    "dist/src",
+    "dist/bin"
   ],
   "typings": "./dist/**/*.d.ts",
   "directories": {
