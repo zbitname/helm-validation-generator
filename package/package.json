@@ -17,11 +17,11 @@
   },
   "files": [
     "README.md",
-    "bin",
     "dist/src",
     "dist/bin"
   ],
-  "typings": "./dist/**/*.d.ts",
+  "typings": "./dist/src/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "directories": {
     "lib": "./dist/src",
     "test": "./tests"
