@@ -31,12 +31,7 @@ jobs:
     - run: cd package && npm run build
     - run: cd docs && npm ci
     - run: cd docs && npm run build
-    - run: |-
-        cat <<EOT > ./docs/dist/404.md
-        ---
-        permalink: /index.html
-        ---
-        EOT
+    - run: ln -s ./docs/dist/index.html ./docs/dist/404.html
     - name: Setup Pages
       uses: actions/configure-pages@v3
     - name: Upload artifact
