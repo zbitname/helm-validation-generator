@@ -31,7 +31,7 @@ jobs:
     - run: cd package && npm run build
     - run: cd docs && npm ci
     - run: cd docs && npm run build
-    - run: сз ./docs/dist/index.html ./docs/dist/404.html
+    - run: cp ./docs/dist/index.html ./docs/dist/404.html
     - name: Setup Pages
       uses: actions/configure-pages@v3
     - name: Upload artifact
