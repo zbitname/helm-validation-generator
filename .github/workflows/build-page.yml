@@ -23,8 +23,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: docs/package-lock.json
     - run: cd docs && npm ci
-    - run: npm run build
-      working-directory: docs
+    - run: cd docs && npm run build
     - name: Setup Pages
       uses: actions/configure-pages@v3
     - name: Upload artifact
