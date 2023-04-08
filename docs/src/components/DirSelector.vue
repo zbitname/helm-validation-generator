@@ -48,7 +48,7 @@ export default {
     @dragover.prevent
     @dragleave.prevent
   >
-    Drag one or more files to this <i>drop zone</i>.
+    Drag folder with helm charts <i>here</i>.
   </div>
 </template>
 

@@ -1,0 +1,2 @@
+imageRepo: nginx # schema: deprecated
+imageTag: latest # schema: deprecated

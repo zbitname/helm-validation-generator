@@ -1,4 +1,6 @@
 @import './base.css';
+@import url(https://fonts.googleapis.com/css?family=Questrial);
+@import url(https://fonts.googleapis.com/css?family=Arvo);
 
 #app {
   display: flex;
@@ -10,15 +12,7 @@
   width: 50rem;
 }
 
-a,
-.green {
-  text-decoration: none;
+a {
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
 }

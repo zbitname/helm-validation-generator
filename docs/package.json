@@ -11,14 +11,19 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@zbit/helm-validation-generator": "file:../package",
     "pinia": "^2.0.32",
+    "prismjs": "^1.29.0",
     "vue": "^3.2.47",
+    "vue-prism-editor": "^2.0.0-alpha.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.14.2",
+    "@types/prismjs": "^1.26.0",
     "@types/wicg-file-system-access": "^2020.9.5",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",

@@ -1,0 +1,15 @@
+{
+  "Image": {
+    "type": "object",
+    "properties": {
+      "pullPolicy": { "type": "string" },
+      "repository": { "type": "string" },
+      "tag": {
+        "type": "string",
+        "enum": [ "Always", "IfNotPresent" ]
+      }
+    },
+    "required": [ "pullPolicy", "repository", "tag" ],
+    "additionalProperties": false
+  }
+}
