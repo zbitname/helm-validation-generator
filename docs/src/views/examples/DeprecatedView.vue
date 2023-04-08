@@ -34,9 +34,11 @@ export default {
     },
     toggleUseDeprecations(): undefined {
       this._updateSchema();
+      return;
     },
     toggleCompactMode(): undefined {
       this._updateSchema();
+      return;
     },
     _updateSchema() {
       this.$data.example1_schema = JSON.stringify(
