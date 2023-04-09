@@ -11,12 +11,15 @@ import 'prismjs/components/prism-yaml';
 import 'prismjs/components/prism-json';
 import 'prismjs/themes/prism.min.css'; // import syntax highlighting styles
 
+import chartValues from '../../assets/examples/1.values.yaml?raw';
+import chartDefs from '../../assets/examples/1.defs.json?raw';
+
 export default {
   data() {
     return {
-      valuesStr: '',
-      valuesOriginalStr: '',
-      defsStr: '',
+      valuesStr: chartValues,
+      valuesOriginalStr: chartValues,
+      defsStr: chartDefs,
       schemaStr: '',
       useDefs: true,
       useCompactMode: true,
@@ -64,14 +67,6 @@ export default {
         null, 2
       );
     }
-  },
-  async created() {
-    const [vals, defs] = await Promise.all([
-      (await fetch(`${this.$data.baseUrl}src/assets/examples/1.values.yaml`)).text(),
-      (await fetch(`${this.$data.baseUrl}src/assets/examples/1.defs.json`)).text(),
-    ]);
-    this.$data.valuesStr = this.$data.valuesOriginalStr = vals;
-    this.$data.defsStr = defs;
   }
 }
 </script>

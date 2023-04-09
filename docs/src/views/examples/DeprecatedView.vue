@@ -11,12 +11,15 @@ import 'prismjs/components/prism-yaml';
 import 'prismjs/components/prism-json';
 import 'prismjs/themes/prism.min.css'; // import syntax highlighting styles
 
+import chartValues from '../../assets/examples/1.values.yaml?raw';
+import chartDeprecations from '../../assets/examples/1.deprecations.yaml?raw';
+
 export default {
   data() {
     return {
-      valuesStr: '',
-      valuesOriginalStr: '',
-      deprecationsStr: '',
+      valuesStr: chartValues,
+      valuesOriginalStr: chartValues,
+      deprecationsStr: chartDeprecations,
       schemaStr: '',
       useDeprecated: true,
       useCompactMode: true,
@@ -59,14 +62,6 @@ export default {
         null, 2
       );
     }
-  },
-  async created() {
-    const [vals, deprecations] = await Promise.all([
-      (await fetch(`${this.$data.baseUrl}src/assets/examples/1.values.yaml`)).text(),
-      (await fetch(`${this.$data.baseUrl}src/assets/examples/1.deprecations.yaml`)).text(),
-    ]);
-    this.$data.valuesStr = this.$data.valuesOriginalStr = vals;
-    this.$data.deprecationsStr = deprecations;
   }
 }
 </script>
