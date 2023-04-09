@@ -7,7 +7,6 @@ export default {
   methods: {
     dropHandler(event: DragEvent) {
       event.preventDefault();
-      // console.log('dropHandler', event.dataTransfer?.items[0].webkitGetAsEntry());
       (event.target as HTMLParagraphElement).className = '';
 
       const fsEntry = useFSEntryStore();
@@ -23,12 +22,10 @@ export default {
     },
     dragOverHandler(event: DragEvent) {
       event.preventDefault();
-      // console.log('dragOverHandler', event);
       (event.target as HTMLParagraphElement).className = 'ondrag';
     },
     dragLeaveHandler(event: DragEvent) {
       event.preventDefault();
-      // console.log('dragLeaveHandler', event);
       (event.target as HTMLParagraphElement).className = '';
     },
   },
@@ -36,8 +33,6 @@ export default {
 </script>
 
 <template>
-  <!-- <input id="fileItem" type="file" /> -->
-  <!-- <button @click="showDirectoryPicker()">Select dir</button> -->
   <div
     id="drop_zone"
     draggable="true"
@@ -48,13 +43,13 @@ export default {
     @dragover.prevent
     @dragleave.prevent
   >
-    Drag folder with helm charts <i>here</i>.
+    Drop your charts <i>here</i>.
   </div>
 </template>
 
 <style>
 #drop_zone {
-  border: 5px solid blue;
+  border: 5px solid hsla(160, 100%, 37%, 0.2);
   width: 100%;
   height: 10rem;
   padding: 4rem 0 0 0;
@@ -63,6 +58,6 @@ export default {
 }
 
 #drop_zone.ondrag {
-  border: 5px dotted red;
+  border: 5px dotted hsla(160, 100%, 37%, 1);
 }
 </style>
