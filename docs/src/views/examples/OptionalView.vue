@@ -14,11 +14,12 @@ import 'prismjs/themes/prism.min.css'; // import syntax highlighting styles
 export default {
   data() {
     return {
-      example1_values: '',
-      example1_valuesOriginal: '',
-      example1_schema: '',
+      valuesStr: '',
+      valuesOriginalStr: '',
+      schemaStr: '',
       useOptional: true,
       useCompactMode: true,
+      baseUrl: import.meta.env.BASE_URL,
     };
   },
   components: {
@@ -33,28 +34,28 @@ export default {
     },
     toggleUseOptional(): undefined {
       if (this.$data.useOptional) {
-        this.$data.example1_values = this.$data.example1_values.replace(/image:\n/g, 'image: # schema: optional\n');
+        this.$data.valuesStr = this.$data.valuesStr.replace(/image:\n/g, 'image: # schema: optional\n');
       } else {
-        this.$data.example1_values = this.$data.example1_valuesOriginal;
+        this.$data.valuesStr = this.$data.valuesOriginalStr;
       }
 
-      if (this.$data.example1_values) {
+      if (this.$data.valuesStr) {
         this._updateSchema();
       }
 
       return;
     },
     toggleCompactMode(): undefined {
-      if (this.$data.example1_values) {
+      if (this.$data.valuesStr) {
         this._updateSchema();
       }
 
       return;
     },
     _updateSchema() {
-      this.$data.example1_schema = JSON.stringify(
+      this.$data.schemaStr = JSON.stringify(
         generateSchemaValidation(
-          [this.$data.example1_values],
+          [this.$data.valuesStr],
           {},
           undefined,
           {compact: this.$data.useCompactMode}
@@ -65,9 +66,9 @@ export default {
   },
   async created() {
     const [vals] = await Promise.all([
-      (await fetch('/src/assets/examples/1.values.yaml')).text(),
+      (await fetch(`${this.$data.baseUrl}src/assets/examples/1.values.yaml`)).text(),
     ]);
-    this.$data.example1_values = this.$data.example1_valuesOriginal = vals;
+    this.$data.valuesStr = this.$data.valuesOriginalStr = vals;
   }
 }
 </script>
@@ -76,7 +77,7 @@ export default {
   <h1>Using of control-comments (hints)</h1>
   <p>Input:</p>
   <div>
-    <prism-editor :highlight="highlighterYaml" v-model="example1_values" line-numbers :readonly="true"></prism-editor>
+    <prism-editor :highlight="highlighterYaml" v-model="valuesStr" line-numbers :readonly="true"></prism-editor>
   </div>
   <p>
     <input type="checkbox" id="use-optional" v-model="useOptional" :on-change="toggleUseOptional()"> <label for="use-optional">Use "optional"</label>
@@ -84,7 +85,7 @@ export default {
     <input type="checkbox" id="use-compact" v-model="useCompactMode" :on-change="toggleCompactMode()"> <label for="use-compact">Compact mode</label>
   </p>
   <p>Output:</p>
-  <prism-editor :highlight="highlighterJson" v-model="example1_schema" line-numbers :readonly="true"></prism-editor>
+  <prism-editor :highlight="highlighterJson" v-model="schemaStr" line-numbers :readonly="true"></prism-editor>
 </template>
 
 <style scoped>
